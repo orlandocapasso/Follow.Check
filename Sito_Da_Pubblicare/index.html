@@ -1,0 +1,2114 @@
+<!DOCTYPE html>
+<html lang="it" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'rgb(var(--background) / <alpha-value>)',
+                        surface: 'rgb(var(--surface) / <alpha-value>)',
+                        'surface-highlight': 'rgb(var(--surface-highlight) / <alpha-value>)',
+                        primary: {
+                            DEFAULT: 'rgb(var(--primary) / <alpha-value>)',
+                            foreground: 'rgb(var(--primary-foreground) / <alpha-value>)',
+                            hover: 'rgb(var(--primary-hover) / <alpha-value>)'
+                        },
+                        status: {
+                            error: 'rgb(var(--status-error) / <alpha-value>)',
+                            success: 'rgb(var(--status-success) / <alpha-value>)',
+                            warning: 'rgb(var(--status-warning) / <alpha-value>)',
+                            info: 'rgb(var(--status-info) / <alpha-value>)'
+                        },
+                        text: {
+                            primary: 'rgb(var(--text-primary) / <alpha-value>)',
+                            secondary: 'rgb(var(--text-secondary) / <alpha-value>)',
+                            muted: 'rgb(var(--text-muted) / <alpha-value>)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                        heading: ['Inter', 'sans-serif'], // Unify fonts for cleaner look
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        fadeIn: 'fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        slideUp: 'slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards',
+                        pulse: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            'from': { opacity: 0, transform: 'translateY(10px) scale(0.98)' },
+                            'to': { opacity: 1, transform: 'translateY(0) scale(1)' }
+                        },
+                        slideUp: {
+                            'from': { opacity: 0, transform: 'translateY(20px)' },
+                            'to': { opacity: 1, transform: 'translateY(0)' }
+                        }
+                    },
+                    boxShadow: {
+                        'glow': '0 0 20px -5px rgba(251, 191, 36, 0.15)',
+                        'glass': '0 8px 32px 0 rgba(0, 0, 0, 0.3)'
+                    }
+                }
+            }
+        };
+    </script>
+
+    <style>
+        :root {
+            /* Light Mode Colors (Zinc-based) */
+            --background: 250 250 250;
+            /* Zinc 50 */
+            --surface: 255 255 255;
+            /* White */
+            --surface-highlight: 244 244 245;
+            /* Zinc 100 */
+
+            --primary: 225 48 108;
+            /* Instagram Pink */
+            --primary-foreground: 255 255 255;
+            --primary-hover: 193 53 132;
+            /* Instagram Purple-Pink */
+
+            --text-primary: 24 24 27;
+            /* Zinc 900 */
+            --text-secondary: 82 82 91;
+            /* Zinc 600 */
+            --text-muted: 113 113 122;
+            /* Zinc 500 */
+
+            --status-error: 239 68 68;
+            --status-success: 16 185 129;
+            --status-warning: 245 158 11;
+            --status-info: 59 130 246;
+
+            --border: 228 228 231;
+            /* Zinc 200 */
+        }
+
+        .dark {
+            /* Dark Mode Colors */
+            --background: 9 9 11;
+            /* Zinc 950 */
+            --surface: 24 24 27;
+            /* Zinc 900 */
+            --surface-highlight: 39 39 42;
+            /* Zinc 800 */
+
+            --primary: 225 48 108;
+            /* Instagram Pink */
+            --primary-foreground: 255 255 255;
+            --primary-hover: 193 53 132;
+            /* Instagram Purple-Pink */
+
+            --text-primary: 250 250 250;
+            /* Zinc 50 */
+            --text-secondary: 161 161 170;
+            /* Zinc 400 */
+            --text-muted: 82 82 91;
+            /* Zinc 600 */
+
+            --status-error: 239 68 68;
+            --status-success: 16 185 129;
+            --status-warning: 245 158 11;
+            --status-info: 59 130 246;
+
+            --border: 255 255 255;
+        }
+
+        body {
+            background-color: rgb(var(--background));
+            color: rgb(var(--text-primary));
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.03;
+            pointer-events: none;
+            z-index: 1000;
+            mix-blend-mode: overlay;
+        }
+
+        /* --border is now defined in :root/.dark */
+
+        .glass {
+            background: rgb(var(--surface) / 0.8);
+            backdrop-filter: blur(24px);
+            border: 1px solid rgb(var(--border) / 0.1);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 24px -8px rgba(0, 0, 0, 0.5);
+        }
+
+        .upload-zone {
+            transition: all 0.3s ease;
+        }
+
+        .upload-zone:hover {
+            border-color: #D4F468;
+            background: rgba(212, 244, 104, 0.05);
+        }
+
+        .upload-zone.dragover {
+            border-color: #D4F468;
+            background: rgba(212, 244, 104, 0.1);
+            transform: scale(1.02);
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0A0A0B;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #27272A;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525B;
+        }
+
+        .hidden-page {
+            display: none !important;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            padding: 16px;
+            border-radius: 8px;
+            background: #0A0A0B;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            transform: translateY(100%);
+            opacity: 0;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            max-width: 350px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast-success {
+            border-left: 4px solid #D4F468;
+        }
+
+        .toast-error {
+            border-left: 4px solid #FF453A;
+        }
+
+        .toast-info {
+            border-left: 4px solid #64D2FF;
+        }
+
+        .result-item {
+            transition: all 0.2s ease;
+        }
+
+        .result-item:hover {
+            background: rgb(var(--surface-highlight));
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(5, 5, 5, 0.95);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+    </style>
+</head>
+
+<body class="min-h-screen">
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center gap-2 cursor-pointer" onclick="showPage('landing')">
+                    <i data-lucide="instagram" class="w-6 h-6 text-primary"></i>
+                    <span class="font-heading font-bold text-lg">FollowCheck</span>
+                </div>
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleLanguage()"
+                        class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-surface-highlight text-text-secondary hover:text-text-primary transition-colors border border-border/50">
+                        <span class="font-bold text-xs" id="lang-label">IT</span>
+                    </button>
+                    <button onclick="showPage('dashboard')"
+                        class="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-surface-highlight text-text-secondary hover:text-text-primary transition-colors">
+                        <i data-lucide="history" class="w-4 h-4"></i><span class="hidden sm:inline"
+                            data-i18n="history_title">Storico</span>
+                    </button>
+                    <button onclick="toggleTheme()"
+                        class="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-surface-highlight text-text-secondary hover:text-text-primary transition-colors">
+                        <i data-lucide="sun" id="theme-icon" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-24 pb-16 min-h-screen">
+
+        <!-- PAGE LANDING -->
+        <div id="page-landing"
+            class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center min-h-[80vh]">
+            <!-- Hero -->
+            <div class="text-center mb-16 animate-fadeIn w-full">
+                <div
+                    class="inline-flex items-center justify-center p-3 mb-6 rounded-2xl bg-surface-highlight border border-border shadow-glow">
+                    <i data-lucide="instagram" class="w-8 h-8 text-primary"></i>
+                </div>
+                <h1
+                    class="font-heading text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-2 text-text-primary">
+                    FollowCheck
+                </h1>
+                <p class="text-primary font-medium uppercase tracking-[0.3em] text-xs mb-8 opacity-80">
+                    By Orlando Capasso
+                </p>
+                <p class="text-text-secondary text-xl max-w-2xl mx-auto leading-relaxed">
+                    <span data-i18n="hero_desc">Analisi dei tuoi follower semplice, sicura e privata.</span><br>
+                    <span class="text-primary font-medium" data-i18n="no_login_required">Nessun login richiesto.</span>
+                </p>
+            </div>
+
+            <!-- Upload -->
+            <div class="w-full max-w-3xl grid md:grid-cols-2 gap-6 animate-slideUp" style="animation-delay: 0.1s;">
+                <div id="drop-followers"
+                    class="upload-zone group border border-border bg-surface hover:bg-surface-highlight rounded-2xl p-10 text-center cursor-pointer relative transition-all duration-300 hover:shadow-glow hover:border-primary/50"
+                    onclick="document.getElementById('file-followers').click()">
+                    <input type="file" id="file-followers" accept=".json" class="hidden"
+                        onchange="handleFileSelect('followers')">
+                    <div id="content-followers"
+                        class="space-y-4 text-text-secondary transition-transform group-hover:scale-105 duration-300">
+                        <div
+                            class="w-16 h-16 mx-auto bg-surface-highlight rounded-full flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-colors">
+                            <i data-lucide="users"
+                                class="w-8 h-8 text-text-primary group-hover:text-primary transition-colors"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-text-primary text-lg" data-i18n="upload_followers">Carica Follower
+                            </p>
+                            <p
+                                class="text-text-muted text-sm mt-1 font-mono bg-surface-highlight inline-block px-2 py-0.5 rounded">
+                                followers_1.json</p>
+                        </div>
+                        <div id="error-followers" class="text-status-error text-xs font-semibold mt-2 hidden"></div>
+                    </div>
+                </div>
+
+                <div id="drop-following"
+                    class="upload-zone group border border-border bg-surface hover:bg-surface-highlight rounded-2xl p-10 text-center cursor-pointer relative transition-all duration-300 hover:shadow-glow hover:border-primary/50"
+                    onclick="document.getElementById('file-following').click()">
+                    <input type="file" id="file-following" accept=".json" class="hidden"
+                        onchange="handleFileSelect('following')">
+                    <div id="content-following"
+                        class="space-y-4 text-text-secondary transition-transform group-hover:scale-105 duration-300">
+                        <div
+                            class="w-16 h-16 mx-auto bg-surface-highlight rounded-full flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-colors">
+                            <i data-lucide="user-plus"
+                                class="w-8 h-8 text-text-primary group-hover:text-primary transition-colors"></i>
+                        </div>
+                        <div>
+                            <p class="font-bold text-text-primary text-lg" data-i18n="upload_following">Carica Seguiti
+                            </p>
+                            <p
+                                class="text-text-muted text-sm mt-1 font-mono bg-surface-highlight inline-block px-2 py-0.5 rounded">
+                                following.json</p>
+                        </div>
+                        <div id="error-following" class="text-status-error text-xs font-semibold mt-2 hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tutorial Section -->
+            <div class="w-full max-w-4xl mt-12 animate-slideUp" style="animation-delay: 0.2s;">
+                <div class="text-center mb-8">
+                    <h3
+                        class="font-heading text-2xl font-bold mb-4 flex items-center justify-center gap-2 text-text-primary">
+                        <i data-lucide="help-circle" class="w-6 h-6 text-primary"></i>
+                        <span data-i18n="tutorial_title">Come ottenere i file</span>
+                    </h3>
+
+                    <!-- Tabs -->
+                    <div class="inline-flex bg-surface border border-border rounded-full p-1.5 shadow-sm">
+                        <button onclick="setTutorialTab('text')" id="tab-btn-text"
+                            class="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/25">
+                            <i data-lucide="file-text" class="w-4 h-4"></i>
+                            <span data-i18n="tutorial_written">Guida Scritta</span>
+                        </button>
+                        <button onclick="setTutorialTab('video')" id="tab-btn-video"
+                            class="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 text-text-secondary hover:text-text-primary hover:bg-surface-highlight">
+                            <i data-lucide="play-circle" class="w-4 h-4"></i>
+                            <span data-i18n="tutorial_video">Video Tutorial</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Video Content -->
+                <div id="tutorial-content-video" class="hidden w-full max-w-3xl mx-auto">
+                    <div
+                        class="relative w-full rounded-2xl overflow-hidden border border-border shadow-2xl bg-black aspect-video group">
+                        <video controls class="w-full h-full object-contain" poster="" id="tutorial-player">
+                            <source src="videotutorial.mp4" type="video/mp4">
+                            Il tuo browser non supporta il tag video.
+                        </video>
+                    </div>
+                    <p class="text-center text-text-muted text-sm mt-4" data-i18n="tutorial_video_desc">
+                        Guarda il video per vedere i passaggi esatti da eseguire su Instagram
+                    </p>
+                </div>
+                <!-- Embedded Video Data (will be loaded via JavaScript) -->
+                <script id="video-data" type="application/octet-stream">VIDEO_BASE64_PLACEHOLDER</script>
+                <script>
+                    (function () {
+                        const videoDataScript = document.getElementById('video-data');
+                        if (videoDataScript && videoDataScript.textContent.length > 100) {
+                            try {
+                                const base64 = videoDataScript.textContent.trim();
+                                const binaryString = atob(base64);
+                                const bytes = new Uint8Array(binaryString.length);
+                                for (let i = 0; i < binaryString.length; i++) {
+                                    bytes[i] = binaryString.charCodeAt(i);
+                                }
+                                const blob = new Blob([bytes], { type: 'video/mp4' });
+                                const blobUrl = URL.createObjectURL(blob);
+                                const video = document.getElementById('tutorial-player');
+                                if (video) {
+                                    video.src = blobUrl;
+                                    video.load();
+                                }
+                            } catch (e) {
+                                console.log('Video embedded data not available, using file fallback');
+                            }
+                        }
+                    })();
+                </script>
+
+                <!-- Text Content -->
+                <div id="tutorial-content-text"
+                    class="w-full max-w-3xl mx-auto p-8 rounded-2xl border border-border bg-surface/50">
+                    <ol class="space-y-4 text-text-secondary list-decimal pl-5 marker:text-primary marker:font-bold">
+                        <li class="pl-2" data-i18n="step_1">Accedi a Instagram da computer → Altro ☰ → Impostazioni</li>
+                        <li class="pl-2" data-i18n="step_2">Centro gestione account → Le tue informazioni → Esporta le
+                            tue informazioni</li>
+                        <li class="pl-2" data-i18n="step_3">Seleziona Instagram → Esporta sul dispositivo</li>
+                        <li class="pl-2" data-i18n="step_4">Seleziona solo 'Seguiti e Follower' → Formato .JSON → Date
+                            su 'Sempre'</li>
+                        <li class="pl-2" data-i18n="step_5">Scarica lo .zip → Estrai Followers_1.json e Following.json →
+                            Caricali qui</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- Analyze Button -->
+            <div class="mt-12 text-center animate-slideUp" style="animation-delay: 0.3s;">
+                <button id="btn-analyze" onclick="startAnalysis()" disabled
+                    class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] hover:opacity-90 font-heading rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-glow">
+                    <span class="mr-2 text-lg">Avvia Analisi</span>
+                    <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- PAGE RESULTS -->
+        <div id="page-results" class="hidden-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="animate-fadeIn">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <button onclick="showPage('landing')"
+                            class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            Torna all'analisi
+                        </button>
+                        <h2 class="font-heading text-3xl font-bold">Risultati dell'analisi</h2>
+                        <p class="text-text-secondary">Generato il <span id="analysis-date"></span></p>
+                    </div>
+                    <button id="btn-goto-bookmark" onclick="scrollToBookmark()"
+                        class="hidden items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm font-medium transition-all border border-primary/20 animate-fade-in">
+                        <i data-lucide="bookmark" class="w-4 h-4 fill-primary"></i>
+                        Vai a: <span id="bookmark-name" class="font-bold"></span>
+                    </button>
+                </div>
+
+                <!-- Summary Cards -->
+                <div class="grid md:grid-cols-4 gap-6 mb-12">
+                    <div class="glass rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-text-secondary">Persone che segui</span>
+                            <i data-lucide="user-plus" class="w-5 h-5 text-status-info"></i>
+                        </div>
+                        <p class="text-3xl font-bold" id="following-count">0</p>
+                    </div>
+
+                    <div class="glass rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-text-secondary">I tuoi follower</span>
+                            <i data-lucide="users" class="w-5 h-5 text-status-success"></i>
+                        </div>
+                        <p class="text-3xl font-bold" id="followers-count">0</p>
+                    </div>
+
+                    <div class="glass rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-text-secondary">Non ti seguono</span>
+                            <i data-lucide="user-minus" class="w-5 h-5 text-status-error"></i>
+                        </div>
+                        <p class="text-3xl font-bold" id="not-following-back-count">0</p>
+                    </div>
+
+                    <div class="glass rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="text-text-secondary">Ti seguono e tu li segui</span>
+                            <i data-lucide="users-2" class="w-5 h-5 text-status-success"></i>
+                        </div>
+                        <p class="text-3xl font-bold" id="mutual-follows-count">0</p>
+                    </div>
+                </div>
+
+                <!-- Stats Chart Section -->
+                <div class="glass rounded-xl p-6 mb-8 flex flex-col md:flex-row items-center justify-center gap-8 min-h-[300px] hidden"
+                    id="stats-section">
+                    <div class="relative w-64 h-64">
+                        <svg viewBox="0 0 100 100" class="w-full h-full transform -rotate-90" id="stats-chart">
+                            <!-- Chart will be drawn here -->
+                        </svg>
+                        <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                            <span
+                                class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45]"
+                                id="chart-total">0</span>
+                            <span class="text-xs text-text-muted">Totale Analizzati</span>
+                        </div>
+                    </div>
+                    <div id="chart-legend" class="grid grid-cols-2 gap-x-8 gap-y-4">
+                        <!-- Legend items -->
+                    </div>
+                </div>
+
+                <!-- Tab Navigation & Controls -->
+                <!-- Tab Navigation & Controls -->
+                <div class="flex flex-col sm:flex-row justify-between items-center bg-surface p-2 gap-4">
+                    <div class="flex w-full sm:w-auto bg-surface-highlight rounded-xl p-1">
+                        <button id="tab-not-following-back"
+                            class="flex-1 py-2 px-4 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm bg-primary text-white"
+                            onclick="switchTab('not-following-back')">
+                            <i data-lucide="user-minus" class="w-4 h-4"></i>
+                            <span data-i18n="not_following_back">Non ti seguono</span> (<span
+                                id="tab-not-following-count">0</span>)
+                        </button>
+                        <button id="tab-you-dont-follow"
+                            class="flex-1 py-2 px-4 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 text-text-secondary hover:text-text-primary"
+                            onclick="switchTab('you-dont-follow')">
+                            <i data-lucide="user-x" class="w-4 h-4"></i>
+                            <span data-i18n="you_dont_follow">Non segui</span> (<span
+                                id="tab-you-dont-follow-count">0</span>)
+                        </button>
+                    </div>
+
+                    <!-- Search Bar -->
+                    <div class="w-full sm:w-auto">
+                        <div class="relative">
+                            <i data-lucide="search"
+                                class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-secondary"></i>
+                            <input type="text" id="search-input" data-i18n-placeholder="search_placeholder"
+                                placeholder="Cerca username o nome..."
+                                class="bg-surface border border-border rounded-full py-2 pl-10 pr-4 text-sm w-full sm:w-64 focus:outline-none focus:border-primary text-text-primary placeholder-text-muted transition-all"
+                                oninput="handleSearch(this.value)">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Advanced Filters & Sorting -->
+                <div class="px-6 py-4 bg-surface-highlight/30 border-t border-border flex flex-wrap gap-4 items-center">
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-bold text-text-muted uppercase tracking-widest"
+                            data-i18n="sort_label">ORDINA:</span>
+                        <div class="flex bg-surface rounded-lg p-1 border border-border">
+                            <button onclick="handleSort('username')" id="btn-sort-az"
+                                class="px-3 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-1 hover:bg-surface-highlight">
+                                <i data-lucide="sort-asc" class="w-3 h-3"></i> <span data-i18n="sort_az">A-Z</span>
+                            </button>
+                            <button onclick="handleSort('date')" id="btn-sort-recent"
+                                class="px-3 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-1 hover:bg-surface-highlight">
+                                <i data-lucide="clock" class="w-3 h-3"></i> <span data-i18n="sort_recent">Recenti</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="h-4 w-px bg-border hidden sm:block"></div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-[10px] font-bold text-text-muted uppercase tracking-widest"
+                            data-i18n="filter_label">FILTRA:</span>
+                        <button onclick="toggleVerifiedFilter()" id="btn-filter-verified"
+                            class="px-3 py-1.5 rounded-lg border border-border bg-surface text-xs font-bold hover:border-primary transition-all flex items-center gap-1.5 group">
+                            <i data-lucide="badge-check"
+                                class="w-3.5 h-3.5 text-status-info group-hover:scale-110 transition-transform"></i>
+                            <span data-i18n="only_verified">Solo Verificati</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Tab Contents Container -->
+                <div id="results-container" class="min-h-[400px]">
+                    <!-- Dynamic Content Loaded Here -->
+                    <div class="p-6">
+                        <div class="mb-4 flex justify-between items-end">
+                            <div>
+                                <h3 id="current-list-title"
+                                    class="font-heading text-xl font-bold flex items-center gap-2">
+                                    <!-- Title set by JS -->
+                                </h3>
+                                <p id="current-list-desc" class="text-text-secondary text-sm mt-1">
+                                    <!-- Desc set by JS -->
+                                </p>
+                            </div>
+                            <div class="text-sm text-text-muted">
+                                <span id="showing-range">0-0</span> di <span id="total-items">0</span>
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto rounded-lg border border-border">
+                            <table class="w-full">
+                                <thead class="bg-surface-highlight text-text-secondary text-sm font-medium">
+                                    <tr>
+                                        <th class="text-left p-4 cursor-pointer hover:text-text-primary transition-colors"
+                                            onclick="handleSort('index')">#</th>
+                                        <th class="text-left p-4 cursor-pointer hover:text-white transition-colors"
+                                            onclick="handleSort('username')">
+                                            Utente <i data-lucide="arrow-up-down"
+                                                class="w-3 h-3 inline ml-1 opacity-50"></i>
+                                        </th>
+                                        <th class="text-left p-4 w-64">Azioni</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="results-table-body">
+                                    <!-- Content will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div id="empty-state" class="hidden py-16 text-center">
+                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 mb-4">
+                                <i data-lucide="search-x" class="w-8 h-8 text-text-muted"></i>
+                            </div>
+                            <h4 class="text-lg font-medium mb-1">Nessun risultato trovato</h4>
+                            <p class="text-text-secondary text-sm">Prova a cercare con un altro termine</p>
+                        </div>
+
+                        <!-- Success State (e.g. 0 people not following back) -->
+                        <div id="success-state" class="hidden py-16 text-center">
+                            <i data-lucide="check-circle" class="w-16 h-16 text-status-success mx-auto mb-4"></i>
+                            <h4 class="font-heading text-xl font-bold mb-2">Perfetto!</h4>
+                            <p id="success-message" class="text-text-secondary">Tutte le persone che segui ti
+                                seguono a loro volta.</p>
+                        </div>
+
+                        <!-- Pagination -->
+                        <div id="pagination-controls" class="mt-6 flex items-center justify-center gap-2">
+                            <button onclick="changePage(-1)" id="btn-prev"
+                                class="p-2 rounded-md bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                                <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                            </button>
+                            <span id="page-display" class="text-sm font-medium px-4">Pagina 1 di 1</span>
+                            <button onclick="changePage(1)" id="btn-next"
+                                class="p-2 rounded-md bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="mt-8 grid md:grid-cols-2 gap-6">
+            <div class="glass rounded-xl p-6">
+                <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="bar-chart" class="w-5 h-5"></i>
+                    Statistiche
+                </h4>
+                <div class="space-y-3">
+                    <div>
+                        <div class="flex justify-between text-sm mb-1">
+                            <span class="text-text-secondary">Rapporto follower/seguendo</span>
+                            <span id="follow-ratio">0%</span>
+                        </div>
+                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                            <div id="follow-ratio-bar" class="h-full bg-primary rounded-full" style="width: 0%">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-sm">
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-text-secondary">Followback rate</span>
+                            <span id="followback-rate">0%</span>
+                        </div>
+                        <div class="flex justify-between py-2 border-b border-white/10">
+                            <span class="text-text-secondary">Account verificati</span>
+                            <span id="verified-count">0</span>
+                        </div>
+                        <div class="flex justify-between py-2">
+                            <span class="text-text-secondary">Account privati</span>
+                            <span id="private-count">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass rounded-xl p-6">
+                <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
+                    <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                    Consigli
+                </h4>
+                <ul class="space-y-3 text-text-secondary">
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
+                        <span>Considera di smettere di seguire account che non ti seguono</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
+                        <span>Mantieni un rapporto follower/seguendo equilibrato (>70%)</span>
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
+                        <span>Analizza regolarmente la tua lista di follower</span>
+                    </li>
+                </ul>
+                <div class="mt-4 p-3 bg-white/5 rounded-lg">
+                    <p class="text-sm text-text-secondary">
+                        <i data-lucide="info" class="w-4 h-4 inline mr-2"></i>
+                        Suggerimento: I link "Visita profilo" potrebbero non funzionare per account con username
+                        speciali.
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+
+        <!-- PAGE DASHBOARD -->
+        <div id="page-dashboard" class="hidden-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="animate-fadeIn">
+                <div class="flex items-center justify-between mb-8">
+                    <div>
+                        <button onclick="showPage('landing')"
+                            class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            <span data-i18n="back_to_analysis">Torna all'analisi</span>
+                        </button>
+                        <h2 class="font-heading text-3xl font-bold" data-i18n="history_title">Storico analisi</h2>
+                        <p class="text-text-secondary" data-i18n="dashboard_desc">Cronologia delle tue analisi
+                            precedenti</p>
+                    </div>
+                </div>
+
+                <div class="glass rounded-xl overflow-hidden">
+                    <div class="p-6 border-b border-white/10">
+                        <h3 class="font-heading text-xl font-bold" data-i18n="dashboard_saved">Analisi salvate</h3>
+                    </div>
+
+                    <div id="history-list" class="p-6">
+                        <div class="text-center py-12">
+                            <i data-lucide="history" class="w-16 h-16 text-text-muted mx-auto mb-4"></i>
+                            <h4 class="font-heading text-lg font-bold mb-2" data-i18n="no_history">Nessuna analisi
+                                salvata</h4>
+                            <p class="text-text-secondary mb-4" data-i18n="dashboard_empty_desc">Le tue analisi future
+                                appariranno qui</p>
+                            <button onclick="showPage('landing')"
+                                class="text-primary hover:text-primary-hover font-medium"
+                                data-i18n="dashboard_first_analysis">
+                                Esegui la tua prima analisi
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE PRIVACY -->
+        <div id="page-privacy" class="hidden-page max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="animate-fadeIn">
+                <div class="mb-8">
+                    <button onclick="showPage('landing')"
+                        class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
+                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                        <span data-i18n="back_to_analysis">Torna all'analisi</span>
+                    </button>
+                    <h2 class="font-heading text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover"
+                        data-i18n="privacy_page_title">
+                        Privacy & Trasparenza</h2>
+                    <p class="text-text-secondary mt-2 text-lg" data-i18n="privacy_header_desc">La tua sicurezza è la
+                        nostra priorità.</p>
+                </div>
+
+                <div class="grid gap-6">
+                    <div class="glass rounded-2xl p-8 border-l-4 border-l-primary shadow-glass">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-primary/10 text-primary">
+                                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-text-primary" data-i18n="privacy_box1_title">
+                                    Nessun dato memorizzato</h3>
+                                <p class="text-text-secondary leading-relaxed" data-i18n="privacy_box1_desc">
+                                    Questa applicazione non possiede un database. I file che carichi vengono letti
+                                    temporaneamente nella memoria del tuo browser e scompaiono non appena chiudi la
+                                    pagina o ricarichi.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-8 border-l-4 border-l-status-success shadow-glass">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-status-success/10 text-status-success">
+                                <i data-lucide="cpu" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-text-primary" data-i18n="privacy_box2_title">
+                                    Elaborazione 100% Locale</h3>
+                                <p class="text-text-secondary leading-relaxed" data-i18n="privacy_box2_desc">
+                                    Tutti i calcoli per confrontare le liste di follower avvengono sul tuo dispositivo.
+                                    Utilizziamo la tecnologia <code
+                                        class="bg-surface-highlight px-1.5 py-0.5 rounded text-primary font-mono">FileReader API</code>
+                                    che permette al browser di leggere i file senza mai inviarli a un server esterno.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-2xl p-8 border-l-4 border-l-status-info shadow-glass">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-xl bg-status-info/10 text-status-info">
+                                <i data-lucide="network" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2 text-text-primary" data-i18n="privacy_box3_title">
+                                    Nessun Login o API Esterna</h3>
+                                <p class="text-text-secondary leading-relaxed" data-i18n="privacy_box3_desc">
+                                    Non ti chiederemo mai la tua password. Non utilizziamo le API di Instagram,
+                                    basandoci esclusivamente sull'esportazione ufficiale dei dati di Meta per garantirti
+                                    il massimo controllo.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="p-6 bg-surface-highlight/50 rounded-2xl border border-border mt-4">
+                    <h4 class="font-bold flex items-center gap-2 mb-3">
+                        <i data-lucide="code" class="w-4 h-4"></i>
+                        Nota Tecnica
+                    </h4>
+                    <p class="text-sm text-text-secondary italic">
+                        "FollowCheck è un progetto statico. Non c'è un backend, non ci sono cookie di profilazione e
+                        non ci sono script di tracciamento di terze parti. È uno strumento creato per essere
+                        trasparente, veloce e sicuro."
+                    </p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    </main>
+
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay hidden">
+        <div class="animate-pulse mb-4">
+            <i data-lucide="loader-circle" class="w-16 h-16 text-primary animate-spin"></i>
+        </div>
+        <h3 class="font-heading text-xl font-bold mb-2">Analisi in corso</h3>
+        <p class="text-text-secondary max-w-md text-center" id="loading-message">Sto analizzando i tuoi dati...</p>
+        <div class="mt-4 w-64 h-2 bg-white/10 rounded-full overflow-hidden">
+            <div id="loading-progress" class="h-full bg-primary rounded-full" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div id="toast" class="toast">
+        <div id="toast-icon"></div>
+        <span id="toast-message">Notification</span>
+    </div>
+
+    <script>
+        // App State
+        let state = {
+            lang: localStorage.getItem('fc_lang') || 'it',
+            followers: null,
+            following: null,
+            currentAnalysis: null,
+            history: JSON.parse(localStorage.getItem('followcheck_history')) || [],
+            view: {
+                currentTab: 'not-following-back', // 'not-following-back' or 'you-dont-follow'
+                searchQuery: '',
+                currentPage: 1,
+                itemsPerPage: 50,
+                sortBy: 'username', // 'username', 'date', 'verified'
+                sortOrder: 'asc', // 'asc' or 'desc'
+                onlyVerified: false,
+                bookmark: localStorage.getItem('followcheck_bookmark') || null
+            },
+            hiddenUsers: new Set(JSON.parse(localStorage.getItem('followcheck_hidden')) || [])
+        };
+
+        const translations = {
+            it: {
+                title: "FollowCheck",
+                subtitle: "Analizza chi non ti segue più su Instagram in modo sicuro e locale.",
+                hero_desc: "Analisi dei tuoi follower semplice, sicura e privata.",
+                no_login_required: "Nessun login richiesto.",
+                start_analysis: "Inizia Analisi",
+                how_it_works: "Come funziona?",
+                privacy_title: "La tua privacy al primo posto",
+                privacy_desc: "Tutta l'elaborazione avviene nel tuo browser. Nessun dato viene inviato a server esterni.",
+                upload_followers: "Carica Follower",
+                upload_following: "Carica Seguiti",
+                analyze_now: "Analizza Ora",
+                analyzing: "Analisi in corso...",
+                results_title: "Risultati Analisi",
+                not_following_back: "Non ti seguono",
+                you_dont_follow: "Non segui",
+                search_placeholder: "Cerca username o nome...",
+                sort_label: "ORDINA:",
+                sort_az: "A-Z",
+                sort_recent: "Recenti",
+                filter_label: "FILTRA:",
+                only_verified: "Solo Verificati",
+                no_results: "Nessun risultato trovato",
+                success_not_following: "Tutte le persone che segui ti seguono a loro volta.",
+                success_you_dont_follow: "Segui tutti coloro che ti seguono.",
+                visit_profile: "Apri",
+                hide_user: "Rimosso",
+                history_title: "Storico",
+                no_history: "Nessuna analisi salvata",
+                privacy_page_title: "Privacy & Trasparenza",
+                back_to_analysis: "Torna all'analisi",
+                date: "Data",
+                followers_label: "Follower",
+                following_label: "Seguiti",
+                mutual_label: "Ricambiano",
+                ratio_label: "Rapporto",
+                loading_msg: "Sto analizzando i tuoi dati...",
+                change_file: "Cambia file",
+                loaded_correct: "Caricato correttamente",
+                error_json: "Seleziona un file JSON valido",
+                error_structure: "Struttura file non riconosciuta",
+                confirm_hide: "Confermi di non seguire più @{user}? Verrà rimosso dalla lista.",
+                tutorial_title: "Come ottenere i file",
+                tutorial_written: "Guida Scritta",
+                tutorial_video: "Video Tutorial",
+                tutorial_video_desc: "Guarda il video per vedere i passaggi esatti da eseguire su Instagram",
+                step_1: "Accedi a Instagram da computer → Altro ☰ → Impostazioni",
+                step_2: "Centro gestione account → Le tue informazioni → Esporta le tue informazioni",
+                step_3: "Seleziona Instagram → Esporta sul dispositivo",
+                step_4: "Seleziona solo 'Seguiti e Follower' → Formato .JSON → Date su 'Sempre'",
+                step_5: "Scarica lo .zip → Estrai Followers_1.json e Following.json → Caricali qui",
+                privacy_header_desc: "La tua sicurezza è la nostra priorità.",
+                privacy_box1_title: "Nessun dato memorizzato",
+                privacy_box1_desc: "Questa applicazione non possiede un database. I file che carichi vengono letti temporaneamente nella memoria del tuo browser e scompaiono non appena chiudi la pagina o ricarichi.",
+                privacy_box2_title: "Elaborazione 100% Locale",
+                privacy_box2_desc: "Tutti i calcoli per confrontare le liste di follower avvengono sul tuo dispositivo. Utilizziamo la tecnologia FileReader API che permette al browser di leggere i file senza mai inviarli a un server esterno.",
+                privacy_box3_title: "Nessun Login o API Esterna",
+                privacy_box3_desc: "Non ti chiederemo mai la tua password. Non utilizziamo le API di Instagram, basandoci esclusivamente sull'esportazione ufficiale dei dati di Meta per garantirti il massimo controllo.",
+                dashboard_desc: "Cronologia delle tue analisi precedenti",
+                dashboard_saved: "Analisi salvate",
+                dashboard_empty_desc: "Le tue analisi future appariranno qui",
+                dashboard_first_analysis: "Esegui la tua prima analisi",
+                pagination_page: "Pagina",
+                pagination_of: "di"
+            },
+            en: {
+                title: "FollowCheck",
+                subtitle: "Analyze who unfollowed you on Instagram safely and locally.",
+                hero_desc: "Simple, secure and private follower analysis.",
+                no_login_required: "No login required.",
+                start_analysis: "Start Analysis",
+                how_it_works: "How it works?",
+                privacy_title: "Privacy first",
+                privacy_desc: "All processing happens in your browser. No data is sent to external servers.",
+                upload_followers: "Upload Followers",
+                upload_following: "Upload Following",
+                analyze_now: "Analyze Now",
+                analyzing: "Analyzing...",
+                results_title: "Analysis Results",
+                not_following_back: "Don't follow back",
+                you_dont_follow: "You don't follow",
+                search_placeholder: "Search username or name...",
+                sort_label: "SORT:",
+                sort_az: "A-Z",
+                sort_recent: "Recent",
+                filter_label: "FILTER:",
+                only_verified: "Verified only",
+                no_results: "No results found",
+                success_not_following: "Everyone you follow follows you back.",
+                success_you_dont_follow: "You follow everyone who follows you.",
+                visit_profile: "Open",
+                hide_user: "Fixed",
+                history_title: "History",
+                no_history: "No saved analysis",
+                privacy_page_title: "Privacy & Transparency",
+                back_to_analysis: "Back to analysis",
+                date: "Date",
+                followers_label: "Followers",
+                following_label: "Following",
+                mutual_label: "Mutual",
+                ratio_label: "Ratio",
+                loading_msg: "Analyzing your data...",
+                change_file: "Change file",
+                loaded_correct: "Loaded correctly",
+                error_json: "Please select a valid JSON file",
+                error_structure: "Unrecognized file structure",
+                confirm_hide: "Confirm you no longer follow @{user}? They will be removed from the list.",
+                tutorial_title: "How to get the files",
+                tutorial_written: "Written Guide",
+                tutorial_video: "Video Tutorial",
+                tutorial_video_desc: "Watch the video to see the exact steps to follow on Instagram",
+                step_1: "Login to Instagram on PC → More ☰ → Settings",
+                step_2: "Accounts Center → Your information → Transfer or copy your information",
+                step_3: "Select Instagram → Download to device",
+                step_4: "Select only 'Followers and Following' → .JSON format → Date range 'All time'",
+                step_5: "Download .zip → Extract Followers_1.json and Following.json → Upload them here",
+                privacy_header_desc: "Your security is our priority.",
+                privacy_box1_title: "No data stored",
+                privacy_box1_desc: "This application does not have a database. The files you upload are read temporarily in your browser's memory and disappear as soon as you close the page or reload.",
+                privacy_box2_title: "100% Local Processing",
+                privacy_box2_desc: "All calculations to compare follower lists happen on your device. We use FileReader API technology which allows the browser to read files without ever sending them to an external server.",
+                privacy_box3_title: "No Login or External API",
+                privacy_box3_desc: "We will never ask for your password. We do not use Instagram APIs, relying exclusively on the official Meta data export to ensure maximum control.",
+                dashboard_desc: "Chronology of your previous analyzes",
+                dashboard_saved: "Saved analyzes",
+                dashboard_empty_desc: "Your future analyzes will appear here",
+                dashboard_first_analysis: "Run your first analysis"
+            }
+        };
+
+        // DOM Elements
+        const elements = {
+            btnAnalyze: document.getElementById('btn-analyze'),
+            dropFollowers: document.getElementById('drop-followers'),
+            dropFollowing: document.getElementById('drop-following'),
+            contentFollowers: document.getElementById('content-followers'),
+            contentFollowing: document.getElementById('content-following'),
+            loadingOverlay: document.getElementById('loading-overlay'),
+            loadingMessage: document.getElementById('loading-message'),
+            loadingProgress: document.getElementById('loading-progress'),
+            resultsBody: document.getElementById('results-table-body'),
+            searchInput: document.getElementById('search-input'),
+            paginationControls: document.getElementById('pagination-controls')
+        };
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize icons
+            lucide.createIcons();
+
+            // Apply saved language
+            updateTexts();
+
+            // Set theme from localStorage
+            if (localStorage.getItem('fc_theme') === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.getElementById('theme-icon')?.setAttribute('data-lucide', 'moon');
+                lucide.createIcons();
+            }
+
+            // Setup drag and drop
+            setupDragAndDrop();
+
+            // Load history if exists
+            if (state.history.length > 0) {
+                updateHistoryDisplay();
+            }
+
+            // Initialize bookmark button
+            updateBookmarkButton();
+        });
+
+        // Language toggle
+        function toggleLanguage() {
+            state.lang = state.lang === 'it' ? 'en' : 'it';
+            localStorage.setItem('fc_lang', state.lang);
+            updateTexts();
+            showToast(state.lang === 'it' ? 'Lingua: Italiano' : 'Language: English', 'info');
+        }
+
+        function updateTexts() {
+            const t = translations[state.lang];
+
+            // Update data-i18n elements
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+
+            // Update data-i18n-placeholder elements
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) el.setAttribute('placeholder', t[key]);
+            });
+
+            // Update specific labels
+            const langLabel = document.getElementById('lang-label');
+            if (langLabel) langLabel.textContent = state.lang.toUpperCase();
+
+            // Update dynamic parts if results are shown
+            if (state.currentAnalysis) {
+                renderCurrentView();
+            }
+
+            // Refresh icons as some text changes might affect layout
+            lucide.createIcons();
+        }
+
+        // Theme toggle
+        function toggleTheme() {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            localStorage.setItem('fc_theme', isDark ? 'dark' : 'light');
+            const icon = document.getElementById('theme-icon');
+            if (icon) {
+                icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+                lucide.createIcons();
+            }
+        }
+
+        // Page navigation
+        function showPage(pageId) {
+            document.getElementById('page-landing').classList.add('hidden-page');
+            document.getElementById('page-results').classList.add('hidden-page');
+            document.getElementById('page-dashboard').classList.add('hidden-page');
+            document.getElementById('page-privacy').classList.add('hidden-page');
+
+            // Show selected page
+            document.getElementById(`page-${pageId}`).classList.remove('hidden-page');
+
+            // Update icons
+            setTimeout(() => lucide.createIcons(), 10);
+        }
+
+        // Setup drag and drop
+        function setupDragAndDrop() {
+            ['followers', 'following'].forEach(type => {
+                const dropZone = document.getElementById(`drop-${type}`);
+
+                dropZone.addEventListener('dragover', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.add('dragover');
+                });
+
+                dropZone.addEventListener('dragleave', () => {
+                    dropZone.classList.remove('dragover');
+                });
+
+                dropZone.addEventListener('drop', (e) => {
+                    e.preventDefault();
+                    dropZone.classList.remove('dragover');
+
+                    if (e.dataTransfer.files.length) {
+                        handleFile(e.dataTransfer.files[0], type);
+                    }
+                });
+            });
+        }
+
+        // Handle file selection
+        function handleFileSelect(type) {
+            const input = document.getElementById(`file-${type}`);
+            if (input.files.length) {
+                handleFile(input.files[0], type);
+            }
+        }
+
+        // Tutorial Tabs
+        function setTutorialTab(tabType) {
+            const btnVideo = document.getElementById('tab-btn-video');
+            const btnText = document.getElementById('tab-btn-text');
+            const contentVideo = document.getElementById('tutorial-content-video');
+            const contentText = document.getElementById('tutorial-content-text');
+
+            if (tabType === 'video') {
+                // Activate Video tab
+                btnVideo.classList.remove('text-text-secondary', 'hover:text-text-primary', 'hover:bg-surface-highlight', 'bg-transparent');
+                btnVideo.classList.add('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/25');
+
+                btnText.classList.add('text-text-secondary', 'hover:text-text-primary', 'hover:bg-surface-highlight', 'bg-transparent');
+                btnText.classList.remove('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/25');
+
+                contentVideo.classList.remove('hidden');
+                contentText.classList.add('hidden');
+            } else {
+                // Activate Text tab
+                btnText.classList.remove('text-text-secondary', 'hover:text-text-primary', 'hover:bg-surface-highlight', 'bg-transparent');
+                btnText.classList.add('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/25');
+
+                btnVideo.classList.add('text-text-secondary', 'hover:text-text-primary', 'hover:bg-surface-highlight', 'bg-transparent');
+                btnVideo.classList.remove('bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/25');
+
+                contentVideo.classList.add('hidden');
+                contentText.classList.remove('hidden');
+
+                // Pause video if playing
+                const video = document.getElementById('tutorial-player');
+                if (video) video.pause();
+            }
+        }
+
+        // Process uploaded file
+        function handleFile(file, type) {
+            // Reset error
+            const errorEl = document.getElementById(`error-${type}`);
+            if (errorEl) {
+                errorEl.classList.add('hidden');
+                errorEl.textContent = '';
+            }
+
+            if (!file.name.endsWith('.json')) {
+                setFileError(type, 'Seleziona un file JSON valido');
+                showToast('Seleziona un file JSON valido', 'error');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const data = JSON.parse(e.target.result);
+
+                    // Basic structure validation
+                    const users = extractUsers(data, type);
+
+                    if (users.length === 0) {
+                        const errorMsg = type === 'followers'
+                            ? 'Struttura file non riconosciuta. Assicurati che sia il file dei Follower.'
+                            : 'Struttura file non riconosciuta. Assicurati che sia il file dei Seguiti.';
+                        setFileError(type, errorMsg);
+                        showToast(errorMsg, 'error');
+                        return;
+                    }
+
+                    state[type] = data;
+
+                    // Update UI
+                    const contentEl = document.getElementById(`content-${type}`);
+                    contentEl.innerHTML = `
+                <div class="flex flex-col items-center animate-fadeIn">
+                    <i data-lucide="check-circle" class="w-12 h-12 mx-auto text-status-success mb-2"></i>
+                    <p class="font-bold text-text-primary mb-1">${file.name}</p>
+                    <p class="text-status-success text-xs font-semibold">Caricato correttamente</p>
+                    <button onclick="event.stopPropagation(); resetFileUpload('${type}')" class="mt-3 text-text-muted hover:text-primary text-xs flex items-center gap-1 transition-colors">
+                        <i data-lucide="refresh-cw" class="w-3 h-3"></i> Cambia file
+                    </button>
+                </div>
+            `;
+
+                    lucide.createIcons();
+                    checkAnalysisReady();
+                    showToast(`${type === 'followers' ? 'Follower' : 'Seguiti'} caricati`, 'success');
+
+                } catch (error) {
+                    console.error('File parsing error:', error);
+                    setFileError(type, 'Errore nel formato del file (JSON corrotto)');
+                    showToast('Errore nel file: JSON non valido', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function setFileError(type, message) {
+            const errorEl = document.getElementById(`error-${type}`);
+            if (errorEl) {
+                errorEl.textContent = message;
+                errorEl.classList.remove('hidden');
+            }
+        }
+
+        function resetFileUpload(type) {
+            state[type] = null;
+            const contentEl = document.getElementById(`content-${type}`);
+            const icon = type === 'followers' ? 'users' : 'user-plus';
+            const title = type === 'followers' ? 'Carica Follower' : 'Carica Seguiti';
+            const filename = type === 'followers' ? 'followers_1.json' : 'following.json';
+
+            contentEl.innerHTML = `
+                <div class="space-y-4 text-text-secondary transition-transform group-hover:scale-105 duration-300">
+                    <div class="w-16 h-16 mx-auto bg-surface-highlight rounded-full flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-colors">
+                        <i data-lucide="${icon}" class="w-8 h-8 text-text-primary group-hover:text-primary transition-colors"></i>
+                    </div>
+                    <div>
+                        <p class="font-bold text-text-primary text-lg">${title}</p>
+                        <p class="text-text-muted text-sm mt-1 font-mono bg-surface-highlight inline-block px-2 py-0.5 rounded">${filename}</p>
+                    </div>
+                </div>
+                <div id="error-${type}" class="text-status-error text-xs font-semibold mt-2 hidden"></div>
+            `;
+
+            lucide.createIcons();
+            checkAnalysisReady();
+        }
+
+        // Show file structure example - DEPRECATED/REMOVED
+        function showFileStructureExample() {
+            // Function removed for cleanup
+        }
+
+        // Extract users from Instagram data
+        function extractUsers(data, type) {
+            const users = [];
+            if (!data) return users;
+
+            // Strict Validation for Instagram JSON structure
+            // CASE 1: New Meta format (Array of objects)
+            if (Array.isArray(data)) {
+                // Check if items have standard Instagram user structure
+                const isValid = data.length === 0 || data.some(item =>
+                    (item.string_list_data && Array.isArray(item.string_list_data)) ||
+                    (item.username) || (item.value) || (item.href)
+                );
+
+                if (isValid) {
+                    data.forEach((item, index) => {
+                        const user = extractUserInfo(item, index);
+                        if (user) users.push(user);
+                    });
+                }
+            }
+            // CASE 2: Nested object format (e.g. {"relationships_followers": [...]})
+            else if (typeof data === 'object') {
+                const instagramKeys = ['relationships_followers', 'relationships_following', 'list', 'items'];
+                let foundKey = instagramKeys.find(key => Array.isArray(data[key]));
+
+                if (!foundKey) {
+                    // Fallback to any array key, but validate its content
+                    const arrayKey = Object.keys(data).find(key => Array.isArray(data[key]));
+                    if (arrayKey && data[arrayKey].some(item =>
+                        (item.string_list_data && Array.isArray(item.string_list_data)) ||
+                        (item.username) || (item.value)
+                    )) {
+                        foundKey = arrayKey;
+                    }
+                }
+
+                if (foundKey) {
+                    data[foundKey].forEach((item, index) => {
+                        const user = extractUserInfo(item, index);
+                        if (user) users.push(user);
+                    });
+                }
+            }
+
+            return users;
+        }
+
+        // Extract user info from item
+        // Extract user info from item
+        function extractUserInfo(item, index) {
+            if (!item) return null;
+            let username = '', name = '', timestamp = 0, isVerified = false;
+
+            // Helper to clean username from URL
+            const extractFromUrl = (url) => {
+                if (!url) return '';
+                const match = url.match(/instagram\.com\/(?:_u\/)?([^\/\?#]+)/);
+                return match ? match[1] : '';
+            };
+
+            if (typeof item === 'string') {
+                username = item; name = item;
+            } else if (item.string_list_data && Array.isArray(item.string_list_data) && item.string_list_data[0]) {
+                const data = item.string_list_data[0];
+                // Value often contains the plain username
+                if (data.value && !data.value.includes('instagram.com')) {
+                    username = data.value;
+                } else if (data.href) {
+                    username = extractFromUrl(data.href);
+                } else if (data.value) {
+                    username = extractFromUrl(data.value);
+                }
+
+                name = data.value && !data.value.includes('instagram.com') ? data.value : username;
+                timestamp = data.timestamp || 0;
+            } else if (item.username) {
+                username = item.username; name = item.name || item.full_name || item.username;
+                timestamp = item.timestamp || item.created_at || 0;
+            } else if (item.value) {
+                username = item.value; name = item.name || item.full_name || item.value;
+                timestamp = item.timestamp || 0;
+            } else if (item.href) {
+                username = extractFromUrl(item.href);
+                name = item.name || item.full_name || username;
+                timestamp = item.timestamp || 0;
+            } else if (item.title) {
+                username = item.title; name = item.title;
+            }
+
+            // Check for verified status (rare but possible in some formats)
+            isVerified = item.is_verified || item.verified || false;
+
+            // Fallback search if still empty
+            if (!username) {
+                for (const key in item) {
+                    if (typeof item[key] === 'string' && item[key].length > 0) {
+                        if (!item[key].includes(' ') && !item[key].includes('://')) {
+                            username = item[key]; name = item[key]; break;
+                        }
+                    }
+                }
+            }
+
+            // Final fallback
+            if (!username) {
+                username = `user_${index}`;
+                name = `User ${index}`;
+            }
+
+            // Clean username
+            username = username.replace(/^@/, '');
+            if (username === '_u') return null; // Filter out invalid entries
+
+            return {
+                username: username,
+                name: name || username,
+                profileUrl: `https://instagram.com/${encodeURIComponent(username)}`,
+                timestamp: timestamp,
+                isVerified: isVerified,
+                id: index
+            };
+        }
+
+        // Check if both files are uploaded
+        function checkAnalysisReady() {
+            elements.btnAnalyze.disabled = !(state.followers && state.following);
+        }
+
+        // Start analysis
+        function startAnalysis() {
+            if (!state.followers || !state.following) {
+                showToast('Carica entrambi i file prima di analizzare', 'error');
+                return;
+            }
+
+            // Show loading overlay
+            elements.loadingOverlay.classList.remove('hidden');
+            elements.loadingMessage.textContent = 'Analisi dei dati in corso...';
+            elements.loadingProgress.style.width = '10%';
+
+            // Disable button
+            elements.btnAnalyze.disabled = true;
+            elements.btnAnalyze.innerHTML = `<i data-lucide="loader-circle" class="w-5 h-5 inline animate-spin mr-2"></i>Analisi in corso...`;
+
+            // Perform analysis with slight delay for better UX
+            setTimeout(() => {
+                try {
+                    performAnalysis();
+                } catch (error) {
+                    console.error('Analysis error:', error);
+                    showToast('Errore durante l\'analisi: ' + error.message, 'error');
+                    resetUI();
+                }
+            }, 500);
+        }
+
+        // Perform the actual analysis
+        function performAnalysis() {
+            try {
+                elements.loadingMessage.textContent = 'Estrazione follower...';
+                elements.loadingProgress.style.width = '25%';
+
+                // Extract followers
+                const followers = extractUsers(state.followers, 'followers');
+                const followerUsernames = new Set(followers.map(user => user.username.toLowerCase()));
+
+                elements.loadingMessage.textContent = 'Estrazione seguiti...';
+                elements.loadingProgress.style.width = '50%';
+
+                // Extract following
+                const following = extractUsers(state.following, 'following');
+
+                elements.loadingMessage.textContent = 'Confronto delle liste...';
+                elements.loadingProgress.style.width = '75%';
+
+                // Find who doesn't follow back (people you follow but don't follow you)
+                const notFollowingBack = [];
+                following.forEach(user => {
+                    if (!followerUsernames.has(user.username.toLowerCase())) {
+                        notFollowingBack.push(user);
+                    }
+                });
+
+                // Find who you don't follow (people who follow you but you don't follow back)
+                const youDontFollow = [];
+                followers.forEach(user => {
+                    const isInFollowing = following.some(f =>
+                        f.username.toLowerCase() === user.username.toLowerCase());
+                    if (!isInFollowing) {
+                        youDontFollow.push(user);
+                    }
+                });
+
+                elements.loadingMessage.textContent = 'Calcolo statistiche...';
+                elements.loadingProgress.style.width = '90%';
+
+                // Create analysis object
+                const analysis = {
+                    id: Date.now(),
+                    date: new Date().toLocaleString('it-IT'),
+                    following: following,
+                    followers: followers,
+                    notFollowingBack: notFollowingBack,
+                    youDontFollow: youDontFollow,
+                    followingCount: following.length,
+                    followersCount: followers.length,
+                    notFollowingBackCount: notFollowingBack.length,
+                    youDontFollowCount: youDontFollow.length,
+                    mutualFollowsCount: following.length - notFollowingBack.length,
+                    followRatio: followers.length > 0 ?
+                        Math.min(100, (followers.length / following.length) * 100) : 0,
+                    followbackRate: following.length > 0 ?
+                        ((following.length - notFollowingBack.length) / following.length * 100) : 0
+                };
+
+                state.currentAnalysis = analysis;
+
+                // Save to history
+                state.history.unshift(analysis);
+                if (state.history.length > 10) state.history = state.history.slice(0, 10);
+                localStorage.setItem('followcheck_history', JSON.stringify(state.history));
+
+                // Update results display
+                displayAnalysisOverview(analysis);
+
+                // Show results page
+                showPage('results');
+
+                // New rendering
+                renderCurrentView();
+
+                // Hide loading
+                setTimeout(() => {
+                    elements.loadingOverlay.classList.add('hidden');
+                    elements.loadingProgress.style.width = '0%';
+                }, 300);
+
+                // Reset button
+                resetUI();
+
+                // Update bookmark button
+                updateBookmarkButton();
+
+                showToast(`Analisi completata! Trovati ${notFollowingBack.length} che non ti seguono`, 'success');
+
+            } catch (error) {
+                console.error('Analysis error:', error);
+                showToast('Errore durante l\'analisi: ' + error.message, 'error');
+                elements.loadingOverlay.classList.add('hidden');
+                resetUI();
+            }
+        }
+
+        // Reset UI after analysis
+        function resetUI() {
+            elements.btnAnalyze.innerHTML = `Analizza Ora <i data-lucide="chevron-right" class="w-5 h-5 inline ml-2"></i>`;
+            checkAnalysisReady();
+        }
+
+        // New: Display only the overview stats
+        function displayAnalysisOverview(analysis) {
+            document.getElementById('analysis-date').textContent = analysis.date;
+            document.getElementById('following-count').textContent = analysis.followingCount;
+            document.getElementById('followers-count').textContent = analysis.followersCount;
+            document.getElementById('not-following-back-count').textContent = analysis.notFollowingBackCount;
+            document.getElementById('mutual-follows-count').textContent = analysis.mutualFollowsCount;
+            document.getElementById('tab-not-following-count').textContent = analysis.notFollowingBackCount;
+            document.getElementById('tab-you-dont-follow-count').textContent = analysis.youDontFollowCount;
+            document.getElementById('follow-ratio').textContent = `${Math.round(analysis.followRatio)}%`;
+            document.getElementById('follow-ratio-bar').style.width = `${Math.min(100, analysis.followRatio)}%`;
+            document.getElementById('followback-rate').textContent = `${Math.round(analysis.followbackRate)}%`;
+        }
+
+        // Helper to get filtered and sorted list
+        function getProcessedList(tabName) {
+            if (!state.currentAnalysis) return [];
+
+            let list = tabName === 'not-following-back'
+                ? [...state.currentAnalysis.notFollowingBack]
+                : [...state.currentAnalysis.youDontFollow];
+
+            // Filter out hidden users
+            list = list.filter(u => !state.hiddenUsers.has(u.username.toLowerCase()));
+
+            // Filter by "Verified only"
+            if (state.view.onlyVerified) {
+                list = list.filter(u => u.isVerified);
+            }
+
+            // Apply search filter
+            if (state.view.searchQuery) {
+                const q = state.view.searchQuery.toLowerCase();
+                list = list.filter(u => u.username.toLowerCase().includes(q) || u.name.toLowerCase().includes(q));
+            }
+
+            // Apply sorting
+            list.sort((a, b) => {
+                let valA, valB;
+
+                if (state.view.sortBy === 'date') {
+                    // Descending by date (most recent first)
+                    valA = a.timestamp || 0;
+                    valB = b.timestamp || 0;
+                    return state.view.sortOrder === 'asc' ? valA - valB : valB - valA;
+                } else if (state.view.sortBy === 'verified') {
+                    valA = a.isVerified ? 1 : 0;
+                    valB = b.isVerified ? 1 : 0;
+                    return state.view.sortOrder === 'asc' ? valA - valB : valB - valA;
+                } else {
+                    // Alphabetic
+                    valA = (a.username || "").toLowerCase();
+                    valB = (b.username || "").toLowerCase();
+                    if (valA < valB) return state.view.sortOrder === 'asc' ? -1 : 1;
+                    if (valA > valB) return state.view.sortOrder === 'asc' ? 1 : -1;
+                    return 0;
+                }
+            });
+
+            return list;
+        }
+
+        function toggleVerifiedFilter() {
+            state.view.onlyVerified = !state.view.onlyVerified;
+            state.view.currentPage = 1;
+            renderCurrentView();
+
+            const btn = document.getElementById('btn-filter-verified');
+            if (btn) {
+                if (state.view.onlyVerified) {
+                    btn.classList.add('bg-primary/10', 'border-primary', 'text-primary');
+                } else {
+                    btn.classList.remove('bg-primary/10', 'border-primary', 'text-primary');
+                }
+            }
+        }
+
+        // New: Core rendering logic
+        function renderCurrentView() {
+            if (!state.currentAnalysis) return;
+
+            // Updated tab counts (using only hidden filter, not search)
+            const allNotFollowing = state.currentAnalysis.notFollowingBack.filter(u => !state.hiddenUsers.has(u.username.toLowerCase()));
+            const allYouDontFollow = state.currentAnalysis.youDontFollow.filter(u => !state.hiddenUsers.has(u.username.toLowerCase()));
+            document.getElementById('tab-not-following-count').textContent = allNotFollowing.length;
+            document.getElementById('tab-you-dont-follow-count').textContent = allYouDontFollow.length;
+
+            // Get the fully processed list (hidden + search + sort)
+            const list = getProcessedList(state.view.currentTab);
+
+            // set titles
+            const titles = {
+                'not-following-back': {
+                    it: { title: 'Persone che segui ma non ti seguono', desc: 'Queste persone segui ma loro non seguono te' },
+                    en: { title: 'People you follow but don\'t follow you back', desc: 'These people you follow but they don\'t follow you' }
+                },
+                'you-dont-follow': {
+                    it: { title: 'Persone che ti seguono ma non segui', desc: 'Queste persone ti seguono ma tu non le segui' },
+                    en: { title: 'People who follow you but you don\'t follow', desc: 'These people follow you but you don\'t follow them back' }
+                }
+            };
+
+            const currentT = titles[state.view.currentTab][state.lang];
+            document.getElementById('current-list-title').innerHTML = `
+                <i data-lucide="${state.view.currentTab === 'not-following-back' ? 'user-minus' : 'user-x'}" class="w-5 h-5 ${state.view.currentTab === 'not-following-back' ? 'text-status-error' : 'text-status-warning'}"></i>
+                ${currentT.title}
+            `;
+            document.getElementById('current-list-desc').textContent = currentT.desc;
+
+            // Update Sort UI Styles
+            const btnAZ = document.getElementById('btn-sort-az');
+            const btnRecent = document.getElementById('btn-sort-recent');
+
+            if (btnAZ && btnRecent) {
+                btnAZ.classList.toggle('bg-primary/10', state.view.sortBy === 'username');
+                btnAZ.classList.toggle('text-primary', state.view.sortBy === 'username');
+                btnAZ.classList.toggle('border-primary/30', state.view.sortBy === 'username');
+
+                btnRecent.classList.toggle('bg-primary/10', state.view.sortBy === 'date');
+                btnRecent.classList.toggle('text-primary', state.view.sortBy === 'date');
+                btnRecent.classList.toggle('border-primary/30', state.view.sortBy === 'date');
+            }
+
+            // Check empty/success states
+            const tableBody = document.getElementById('results-table-body');
+            const emptyState = document.getElementById('empty-state');
+            const successState = document.getElementById('success-state');
+            const paginationControls = document.getElementById('pagination-controls');
+
+            // Reset view
+            tableBody.innerHTML = '';
+            emptyState.classList.add('hidden');
+            successState.classList.add('hidden');
+            paginationControls.classList.add('hidden');
+
+            if (list.length === 0) {
+                if (state.view.searchQuery) {
+                    emptyState.classList.remove('hidden');
+                } else {
+                    successState.classList.remove('hidden');
+                    const t = translations[state.lang];
+                    document.getElementById('success-message').textContent = state.view.currentTab === 'not-following-back'
+                        ? t.success_not_following
+                        : t.success_you_dont_follow;
+                }
+                document.getElementById('showing-range').textContent = '0-0';
+                document.getElementById('total-items').textContent = '0';
+                return;
+            }
+
+            // Pagination
+            const totalItems = list.length;
+            const totalPages = Math.ceil(totalItems / state.view.itemsPerPage);
+
+            // Ensure current page is valid
+            if (state.view.currentPage > totalPages) state.view.currentPage = 1;
+
+            const startIdx = (state.view.currentPage - 1) * state.view.itemsPerPage;
+            const endIdx = Math.min(startIdx + state.view.itemsPerPage, totalItems);
+            const pageItems = list.slice(startIdx, endIdx);
+
+            // Render Table
+            let html = '';
+            pageItems.forEach((user, i) => {
+                const isBookmarked = state.view.bookmark === user.username;
+                const formattedDate = user.timestamp ? new Date(user.timestamp * 1000).toLocaleDateString(state.lang === 'it' ? 'it-IT' : 'en-US') : '';
+
+                html += `
+            <tr class="result-item border-t border-border hover:bg-white/5 transition-colors ${isBookmarked ? 'bg-primary/5 ring-1 ring-inset ring-primary/30' : ''}" id="user-row-${user.username}">
+                <td class="p-4 text-text-muted text-sm w-16">${startIdx + i + 1}</td>
+                <td class="p-4">
+                    <div class="flex flex-col">
+                        <div class="flex items-center gap-2">
+                            <span class="font-bold text-text-primary text-base">${escapeHtml(user.username)}</span>
+                            ${user.isVerified ? '<i data-lucide="badge-check" class="w-4 h-4 text-status-info fill-status-info/20"></i>' : ''}
+                            ${isBookmarked ? '<i data-lucide="bookmark" class="w-3 h-3 text-primary fill-primary"></i>' : ''}
+                        </div>
+                        <div class="flex items-center gap-2 text-xs text-text-secondary">
+                            <span>${escapeHtml(user.name)}</span>
+                            ${formattedDate ? `<span class="opacity-50">&bull; ${formattedDate}</span>` : ''}
+                        </div>
+                    </div>
+                </td>
+                <td class="p-4">
+                    <div class="flex items-center gap-2">
+                        <button onclick="toggleBookmark('${escapeHtml(user.username)}')" 
+                                class="p-2 rounded-lg border border-border hover:border-text-secondary text-text-secondary hover:text-text-primary transition-colors ${isBookmarked ? 'bg-primary/10 border-primary text-primary' : 'bg-surface'}"
+                                title="Segnalibro">
+                            <i data-lucide="bookmark" class="w-4 h-4 ${isBookmarked ? 'fill-primary' : ''}"></i>
+                        </button>
+                        
+                        <button onclick="hideUser('${escapeHtml(user.username)}')" 
+                                class="flex items-center justify-center gap-2 bg-surface border border-border hover:border-text-secondary text-text-primary px-3 py-2 rounded-lg transition-all group"
+                                title="Segna come rimosso">
+                            <i data-lucide="eye-off" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity"></i>
+                            <span class="text-xs font-bold" data-i18n="hide_user">Rimosso</span>
+                        </button>
+
+                        <a href="${user.profileUrl}" target="_blank" 
+                           class="flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-2 rounded-lg text-xs font-medium transition-colors">
+                            <i data-lucide="external-link" class="w-3 h-3"></i>
+                            <span data-i18n="visit_profile">Apri</span>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        `;
+            });
+            tableBody.innerHTML = html;
+
+            // Update Stats & Controls
+            document.getElementById('showing-range').textContent = `${startIdx + 1}-${endIdx}`;
+            document.getElementById('total-items').textContent = totalItems;
+
+            if (totalPages > 1) {
+                paginationControls.classList.remove('hidden');
+                paginationControls.classList.add('flex');
+                const t = translations[state.lang];
+                document.getElementById('page-display').textContent = `${t.pagination_page} ${state.view.currentPage} ${t.pagination_of} ${totalPages}`;
+                document.getElementById('btn-prev').disabled = state.view.currentPage === 1;
+                document.getElementById('btn-next').disabled = state.view.currentPage === totalPages;
+            }
+
+            lucide.createIcons();
+        }
+
+        // Search Handler
+        let searchDebounce;
+        function handleSearch(query) {
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(() => {
+                state.view.searchQuery = query;
+                state.view.currentPage = 1;
+                renderCurrentView();
+            }, 300);
+        }
+
+        // Sort Handler
+        function handleSort(field) {
+            if (state.view.sortBy === field) {
+                state.view.sortOrder = state.view.sortOrder === 'asc' ? 'desc' : 'asc';
+            } else {
+                state.view.sortBy = field;
+                state.view.sortOrder = 'asc';
+            }
+            renderCurrentView();
+        }
+
+        // Page Change Handler
+        function changePage(delta) {
+            state.view.currentPage += delta;
+            renderCurrentView();
+        }
+
+        // Toggle Bookmark
+        function toggleBookmark(username) {
+            if (state.view.bookmark === username) {
+                state.view.bookmark = null;
+                localStorage.removeItem('followcheck_bookmark');
+            } else {
+                state.view.bookmark = username;
+                localStorage.setItem('followcheck_bookmark', username);
+            }
+            renderCurrentView();
+            updateBookmarkButton();
+        }
+
+        // Hide User
+        function hideUser(username) {
+            if (confirm(`Confermi di non seguire più @${username}? Verrà rimosso dalla lista.`)) {
+                state.hiddenUsers.add(username.toLowerCase());
+                localStorage.setItem('followcheck_hidden', JSON.stringify(Array.from(state.hiddenUsers)));
+
+                // Clear bookmark if this user was bookmarked
+                if (state.view.bookmark === username) {
+                    state.view.bookmark = null;
+                    localStorage.removeItem('followcheck_bookmark');
+                    updateBookmarkButton();
+                }
+
+                // Animate row removal
+                const row = document.getElementById(`user-row-${username}`);
+                if (row) {
+                    row.style.opacity = '0';
+                    row.style.transform = 'translateX(20px)';
+                    row.style.transition = 'all 0.3s ease';
+                    setTimeout(() => renderCurrentView(), 300);
+                } else {
+                    renderCurrentView();
+                }
+
+                showToast(`@${username} rimosso dalla lista`, 'info');
+            }
+        }
+
+        // Scroll to bookmark
+        function scrollToBookmark() {
+            if (!state.view.bookmark) return;
+
+            // Check if hidden
+            if (state.hiddenUsers.has(state.view.bookmark.toLowerCase())) {
+                showToast(`@${state.view.bookmark} è stato rimosso dalla lista`, 'info');
+                return;
+            }
+
+            // Find which tab it's in (raw check)
+            const inNotFollowing = state.currentAnalysis.notFollowingBack.some(u => u.username === state.view.bookmark);
+            const inYouDontFollow = state.currentAnalysis.youDontFollow.some(u => u.username === state.view.bookmark);
+
+            if (!inNotFollowing && !inYouDontFollow) {
+                showToast('Segnalibro non trovato nell\'analisi attuale', 'info');
+                return;
+            }
+
+            // Switch tab if needed
+            if (inNotFollowing && state.view.currentTab !== 'not-following-back') {
+                switchTab('not-following-back');
+            } else if (inYouDontFollow && state.view.currentTab !== 'you-dont-follow') {
+                switchTab('you-dont-follow');
+            }
+
+            // Use unified processing to find correct index
+            let list = getProcessedList(state.view.currentTab);
+            let index = list.findIndex(u => u.username === state.view.bookmark);
+
+            // If hidden by search, clear it
+            if (index === -1 && state.view.searchQuery) {
+                state.view.searchQuery = '';
+                const searchInput = document.getElementById('search-input');
+                if (searchInput) searchInput.value = '';
+                list = getProcessedList(state.view.currentTab);
+                index = list.findIndex(u => u.username === state.view.bookmark);
+            }
+
+            if (index !== -1) {
+                const page = Math.floor(index / state.view.itemsPerPage) + 1;
+                state.view.currentPage = page;
+                renderCurrentView();
+
+                // Scroll with delay
+                setTimeout(() => {
+                    const rowId = `user-row-${state.view.bookmark}`;
+                    const row = document.getElementById(rowId);
+                    if (row) {
+                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        row.classList.add('ring-2', 'ring-primary', 'bg-primary/5');
+                        setTimeout(() => row.classList.remove('ring-2', 'bg-primary/5'), 3000);
+                    }
+                }, 300);
+            }
+        }
+
+        // Update Global Bookmark Button visibility
+        function updateBookmarkButton() {
+            const btn = document.getElementById('btn-goto-bookmark');
+            if (btn) {
+                if (state.view.bookmark) {
+                    btn.classList.remove('hidden');
+                    btn.classList.add('flex');
+                    document.getElementById('bookmark-name').textContent = state.view.bookmark;
+                } else {
+                    btn.classList.add('hidden');
+                    btn.classList.remove('flex');
+                }
+            }
+        }
+
+        // Switch between tabs
+        function switchTab(tabName) {
+            // Styling
+            const tab1 = document.getElementById('tab-not-following-back');
+            const tab2 = document.getElementById('tab-you-dont-follow');
+
+            if (tabName === 'not-following-back') {
+                tab1.classList.add('border-primary', 'text-primary', 'bg-primary/10');
+                tab1.classList.remove('border-transparent', 'text-text-secondary');
+                tab2.classList.remove('border-primary', 'text-primary', 'bg-primary/10');
+                tab2.classList.add('border-transparent', 'text-text-secondary');
+            } else {
+                tab2.classList.add('border-primary', 'text-primary', 'bg-primary/10');
+                tab2.classList.remove('border-transparent', 'text-primary', 'bg-primary/10');
+                tab1.classList.remove('border-primary', 'text-primary', 'bg-primary/10');
+                tab1.classList.add('border-transparent', 'text-text-secondary');
+            }
+
+            // State Update
+            state.view.currentTab = tabName;
+            state.view.currentPage = 1;
+            state.view.searchQuery = '';
+            document.getElementById('search-input').value = '';
+
+            renderCurrentView();
+        }
+
+        // Copy username to clipboard
+        function copyUsername(username) {
+            navigator.clipboard.writeText(username)
+                .then(() => showToast(`Copiato: ${username}`, 'success'))
+                .catch(err => showToast('Errore nella copia', 'error'));
+        }
+
+
+
+        // Escape HTML
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        // Update history display
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('history-list');
+            if (state.history.length === 0) {
+                historyList.innerHTML = `
+            <div class="text-center py-12">
+                <i data-lucide="history" class="w-16 h-16 text-text-muted mx-auto mb-4"></i>
+                <h4 class="font-heading text-lg font-bold mb-2">Nessuna analisi salvata</h4>
+                <p class="text-text-secondary mb-4">Le tue analisi future appariranno qui</p>
+                <button onclick="showPage('landing')" class="text-primary hover:text-primary-hover font-medium">
+                    Esegui la tua prima analisi
+                </button>
+            </div>
+        `;
+                return;
+            }
+
+            let historyHTML = '<div class="space-y-4">';
+            state.history.forEach((analysis, index) => {
+                historyHTML += `
+            <div class="glass rounded-lg p-4 hover:bg-white/5 transition-colors cursor-pointer" onclick="loadAnalysis(${index})">
+                <div class="flex justify-between items-start mb-2">
+                    <div><h4 class="font-medium">Analisi del ${analysis.date}</h4><p class="text-text-secondary text-sm">ID: ${analysis.id}</p></div>
+                    <span class="px-2 py-1 rounded-full text-xs ${analysis.notFollowingBackCount > 0 ? 'bg-status-error/20 text-status-error' : 'bg-status-success/20 text-status-success'}">${analysis.notFollowingBackCount} non ti seguono</span>
+                </div>
+                <div class="grid grid-cols-3 gap-4 text-sm">
+                    <div><p class="text-text-secondary">Seguiti</p><p class="font-medium">${analysis.followingCount}</p></div>
+                    <div><p class="text-text-secondary">Follower</p><p class="font-medium">${analysis.followersCount}</p></div>
+                    <div><p class="text-text-secondary">Rapporto</p><p class="font-medium">${Math.round(analysis.followRatio)}%</p></div>
+                </div>
+            </div>`;
+            });
+            historyHTML += '</div>';
+            historyList.innerHTML = historyHTML;
+            setTimeout(() => lucide.createIcons(), 10);
+        }
+
+        // Load analysis from history
+        function loadAnalysis(index) {
+            if (state.history[index]) {
+                state.currentAnalysis = state.history[index];
+                displayAnalysisOverview(state.currentAnalysis);
+                showPage('results');
+                renderCurrentView();
+            }
+        }
+
+        // Toast notification
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const msg = document.getElementById('toast-message');
+            toast.className = `toast toast-${type} show`;
+            msg.textContent = message;
+            let iconHTML = type === 'success' ? '<i data-lucide="check-circle" class="text-status-success w-5 h-5"></i>' : type === 'error' ? '<i data-lucide="alert-circle" class="text-status-error w-5 h-5"></i>' : '<i data-lucide="info" class="text-status-info w-5 h-5"></i>';
+            icon.innerHTML = iconHTML;
+            lucide.createIcons();
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Draw Stats Chart
+        // Draw Stats Chart
+        function drawStatsChart(analysis) {
+            const chart = document.getElementById('stats-chart');
+            const legend = document.getElementById('chart-legend');
+            const totalDisplay = document.getElementById('chart-total');
+            const section = document.getElementById('stats-section');
+
+            if (!chart || !legend) return;
+
+            // Show section
+            if (section) section.classList.remove('hidden');
+
+            const total = analysis.followingCount; // Total we are looking at is basically 'Following' as the base
+            const notFollowingBack = analysis.notFollowingBackCount;
+            const mutual = analysis.mutualFollowsCount;
+
+            // Adjust Logic: Pie = Mutual vs Not Following Back (Total Following)
+            // Segments
+            const segments = [
+                { label: 'Ricambiano', value: mutual, color: '#10B981' }, // Success Green
+                { label: 'Non Ricambiano', value: notFollowingBack, color: '#EF4444' } // Error Red
+                // We could add 'Followers you dont follow' but that's a different list. 
+                // Let's stick to the main analysis: Following breakdown.
+            ];
+
+            let accumulatedPercent = 0;
+            let svgContent = '';
+            let legendContent = '';
+
+            segments.forEach(segment => {
+                const percent = (segment.value / total) * 100;
+                const dashArray = `${percent} ${100 - percent}`;
+                const offset = 100 - accumulatedPercent;
+
+                // SVG Circle
+                svgContent += `<circle cx="50" cy="50" r="40" fill="transparent" stroke="${segment.color}" stroke-width="12" stroke-dasharray="${dashArray}" stroke-dashoffset="${offset}" class="transition-all duration-1000 ease-out" />`;
+
+                // Legend
+                legendContent += `
+                    <div class="flex items-center gap-3">
+                        <div class="w-4 h-4 rounded-full" style="background-color: ${segment.color}"></div>
+                        <div>
+                            <p class="font-bold text-lg">${segment.value}</p>
+                            <p class="text-text-secondary text-sm">${segment.label}</p>
+                        </div>
+                    </div>
+                `;
+
+                accumulatedPercent += percent;
+            });
+
+            chart.innerHTML = svgContent;
+            legend.innerHTML = legendContent;
+            totalDisplay.textContent = total;
+        }
+    </script>
+
+    <!-- Footer -->
+    <footer class="py-16 border-t border-border/50 mt-auto bg-surface/30">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="mb-8">
+                <button onclick="showPage('privacy')"
+                    class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface border border-primary/30 hover:border-primary text-text-primary hover:bg-primary/5 transition-all duration-300 shadow-glass group">
+                    <i data-lucide="shield-check"
+                        class="w-4 h-4 text-primary group-hover:scale-110 transition-transform"></i>
+                    <span class="text-sm font-bold tracking-wide">Privacy & Trasparenza</span>
+                </button>
+            </div>
+
+            <p class="text-text-muted text-sm font-medium tracking-wide">
+                Realizzato da <span class="text-text-primary font-bold">Orlando Capasso</span>
+            </p>
+            <p class="text-text-muted text-[10px] mt-4 opacity-50 uppercase tracking-[0.3em]">
+                &copy; 2026 FollowCheck &bull; Analisi Sicura Locale
+            </p>
+        </div>
+    </footer>
+
+</body>
+
+</html>
