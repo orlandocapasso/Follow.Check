@@ -361,67 +361,6 @@
                 </div>
             </div>
 
-            <!-- Optional Premium Uploads -->
-            <div class="w-full max-w-4xl mt-10 animate-slideUp" style="animation-delay: 0.15s;">
-                <div class="text-center mb-6">
-                    <h3 class="font-heading text-lg font-bold flex items-center justify-center gap-2 text-text-primary">
-                        <i data-lucide="sparkles" class="w-5 h-5 text-primary"></i>
-                        Voglia di analisi avanzata? (Opzionale)
-                    </h3>
-                    <p class="text-text-secondary text-sm">Carica questi file per sbloccare la dashboard Top Fan e
-                        Engagement</p>
-                </div>
-                <div class="grid grid-cols-2 sm:grid-cols-2 gap-4">
-                    <div id="drop-likes"
-                        class="upload-zone group border border-border/50 bg-surface/30 hover:bg-surface-highlight/50 rounded-xl p-4 text-center cursor-pointer transition-all duration-300"
-                        onclick="document.getElementById('file-likes').click()">
-                        <input type="file" id="file-likes" accept=".json" class="hidden"
-                            onchange="handleFileSelect('likes')">
-                        <div id="content-likes" class="flex items-center gap-3 text-left">
-                            <div class="p-2 bg-surface-highlight rounded-lg group-hover:bg-primary/10">
-                                <i data-lucide="heart" class="w-5 h-5 text-text-primary group-hover:text-primary"></i>
-                            </div>
-                            <div>
-                                <p class="font-bold text-sm text-text-primary">Liked Posts</p>
-                                <p class="text-[10px] text-text-muted font-mono">liked_posts.json</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="drop-comments"
-                        class="upload-zone group border border-border/50 bg-surface/30 hover:bg-surface-highlight/50 rounded-xl p-4 text-center cursor-pointer transition-all duration-300"
-                        onclick="document.getElementById('file-comments').click()">
-                        <input type="file" id="file-comments" accept=".json" class="hidden"
-                            onchange="handleFileSelect('comments')">
-                        <div id="content-comments" class="flex items-center gap-3 text-left">
-                            <div class="p-2 bg-surface-highlight rounded-lg group-hover:bg-primary/10">
-                                <i data-lucide="message-circle"
-                                    class="w-5 h-5 text-text-primary group-hover:text-primary"></i>
-                            </div>
-                            <div>
-                                <p class="font-bold text-sm text-text-primary">Comments</p>
-                                <p class="text-[10px] text-text-muted font-mono">post_comments_1.json</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div id="drop-stories"
-                        class="upload-zone group border border-border/50 bg-surface/30 hover:bg-surface-highlight/50 rounded-xl p-4 text-center cursor-pointer transition-all duration-300 col-span-2"
-                        onclick="document.getElementById('file-stories').click()">
-                        <input type="file" id="file-stories" accept=".json" class="hidden"
-                            onchange="handleFileSelect('stories')">
-                        <div id="content-stories" class="flex items-center justify-center gap-3">
-                            <div class="p-2 bg-surface-highlight rounded-lg group-hover:bg-primary/10">
-                                <i data-lucide="play" class="w-5 h-5 text-text-primary group-hover:text-primary"></i>
-                            </div>
-                            <div class="text-left">
-                                <p class="font-bold text-sm text-text-primary">Story Interactions</p>
-                                <p class="text-[10px] text-text-muted font-mono">story_interactions.json (Opzionale)</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
             <!-- Tutorial Section -->
             <div class="w-full max-w-4xl mt-12 animate-slideUp" style="animation-delay: 0.2s;">
@@ -760,106 +699,6 @@
         </div>
         </div>
 
-        <!-- PAGE DASHBOARD -->
-        <div id="page-insights" class="hidden-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="animate-fadeIn">
-                <!-- Header -->
-                <div class="flex items-center justify-between mb-8">
-                    <div>
-                        <button onclick="showPage('results')"
-                            class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
-                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            Torna ai risultati
-                        </button>
-                        <h2 class="font-heading text-3xl font-bold flex items-center gap-3">
-                            <i data-lucide="sparkles" class="w-8 h-8 text-primary"></i>
-                            Dashboard Insights Premium
-                        </h2>
-                        <p class="text-text-secondary">Analisi dell'engagement e ranking interazioni</p>
-                    </div>
-                    <button onclick="saveAnalysisSnapshot()"
-                        class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-highlight border border-border hover:bg-surface transition-all text-sm font-bold shadow-sm">
-                        <i data-lucide="save" class="w-4 h-4 text-primary"></i>
-                        Salva Snapshot Analisi
-                    </button>
-                </div>
-
-                <!-- Snapshot Alert (Lost Followers) -->
-                <div id="snapshot-alert"
-                    class="hidden mb-8 p-4 rounded-xl bg-status-warning/10 border border-status-warning/20 animate-slideUp">
-                    <div class="flex items-start gap-3">
-                        <i data-lucide="alert-triangle" class="w-5 h-5 text-status-warning mt-0.5"></i>
-                        <div>
-                            <h4 class="font-bold text-status-warning text-sm">Persi dall'ultimo salvataggio</h4>
-                            <p class="text-text-secondary text-sm mt-1" id="snapshot-lost-text"></p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Interaction Stats -->
-                <div class="grid md:grid-cols-3 gap-6 mb-8">
-                    <div class="glass rounded-xl p-6 text-center">
-                        <h4 class="text-text-secondary uppercase text-[10px] tracking-widest font-bold mb-2">Engagement
-                            Rate</h4>
-                        <p class="text-4xl font-bold text-primary" id="insight-engagement">--%</p>
-                        <p class="text-xs text-text-muted mt-2">Media interazioni per follower</p>
-                    </div>
-                    <div class="glass rounded-xl p-6 text-center">
-                        <h4 class="text-text-secondary uppercase text-[10px] tracking-widest font-bold mb-2">Interazioni
-                            Totali</h4>
-                        <p class="text-4xl font-bold" id="insight-total-int">--</p>
-                        <p class="text-xs text-text-muted mt-2">Somma di Like e Commenti</p>
-                    </div>
-                    <div class="glass rounded-xl p-6 text-center">
-                        <h4 class="text-text-secondary uppercase text-[10px] tracking-widest font-bold mb-2">Crescita
-                            Mensile</h4>
-                        <p class="text-4xl font-bold text-status-success" id="insight-growth">--</p>
-                        <p class="text-xs text-text-muted mt-2">Follower acquisiti nell'ultimo mese</p>
-                    </div>
-                </div>
-
-                <!-- Growth Chart -->
-                <div class="glass rounded-xl p-8 mb-8">
-                    <h3 class="font-heading text-xl font-bold mb-8">📈 Trend di Crescita (Follower Totali)</h3>
-                    <div class="h-80 w-full">
-                        <canvas id="growthChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Rank List -->
-                <div class="grid md:grid-cols-2 gap-8">
-                    <div class="glass rounded-xl p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-heading text-xl font-bold flex items-center gap-2">
-                                <i data-lucide="trophy" class="w-6 h-6 text-status-warning"></i>
-                                Top 10 Fan
-                            </h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-surface-highlight text-text-muted">BASATO SU
-                                LIKE E COMMENTI</span>
-                        </div>
-                        <div id="top-fans-ranking" class="space-y-3">
-                            <!-- JS will populate -->
-                            <p class="text-text-muted italic text-center py-8">Carica liked_posts.json o
-                                post_comments.json</p>
-                        </div>
-                    </div>
-
-                    <div class="glass rounded-xl p-6">
-                        <div class="flex items-center justify-between mb-6">
-                            <h3 class="font-heading text-xl font-bold flex items-center gap-2">
-                                <i data-lucide="heart" class="w-6 h-6 text-primary"></i>
-                                Re delle Storie
-                            </h3>
-                            <span class="text-[10px] px-2 py-0.5 rounded bg-surface-highlight text-text-muted">DATI
-                                DALLE INTERAZIONI</span>
-                        </div>
-                        <div id="top-stories-ranking" class="space-y-3">
-                            <p class="text-text-muted italic text-center py-8">Dati non ancora disponibili</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <!-- PAGE DASHBOARD -->
         <div id="page-dashboard" class="hidden-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -932,13 +771,7 @@
                 sortOrder: 'asc', // 'asc' or 'desc'
                 bookmark: localStorage.getItem('followcheck_bookmark') || null
             },
-            hiddenUsers: new Set(JSON.parse(localStorage.getItem('followcheck_hidden')) || []),
-            premium: {
-                likes: [],
-                comments: [],
-                stories: [],
-                hasInteractionData: false
-            }
+            hiddenUsers: new Set(JSON.parse(localStorage.getItem('followcheck_hidden')) || [])
         };
 
         // DOM Elements
@@ -946,21 +779,14 @@
             btnAnalyze: document.getElementById('btn-analyze'),
             dropFollowers: document.getElementById('drop-followers'),
             dropFollowing: document.getElementById('drop-following'),
-            dropLikes: document.getElementById('drop-likes'),
-            dropComments: document.getElementById('drop-comments'),
-            dropStories: document.getElementById('drop-stories'),
             contentFollowers: document.getElementById('content-followers'),
             contentFollowing: document.getElementById('content-following'),
-            contentLikes: document.getElementById('content-likes'),
-            contentComments: document.getElementById('content-comments'),
-            contentStories: document.getElementById('content-stories'),
             loadingOverlay: document.getElementById('loading-overlay'),
             loadingMessage: document.getElementById('loading-message'),
             loadingProgress: document.getElementById('loading-progress'),
             resultsBody: document.getElementById('results-table-body'),
             searchInput: document.getElementById('search-input'),
-            paginationControls: document.getElementById('pagination-controls'),
-            navInsights: document.getElementById('nav-insights')
+            paginationControls: document.getElementById('pagination-controls')
         };
 
         // Initialize
@@ -1002,7 +828,6 @@
             document.getElementById('page-landing').classList.add('hidden-page');
             document.getElementById('page-results').classList.add('hidden-page');
             document.getElementById('page-dashboard').classList.add('hidden-page');
-            document.getElementById('page-insights').classList.add('hidden-page');
 
             // Show selected page
             document.getElementById(`page-${pageId}`).classList.remove('hidden-page');
@@ -1013,7 +838,7 @@
 
         // Setup drag and drop
         function setupDragAndDrop() {
-            ['followers', 'following', 'likes', 'comments', 'stories'].forEach(type => {
+            ['followers', 'following'].forEach(type => {
                 const dropZone = document.getElementById(`drop-${type}`);
                 if (!dropZone) return;
 
@@ -1103,29 +928,6 @@
                         }
                     } else if (type === 'following') {
                         state.following = data.relationships_following || data;
-                    } else if (type === 'likes') {
-                        const likes = data.likes_media_likes || [];
-                        state.premium.likes = likes.map(l => l.title);
-                        state.premium.hasInteractionData = true;
-                    } else if (type === 'comments') {
-                        const comments = data.comments_media_comments || [];
-                        state.premium.comments = comments.map(c => c.title || (c.string_list_data ? c.string_list_data[0].value : null)).filter(Boolean);
-                        state.premium.hasInteractionData = true;
-                    } else if (type === 'stories') {
-                        // Extract from poll responses, stickers, etc.
-                        const interactions = [];
-                        if (data.story_activities_polls) {
-                            data.story_activities_polls.forEach(p => {
-                                if (p.title) interactions.push(p.title);
-                            });
-                        }
-                        if (data.story_activities_stickers) {
-                            data.story_activities_stickers.forEach(s => {
-                                if (s.title) interactions.push(s.title);
-                            });
-                        }
-                        state.premium.stories = interactions;
-                        state.premium.hasInteractionData = true;
                     }
 
                     // Update UI
@@ -1284,13 +1086,6 @@
                 try {
                     performAnalysis();
 
-                    // Specific logic for premium/insights
-                    if (state.premium.hasInteractionData || (Array.isArray(state.followers) && state.followers.some(f => f.timestamp))) {
-                        elements.navInsights.classList.remove('hidden');
-                        renderInsights();
-                    }
-                    checkSnapshots();
-
                 } catch (error) {
                     console.error('Analysis error:', error);
                     showToast('Errore durante l\'analisi: ' + error.message, 'error');
@@ -1299,159 +1094,6 @@
             }, 500);
         }
 
-        // --- PREMIUM INSIGHTS LOGIC ---
-
-        function renderInsights() {
-            // 1. Engagement Rate
-            const totalInt = state.premium.likes.length + state.premium.comments.length + state.premium.stories.length;
-            const followersCount = (Array.isArray(state.followers) ? state.followers.length : 0) || 1;
-            const engagement = ((totalInt / followersCount) * 100).toFixed(2);
-            document.getElementById('insight-engagement').textContent = engagement + '%';
-            document.getElementById('insight-total-int').textContent = totalInt;
-
-            // 2. Growth Logic
-            let growth = 0;
-            if (Array.isArray(state.followers)) {
-                const now = new Date();
-                const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
-                growth = state.followers.filter(f => f.timestamp && (f.timestamp * 1000) > lastMonth.getTime()).length;
-            }
-            document.getElementById('insight-growth').textContent = '+' + growth;
-
-            // 3. Growth Chart
-            renderGrowthChart();
-
-            // 4. Rankings
-            renderRankings();
-        }
-
-        function renderGrowthChart() {
-            const ctx = document.getElementById('growthChart').getContext('2d');
-            const monthlyGrowth = {};
-
-            if (Array.isArray(state.followers)) {
-                state.followers.forEach(f => {
-                    if (!f.timestamp) return;
-                    const d = new Date(f.timestamp * 1000);
-                    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
-                    monthlyGrowth[key] = (monthlyGrowth[key] || 0) + 1;
-                });
-            }
-
-            const labels = Object.keys(monthlyGrowth).sort();
-            if (labels.length === 0) return;
-
-            let cumulative = 0;
-            const data = labels.map(l => cumulative += monthlyGrowth[l]);
-
-            if (window.growthChartInstance) window.growthChartInstance.destroy();
-
-            window.growthChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Follower Totali',
-                        data: data,
-                        borderColor: '#E1306C',
-                        backgroundColor: 'rgba(225, 48, 108, 0.1)',
-                        fill: true,
-                        tension: 0.4,
-                        borderWidth: 3,
-                        pointRadius: 4,
-                        pointHoverRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        y: {
-                            grid: { color: 'rgba(255,255,255,0.05)' },
-                            ticks: { color: '#888' }
-                        },
-                        x: {
-                            grid: { display: false },
-                            ticks: { color: '#888' }
-                        }
-                    }
-                }
-            });
-        }
-
-        function renderRankings() {
-            // General Fans (Likes + Comments)
-            const counts = {};
-            state.premium.likes.forEach(u => counts[u] = (counts[u] || 0) + 1);
-            state.premium.comments.forEach(u => counts[u] = (counts[u] || 0) + 2);
-
-            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
-            const container = document.getElementById('top-fans-ranking');
-
-            if (sorted.length === 0) {
-                container.innerHTML = '<p class="text-text-muted italic text-center py-8">Carica liked_posts.json o post_comments.json</p>';
-            } else {
-                container.innerHTML = sorted.map(([user, score], i) => `
-                    <div class="flex items-center justify-between p-3 rounded-lg bg-surface-highlight/50 border border-border/10">
-                        <div class="flex items-center gap-3">
-                            <span class="w-6 h-6 flex items-center justify-center rounded-full bg-primary/20 text-primary text-[10px] font-bold">${i + 1}</span>
-                            <span class="font-bold text-sm text-text-primary">${user}</span>
-                        </div>
-                        <span class="text-xs font-mono text-text-muted">${score} pt</span>
-                    </div>
-                `).join('');
-            }
-
-            // Story Kings (Poll Resp, Stickers)
-            const storyCounts = {};
-            state.premium.stories.forEach(u => storyCounts[u] = (storyCounts[u] || 0) + 1);
-            const sortedStories = Object.entries(storyCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
-            const storyContainer = document.getElementById('top-stories-ranking');
-
-            if (sortedStories.length === 0) {
-                storyContainer.innerHTML = '<p class="text-text-muted italic text-center py-8">Carica story_interactions.json</p>';
-            } else {
-                storyContainer.innerHTML = sortedStories.map(([user, score], i) => `
-                    <div class="flex items-center justify-between p-3 rounded-lg bg-surface-highlight/50 border border-border/10">
-                        <div class="flex items-center gap-3">
-                            <span class="w-6 h-6 flex items-center justify-center rounded-full bg-secondary/20 text-secondary text-[10px] font-bold">${i + 1}</span>
-                            <span class="font-bold text-sm text-text-primary">${user}</span>
-                        </div>
-                        <span class="text-xs font-mono text-text-muted">${score} interaz.</span>
-                    </div>
-                `).join('');
-            }
-        }
-
-        function saveAnalysisSnapshot() {
-            if (!Array.isArray(state.followers)) return;
-            const snapshot = {
-                date: new Date().toISOString(),
-                usernames: state.followers.map(f => f.username)
-            };
-            localStorage.setItem('followcheck_snapshot', JSON.stringify(snapshot));
-            showToast("Snapshot salvato! Ora potrai vedere chi ti rimuove.", "success");
-        }
-
-        function checkSnapshots() {
-            const last = localStorage.getItem('followcheck_snapshot');
-            if (!last || !Array.isArray(state.followers)) return;
-
-            const old = JSON.parse(last);
-            const currentSet = new Set(state.followers.map(f => f.username));
-            const lost = old.usernames.filter(u => !currentSet.has(u));
-
-            const alertBox = document.getElementById('snapshot-alert');
-            const text = document.getElementById('snapshot-lost-text');
-
-            if (lost.length > 0) {
-                alertBox.classList.remove('hidden');
-                text.textContent = `${lost.length} persone ti hanno rimosso dall'ultima analisi (${new Date(old.date).toLocaleDateString()}): ${lost.join(', ')}`;
-            } else {
-                alertBox.classList.add('hidden');
-            }
-        }
 
         // Perform the actual analysis
         function performAnalysis() {
