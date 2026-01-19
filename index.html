@@ -279,14 +279,9 @@
                     <span class="font-heading font-bold text-lg">FollowCheck</span>
                 </div>
                 <div class="flex items-center gap-3">
-                    <button onclick="toggleLanguage()"
-                        class="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-surface-highlight text-text-secondary hover:text-text-primary transition-colors border border-border/50">
-                        <span class="font-bold text-xs" id="lang-label">IT</span>
-                    </button>
                     <button onclick="showPage('dashboard')"
                         class="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-surface-highlight text-text-secondary hover:text-text-primary transition-colors">
-                        <i data-lucide="history" class="w-4 h-4"></i><span class="hidden sm:inline"
-                            data-i18n="history_title">Storico</span>
+                        <i data-lucide="history" class="w-4 h-4"></i><span class="hidden sm:inline">Storico</span>
                     </button>
                     <button onclick="toggleTheme()"
                         class="flex items-center gap-2 px-4 py-2 rounded-md hover:bg-surface-highlight text-text-secondary hover:text-text-primary transition-colors">
@@ -316,8 +311,8 @@
                     By Orlando Capasso
                 </p>
                 <p class="text-text-secondary text-xl max-w-2xl mx-auto leading-relaxed">
-                    <span data-i18n="hero_desc">Analisi dei tuoi follower semplice, sicura e privata.</span><br>
-                    <span class="text-primary font-medium" data-i18n="no_login_required">Nessun login richiesto.</span>
+                    Analisi dei tuoi follower semplice, sicura e privata.<br>
+                    <span class="text-primary font-medium">Nessun login richiesto.</span>
                 </p>
             </div>
 
@@ -336,13 +331,11 @@
                                 class="w-8 h-8 text-text-primary group-hover:text-primary transition-colors"></i>
                         </div>
                         <div>
-                            <p class="font-bold text-text-primary text-lg" data-i18n="upload_followers">Carica Follower
-                            </p>
+                            <p class="font-bold text-text-primary text-lg">Carica Follower</p>
                             <p
                                 class="text-text-muted text-sm mt-1 font-mono bg-surface-highlight inline-block px-2 py-0.5 rounded">
                                 followers_1.json</p>
                         </div>
-                        <div id="error-followers" class="text-status-error text-xs font-semibold mt-2 hidden"></div>
                     </div>
                 </div>
 
@@ -359,13 +352,73 @@
                                 class="w-8 h-8 text-text-primary group-hover:text-primary transition-colors"></i>
                         </div>
                         <div>
-                            <p class="font-bold text-text-primary text-lg" data-i18n="upload_following">Carica Seguiti
-                            </p>
+                            <p class="font-bold text-text-primary text-lg">Carica Seguiti</p>
                             <p
                                 class="text-text-muted text-sm mt-1 font-mono bg-surface-highlight inline-block px-2 py-0.5 rounded">
                                 following.json</p>
                         </div>
-                        <div id="error-following" class="text-status-error text-xs font-semibold mt-2 hidden"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Optional Premium Uploads -->
+            <div class="w-full max-w-4xl mt-10 animate-slideUp" style="animation-delay: 0.15s;">
+                <div class="text-center mb-6">
+                    <h3 class="font-heading text-lg font-bold flex items-center justify-center gap-2 text-text-primary">
+                        <i data-lucide="sparkles" class="w-5 h-5 text-primary"></i>
+                        Voglia di analisi avanzata? (Opzionale)
+                    </h3>
+                    <p class="text-text-secondary text-sm">Carica questi file per sbloccare la dashboard Top Fan e
+                        Engagement</p>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-2 gap-4">
+                    <div id="drop-likes"
+                        class="upload-zone group border border-border/50 bg-surface/30 hover:bg-surface-highlight/50 rounded-xl p-4 text-center cursor-pointer transition-all duration-300"
+                        onclick="document.getElementById('file-likes').click()">
+                        <input type="file" id="file-likes" accept=".json" class="hidden"
+                            onchange="handleFileSelect('likes')">
+                        <div id="content-likes" class="flex items-center gap-3 text-left">
+                            <div class="p-2 bg-surface-highlight rounded-lg group-hover:bg-primary/10">
+                                <i data-lucide="heart" class="w-5 h-5 text-text-primary group-hover:text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm text-text-primary">Liked Posts</p>
+                                <p class="text-[10px] text-text-muted font-mono">liked_posts.json</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="drop-comments"
+                        class="upload-zone group border border-border/50 bg-surface/30 hover:bg-surface-highlight/50 rounded-xl p-4 text-center cursor-pointer transition-all duration-300"
+                        onclick="document.getElementById('file-comments').click()">
+                        <input type="file" id="file-comments" accept=".json" class="hidden"
+                            onchange="handleFileSelect('comments')">
+                        <div id="content-comments" class="flex items-center gap-3 text-left">
+                            <div class="p-2 bg-surface-highlight rounded-lg group-hover:bg-primary/10">
+                                <i data-lucide="message-circle"
+                                    class="w-5 h-5 text-text-primary group-hover:text-primary"></i>
+                            </div>
+                            <div>
+                                <p class="font-bold text-sm text-text-primary">Comments</p>
+                                <p class="text-[10px] text-text-muted font-mono">post_comments_1.json</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="drop-stories"
+                        class="upload-zone group border border-border/50 bg-surface/30 hover:bg-surface-highlight/50 rounded-xl p-4 text-center cursor-pointer transition-all duration-300 col-span-2"
+                        onclick="document.getElementById('file-stories').click()">
+                        <input type="file" id="file-stories" accept=".json" class="hidden"
+                            onchange="handleFileSelect('stories')">
+                        <div id="content-stories" class="flex items-center justify-center gap-3">
+                            <div class="p-2 bg-surface-highlight rounded-lg group-hover:bg-primary/10">
+                                <i data-lucide="play" class="w-5 h-5 text-text-primary group-hover:text-primary"></i>
+                            </div>
+                            <div class="text-left">
+                                <p class="font-bold text-sm text-text-primary">Story Interactions</p>
+                                <p class="text-[10px] text-text-muted font-mono">story_interactions.json (Opzionale)</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -376,7 +429,7 @@
                     <h3
                         class="font-heading text-2xl font-bold mb-4 flex items-center justify-center gap-2 text-text-primary">
                         <i data-lucide="help-circle" class="w-6 h-6 text-primary"></i>
-                        <span data-i18n="tutorial_title">Come ottenere i file</span>
+                        Come ottenere i file
                     </h3>
 
                     <!-- Tabs -->
@@ -384,12 +437,12 @@
                         <button onclick="setTutorialTab('text')" id="tab-btn-text"
                             class="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-bold transition-all duration-300 bg-primary text-white shadow-lg shadow-primary/25">
                             <i data-lucide="file-text" class="w-4 h-4"></i>
-                            <span data-i18n="tutorial_written">Guida Scritta</span>
+                            Guida Scritta
                         </button>
                         <button onclick="setTutorialTab('video')" id="tab-btn-video"
                             class="flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium transition-all duration-300 text-text-secondary hover:text-text-primary hover:bg-surface-highlight">
                             <i data-lucide="play-circle" class="w-4 h-4"></i>
-                            <span data-i18n="tutorial_video">Video Tutorial</span>
+                            Video Tutorial
                         </button>
                     </div>
                 </div>
@@ -403,7 +456,7 @@
                             Il tuo browser non supporta il tag video.
                         </video>
                     </div>
-                    <p class="text-center text-text-muted text-sm mt-4" data-i18n="tutorial_video_desc">
+                    <p class="text-center text-text-muted text-sm mt-4">
                         Guarda il video per vedere i passaggi esatti da eseguire su Instagram
                     </p>
                 </div>
@@ -438,14 +491,15 @@
                 <div id="tutorial-content-text"
                     class="w-full max-w-3xl mx-auto p-8 rounded-2xl border border-border bg-surface/50">
                     <ol class="space-y-4 text-text-secondary list-decimal pl-5 marker:text-primary marker:font-bold">
-                        <li class="pl-2" data-i18n="step_1">Accedi a Instagram da computer → Altro ☰ → Impostazioni</li>
-                        <li class="pl-2" data-i18n="step_2">Centro gestione account → Le tue informazioni → Esporta le
-                            tue informazioni</li>
-                        <li class="pl-2" data-i18n="step_3">Seleziona Instagram → Esporta sul dispositivo</li>
-                        <li class="pl-2" data-i18n="step_4">Seleziona solo 'Seguiti e Follower' → Formato .JSON → Date
-                            su 'Sempre'</li>
-                        <li class="pl-2" data-i18n="step_5">Scarica lo .zip → Estrai Followers_1.json e Following.json →
-                            Caricali qui</li>
+                        <li class="pl-2">Accedi a Instagram da computer → Altro ☰ → Impostazioni</li>
+                        <li class="pl-2">Vedi altro nel centro gestione account di Meta → Le tue informazioni e
+                            autorizzazioni → Esporta le tue informazioni</li>
+                        <li class="pl-2">Crea esportazione → Seleziona Instagram → Esporta sul dispositivo</li>
+                        <li class="pl-2">Personalizza dati: spunta "&#9989;" solo Contatti e Follower e persone/Pagine
+                            seguite → Modificare il formato in .JSON → Intervallo di date su Sempre</li>
+                        <li class="pl-2">Avvia esportazione → Aspettare 5/10 minuti che i file si creino → Download del
+                            fine che sarà in formato .zip → Fare estrai e cercare Followers_1.json e Following.json →
+                            Torniamo sul sito aggiungiamo i file richiesti → Avvia Analisi</li>
                     </ol>
                 </div>
             </div>
@@ -536,204 +590,275 @@
                 </div>
 
                 <!-- Tab Navigation & Controls -->
-                <!-- Tab Navigation & Controls -->
-                <div class="flex flex-col sm:flex-row justify-between items-center bg-surface p-2 gap-4">
-                    <div class="flex w-full sm:w-auto bg-surface-highlight rounded-xl p-1">
-                        <button id="tab-not-following-back"
-                            class="flex-1 py-2 px-4 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-sm bg-primary text-white"
-                            onclick="switchTab('not-following-back')">
-                            <i data-lucide="user-minus" class="w-4 h-4"></i>
-                            <span data-i18n="not_following_back">Non ti seguono</span> (<span
-                                id="tab-not-following-count">0</span>)
-                        </button>
-                        <button id="tab-you-dont-follow"
-                            class="flex-1 py-2 px-4 rounded-lg text-sm font-bold transition-all duration-300 flex items-center justify-center gap-2 text-text-secondary hover:text-text-primary"
-                            onclick="switchTab('you-dont-follow')">
-                            <i data-lucide="user-x" class="w-4 h-4"></i>
-                            <span data-i18n="you_dont_follow">Non segui</span> (<span
-                                id="tab-you-dont-follow-count">0</span>)
-                        </button>
-                    </div>
-
-                    <!-- Search Bar -->
-                    <div class="w-full sm:w-auto">
-                        <div class="relative">
-                            <i data-lucide="search"
-                                class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-secondary"></i>
-                            <input type="text" id="search-input" data-i18n-placeholder="search_placeholder"
-                                placeholder="Cerca username o nome..."
-                                class="bg-surface border border-border rounded-full py-2 pl-10 pr-4 text-sm w-full sm:w-64 focus:outline-none focus:border-primary text-text-primary placeholder-text-muted transition-all"
-                                oninput="handleSearch(this.value)">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Advanced Filters & Sorting -->
-                <div class="px-6 py-4 bg-surface-highlight/30 border-t border-border flex flex-wrap gap-4 items-center">
-                    <div class="flex items-center gap-2">
-                        <span class="text-[10px] font-bold text-text-muted uppercase tracking-widest"
-                            data-i18n="sort_label">ORDINA:</span>
-                        <div class="flex bg-surface rounded-lg p-1 border border-border">
-                            <button onclick="handleSort('username')" id="btn-sort-az"
-                                class="px-3 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-1 hover:bg-surface-highlight">
-                                <i data-lucide="sort-asc" class="w-3 h-3"></i> <span data-i18n="sort_az">A-Z</span>
+                <div class="glass rounded-xl overflow-hidden mb-6">
+                    <div
+                        class="border-b border-border flex flex-col sm:flex-row justify-between items-center bg-surface">
+                        <div class="flex w-full sm:w-auto">
+                            <button id="tab-not-following-back"
+                                class="flex-1 py-4 px-6 text-center font-medium border-b-2 border-primary text-primary bg-primary/10 transition-colors"
+                                onclick="switchTab('not-following-back')">
+                                <i data-lucide="user-minus" class="w-4 h-4 inline mr-2"></i>
+                                Non ti seguono (<span id="tab-not-following-count">0</span>)
                             </button>
-                            <button onclick="handleSort('date')" id="btn-sort-recent"
-                                class="px-3 py-1 rounded-md text-xs font-bold transition-all flex items-center gap-1 hover:bg-surface-highlight">
-                                <i data-lucide="clock" class="w-3 h-3"></i> <span data-i18n="sort_recent">Recenti</span>
+                            <button id="tab-you-dont-follow"
+                                class="flex-1 py-4 px-6 text-center font-medium text-text-secondary hover:text-text-primary transition-colors border-b-2 border-transparent"
+                                onclick="switchTab('you-dont-follow')">
+                                <i data-lucide="user-x" class="w-4 h-4 inline mr-2"></i>
+                                Non segui (<span id="tab-you-dont-follow-count">0</span>)
                             </button>
                         </div>
-                    </div>
-                    <div class="h-4 w-px bg-border hidden sm:block"></div>
-                    <div class="flex items-center gap-2">
-                        <span class="text-[10px] font-bold text-text-muted uppercase tracking-widest"
-                            data-i18n="filter_label">FILTRA:</span>
-                        <button onclick="toggleVerifiedFilter()" id="btn-filter-verified"
-                            class="px-3 py-1.5 rounded-lg border border-border bg-surface text-xs font-bold hover:border-primary transition-all flex items-center gap-1.5 group">
-                            <i data-lucide="badge-check"
-                                class="w-3.5 h-3.5 text-status-info group-hover:scale-110 transition-transform"></i>
-                            <span data-i18n="only_verified">Solo Verificati</span>
-                        </button>
-                    </div>
-                </div>
 
-                <!-- Tab Contents Container -->
-                <div id="results-container" class="min-h-[400px]">
-                    <!-- Dynamic Content Loaded Here -->
-                    <div class="p-6">
-                        <div class="mb-4 flex justify-between items-end">
-                            <div>
-                                <h3 id="current-list-title"
-                                    class="font-heading text-xl font-bold flex items-center gap-2">
-                                    <!-- Title set by JS -->
-                                </h3>
-                                <p id="current-list-desc" class="text-text-secondary text-sm mt-1">
-                                    <!-- Desc set by JS -->
-                                </p>
-                            </div>
-                            <div class="text-sm text-text-muted">
-                                <span id="showing-range">0-0</span> di <span id="total-items">0</span>
+                        <!-- Search Bar -->
+                        <div class="p-3 w-full sm:w-auto">
+                            <div class="relative">
+                                <i data-lucide="search"
+                                    class="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-text-secondary"></i>
+                                <input type="text" id="search-input" placeholder="Cerca username o nome..."
+                                    class="bg-surface border border-border rounded-full py-2 pl-10 pr-4 text-sm w-full sm:w-64 focus:outline-none focus:border-primary/50 text-text-primary placeholder-text-muted transition-all"
+                                    oninput="handleSearch(this.value)">
                             </div>
                         </div>
+                    </div>
 
-                        <div class="overflow-x-auto rounded-lg border border-border">
-                            <table class="w-full">
-                                <thead class="bg-surface-highlight text-text-secondary text-sm font-medium">
-                                    <tr>
-                                        <th class="text-left p-4 cursor-pointer hover:text-text-primary transition-colors"
-                                            onclick="handleSort('index')">#</th>
-                                        <th class="text-left p-4 cursor-pointer hover:text-white transition-colors"
-                                            onclick="handleSort('username')">
-                                            Utente <i data-lucide="arrow-up-down"
-                                                class="w-3 h-3 inline ml-1 opacity-50"></i>
-                                        </th>
-                                        <th class="text-left p-4 w-64">Azioni</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="results-table-body">
-                                    <!-- Content will be populated here -->
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Empty State -->
-                        <div id="empty-state" class="hidden py-16 text-center">
-                            <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 mb-4">
-                                <i data-lucide="search-x" class="w-8 h-8 text-text-muted"></i>
+                    <!-- Tab Contents Container -->
+                    <div id="results-container" class="min-h-[400px]">
+                        <!-- Dynamic Content Loaded Here -->
+                        <div class="p-6">
+                            <div class="mb-4 flex justify-between items-end">
+                                <div>
+                                    <h3 id="current-list-title"
+                                        class="font-heading text-xl font-bold flex items-center gap-2">
+                                        <!-- Title set by JS -->
+                                    </h3>
+                                    <p id="current-list-desc" class="text-text-secondary text-sm mt-1">
+                                        <!-- Desc set by JS -->
+                                    </p>
+                                </div>
+                                <div class="text-sm text-text-muted">
+                                    <span id="showing-range">0-0</span> di <span id="total-items">0</span>
+                                </div>
                             </div>
-                            <h4 class="text-lg font-medium mb-1">Nessun risultato trovato</h4>
-                            <p class="text-text-secondary text-sm">Prova a cercare con un altro termine</p>
-                        </div>
 
-                        <!-- Success State (e.g. 0 people not following back) -->
-                        <div id="success-state" class="hidden py-16 text-center">
-                            <i data-lucide="check-circle" class="w-16 h-16 text-status-success mx-auto mb-4"></i>
-                            <h4 class="font-heading text-xl font-bold mb-2">Perfetto!</h4>
-                            <p id="success-message" class="text-text-secondary">Tutte le persone che segui ti
-                                seguono a loro volta.</p>
-                        </div>
+                            <div class="overflow-x-auto rounded-lg border border-border">
+                                <table class="w-full">
+                                    <thead class="bg-surface-highlight text-text-secondary text-sm font-medium">
+                                        <tr>
+                                            <th class="text-left p-4 cursor-pointer hover:text-text-primary transition-colors"
+                                                onclick="handleSort('index')">#</th>
+                                            <th class="text-left p-4 cursor-pointer hover:text-white transition-colors"
+                                                onclick="handleSort('username')">
+                                                Utente <i data-lucide="arrow-up-down"
+                                                    class="w-3 h-3 inline ml-1 opacity-50"></i>
+                                            </th>
+                                            <th class="text-left p-4 w-64">Azioni</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="results-table-body">
+                                        <!-- Content will be populated here -->
+                                    </tbody>
+                                </table>
+                            </div>
 
-                        <!-- Pagination -->
-                        <div id="pagination-controls" class="mt-6 flex items-center justify-center gap-2">
-                            <button onclick="changePage(-1)" id="btn-prev"
-                                class="p-2 rounded-md bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-                                <i data-lucide="chevron-left" class="w-5 h-5"></i>
-                            </button>
-                            <span id="page-display" class="text-sm font-medium px-4">Pagina 1 di 1</span>
-                            <button onclick="changePage(1)" id="btn-next"
-                                class="p-2 rounded-md bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
-                                <i data-lucide="chevron-right" class="w-5 h-5"></i>
-                            </button>
+                            <!-- Empty State -->
+                            <div id="empty-state" class="hidden py-16 text-center">
+                                <div
+                                    class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-white/5 mb-4">
+                                    <i data-lucide="search-x" class="w-8 h-8 text-text-muted"></i>
+                                </div>
+                                <h4 class="text-lg font-medium mb-1">Nessun risultato trovato</h4>
+                                <p class="text-text-secondary text-sm">Prova a cercare con un altro termine</p>
+                            </div>
+
+                            <!-- Success State (e.g. 0 people not following back) -->
+                            <div id="success-state" class="hidden py-16 text-center">
+                                <i data-lucide="check-circle" class="w-16 h-16 text-status-success mx-auto mb-4"></i>
+                                <h4 class="font-heading text-xl font-bold mb-2">Perfetto!</h4>
+                                <p id="success-message" class="text-text-secondary">Tutte le persone che segui ti
+                                    seguono a loro volta.</p>
+                            </div>
+
+                            <!-- Pagination -->
+                            <div id="pagination-controls" class="mt-6 flex items-center justify-center gap-2">
+                                <button onclick="changePage(-1)" id="btn-prev"
+                                    class="p-2 rounded-md bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                                </button>
+                                <span id="page-display" class="text-sm font-medium px-4">Pagina 1 di 1</span>
+                                <button onclick="changePage(1)" id="btn-next"
+                                    class="p-2 rounded-md bg-white/5 hover:bg-white/10 disabled:opacity-50 disabled:cursor-not-allowed transition-colors">
+                                    <i data-lucide="chevron-right" class="w-5 h-5"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <!-- Stats -->
+            <div class="mt-8 grid md:grid-cols-2 gap-6">
+                <div class="glass rounded-xl p-6">
+                    <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="bar-chart" class="w-5 h-5"></i>
+                        Statistiche
+                    </h4>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="flex justify-between text-sm mb-1">
+                                <span class="text-text-secondary">Rapporto follower/seguendo</span>
+                                <span id="follow-ratio">0%</span>
+                            </div>
+                            <div class="h-2 bg-white/10 rounded-full overflow-hidden">
+                                <div id="follow-ratio-bar" class="h-full bg-primary rounded-full" style="width: 0%">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-sm">
+                            <div class="flex justify-between py-2 border-b border-white/10">
+                                <span class="text-text-secondary">Followback rate</span>
+                                <span id="followback-rate">0%</span>
+                            </div>
+                            <div class="flex justify-between py-2 border-b border-white/10">
+                                <span class="text-text-secondary">Account verificati</span>
+                                <span id="verified-count">0</span>
+                            </div>
+                            <div class="flex justify-between py-2">
+                                <span class="text-text-secondary">Account privati</span>
+                                <span id="private-count">0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass rounded-xl p-6">
+                    <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
+                        <i data-lucide="lightbulb" class="w-5 h-5"></i>
+                        Consigli
+                    </h4>
+                    <ul class="space-y-3 text-text-secondary">
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
+                            <span>Considera di smettere di seguire account che non ti seguono</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
+                            <span>Mantieni un rapporto follower/seguendo equilibrato (>70%)</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
+                            <span>Analizza regolarmente la tua lista di follower</span>
+                        </li>
+                    </ul>
+                    <div class="mt-4 p-3 bg-white/5 rounded-lg">
+                        <p class="text-sm text-text-secondary">
+                            <i data-lucide="info" class="w-4 h-4 inline mr-2"></i>
+                            Suggerimento: I link "Visita profilo" potrebbero non funzionare per account con username
+                            speciali.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
         </div>
 
-        <!-- Stats -->
-        <div class="mt-8 grid md:grid-cols-2 gap-6">
-            <div class="glass rounded-xl p-6">
-                <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
-                    <i data-lucide="bar-chart" class="w-5 h-5"></i>
-                    Statistiche
-                </h4>
-                <div class="space-y-3">
+        <!-- PAGE DASHBOARD -->
+        <div id="page-insights" class="hidden-page max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="animate-fadeIn">
+                <!-- Header -->
+                <div class="flex items-center justify-between mb-8">
                     <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-text-secondary">Rapporto follower/seguendo</span>
-                            <span id="follow-ratio">0%</span>
-                        </div>
-                        <div class="h-2 bg-white/10 rounded-full overflow-hidden">
-                            <div id="follow-ratio-bar" class="h-full bg-primary rounded-full" style="width: 0%">
-                            </div>
-                        </div>
+                        <button onclick="showPage('results')"
+                            class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
+                            <i data-lucide="arrow-left" class="w-4 h-4"></i>
+                            Torna ai risultati
+                        </button>
+                        <h2 class="font-heading text-3xl font-bold flex items-center gap-3">
+                            <i data-lucide="sparkles" class="w-8 h-8 text-primary"></i>
+                            Dashboard Insights Premium
+                        </h2>
+                        <p class="text-text-secondary">Analisi dell'engagement e ranking interazioni</p>
                     </div>
-                    <div class="text-sm">
-                        <div class="flex justify-between py-2 border-b border-white/10">
-                            <span class="text-text-secondary">Followback rate</span>
-                            <span id="followback-rate">0%</span>
-                        </div>
-                        <div class="flex justify-between py-2 border-b border-white/10">
-                            <span class="text-text-secondary">Account verificati</span>
-                            <span id="verified-count">0</span>
-                        </div>
-                        <div class="flex justify-between py-2">
-                            <span class="text-text-secondary">Account privati</span>
-                            <span id="private-count">0</span>
-                        </div>
-                    </div>
+                    <button onclick="saveAnalysisSnapshot()"
+                        class="flex items-center gap-2 px-5 py-2.5 rounded-full bg-surface-highlight border border-border hover:bg-surface transition-all text-sm font-bold shadow-sm">
+                        <i data-lucide="save" class="w-4 h-4 text-primary"></i>
+                        Salva Snapshot Analisi
+                    </button>
                 </div>
-            </div>
 
-            <div class="glass rounded-xl p-6">
-                <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
-                    <i data-lucide="lightbulb" class="w-5 h-5"></i>
-                    Consigli
-                </h4>
-                <ul class="space-y-3 text-text-secondary">
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
-                        <span>Considera di smettere di seguire account che non ti seguono</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
-                        <span>Mantieni un rapporto follower/seguendo equilibrato (>70%)</span>
-                    </li>
-                    <li class="flex items-start gap-2">
-                        <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
-                        <span>Analizza regolarmente la tua lista di follower</span>
-                    </li>
-                </ul>
-                <div class="mt-4 p-3 bg-white/5 rounded-lg">
-                    <p class="text-sm text-text-secondary">
-                        <i data-lucide="info" class="w-4 h-4 inline mr-2"></i>
-                        Suggerimento: I link "Visita profilo" potrebbero non funzionare per account con username
-                        speciali.
-                    </p>
+                <!-- Snapshot Alert (Lost Followers) -->
+                <div id="snapshot-alert"
+                    class="hidden mb-8 p-4 rounded-xl bg-status-warning/10 border border-status-warning/20 animate-slideUp">
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="alert-triangle" class="w-5 h-5 text-status-warning mt-0.5"></i>
+                        <div>
+                            <h4 class="font-bold text-status-warning text-sm">Persi dall'ultimo salvataggio</h4>
+                            <p class="text-text-secondary text-sm mt-1" id="snapshot-lost-text"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Interaction Stats -->
+                <div class="grid md:grid-cols-3 gap-6 mb-8">
+                    <div class="glass rounded-xl p-6 text-center">
+                        <h4 class="text-text-secondary uppercase text-[10px] tracking-widest font-bold mb-2">Engagement
+                            Rate</h4>
+                        <p class="text-4xl font-bold text-primary" id="insight-engagement">--%</p>
+                        <p class="text-xs text-text-muted mt-2">Media interazioni per follower</p>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center">
+                        <h4 class="text-text-secondary uppercase text-[10px] tracking-widest font-bold mb-2">Interazioni
+                            Totali</h4>
+                        <p class="text-4xl font-bold" id="insight-total-int">--</p>
+                        <p class="text-xs text-text-muted mt-2">Somma di Like e Commenti</p>
+                    </div>
+                    <div class="glass rounded-xl p-6 text-center">
+                        <h4 class="text-text-secondary uppercase text-[10px] tracking-widest font-bold mb-2">Crescita
+                            Mensile</h4>
+                        <p class="text-4xl font-bold text-status-success" id="insight-growth">--</p>
+                        <p class="text-xs text-text-muted mt-2">Follower acquisiti nell'ultimo mese</p>
+                    </div>
+                </div>
+
+                <!-- Growth Chart -->
+                <div class="glass rounded-xl p-8 mb-8">
+                    <h3 class="font-heading text-xl font-bold mb-8">📈 Trend di Crescita (Follower Totali)</h3>
+                    <div class="h-80 w-full">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Rank List -->
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="glass rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-heading text-xl font-bold flex items-center gap-2">
+                                <i data-lucide="trophy" class="w-6 h-6 text-status-warning"></i>
+                                Top 10 Fan
+                            </h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-surface-highlight text-text-muted">BASATO SU
+                                LIKE E COMMENTI</span>
+                        </div>
+                        <div id="top-fans-ranking" class="space-y-3">
+                            <!-- JS will populate -->
+                            <p class="text-text-muted italic text-center py-8">Carica liked_posts.json o
+                                post_comments.json</p>
+                        </div>
+                    </div>
+
+                    <div class="glass rounded-xl p-6">
+                        <div class="flex items-center justify-between mb-6">
+                            <h3 class="font-heading text-xl font-bold flex items-center gap-2">
+                                <i data-lucide="heart" class="w-6 h-6 text-primary"></i>
+                                Re delle Storie
+                            </h3>
+                            <span class="text-[10px] px-2 py-0.5 rounded bg-surface-highlight text-text-muted">DATI
+                                DALLE INTERAZIONI</span>
+                        </div>
+                        <div id="top-stories-ranking" class="space-y-3">
+                            <p class="text-text-muted italic text-center py-8">Dati non ancora disponibili</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-        </div>
         </div>
 
         <!-- PAGE DASHBOARD -->
@@ -744,120 +869,31 @@
                         <button onclick="showPage('landing')"
                             class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            <span data-i18n="back_to_analysis">Torna all'analisi</span>
+                            Torna all'analisi
                         </button>
-                        <h2 class="font-heading text-3xl font-bold" data-i18n="history_title">Storico analisi</h2>
-                        <p class="text-text-secondary" data-i18n="dashboard_desc">Cronologia delle tue analisi
-                            precedenti</p>
+                        <h2 class="font-heading text-3xl font-bold">Storico analisi</h2>
+                        <p class="text-text-secondary">Cronologia delle tue analisi precedenti</p>
                     </div>
                 </div>
 
                 <div class="glass rounded-xl overflow-hidden">
                     <div class="p-6 border-b border-white/10">
-                        <h3 class="font-heading text-xl font-bold" data-i18n="dashboard_saved">Analisi salvate</h3>
+                        <h3 class="font-heading text-xl font-bold">Analisi salvate</h3>
                     </div>
 
                     <div id="history-list" class="p-6">
                         <div class="text-center py-12">
                             <i data-lucide="history" class="w-16 h-16 text-text-muted mx-auto mb-4"></i>
-                            <h4 class="font-heading text-lg font-bold mb-2" data-i18n="no_history">Nessuna analisi
-                                salvata</h4>
-                            <p class="text-text-secondary mb-4" data-i18n="dashboard_empty_desc">Le tue analisi future
-                                appariranno qui</p>
+                            <h4 class="font-heading text-lg font-bold mb-2">Nessuna analisi salvata</h4>
+                            <p class="text-text-secondary mb-4">Le tue analisi future appariranno qui</p>
                             <button onclick="showPage('landing')"
-                                class="text-primary hover:text-primary-hover font-medium"
-                                data-i18n="dashboard_first_analysis">
+                                class="text-primary hover:text-primary-hover font-medium">
                                 Esegui la tua prima analisi
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-
-        <!-- PAGE PRIVACY -->
-        <div id="page-privacy" class="hidden-page max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="animate-fadeIn">
-                <div class="mb-8">
-                    <button onclick="showPage('landing')"
-                        class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                        <span data-i18n="back_to_analysis">Torna all'analisi</span>
-                    </button>
-                    <h2 class="font-heading text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary to-primary-hover"
-                        data-i18n="privacy_page_title">
-                        Privacy & Trasparenza</h2>
-                    <p class="text-text-secondary mt-2 text-lg" data-i18n="privacy_header_desc">La tua sicurezza è la
-                        nostra priorità.</p>
-                </div>
-
-                <div class="grid gap-6">
-                    <div class="glass rounded-2xl p-8 border-l-4 border-l-primary shadow-glass">
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 rounded-xl bg-primary/10 text-primary">
-                                <i data-lucide="shield-check" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold mb-2 text-text-primary" data-i18n="privacy_box1_title">
-                                    Nessun dato memorizzato</h3>
-                                <p class="text-text-secondary leading-relaxed" data-i18n="privacy_box1_desc">
-                                    Questa applicazione non possiede un database. I file che carichi vengono letti
-                                    temporaneamente nella memoria del tuo browser e scompaiono non appena chiudi la
-                                    pagina o ricarichi.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass rounded-2xl p-8 border-l-4 border-l-status-success shadow-glass">
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 rounded-xl bg-status-success/10 text-status-success">
-                                <i data-lucide="cpu" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold mb-2 text-text-primary" data-i18n="privacy_box2_title">
-                                    Elaborazione 100% Locale</h3>
-                                <p class="text-text-secondary leading-relaxed" data-i18n="privacy_box2_desc">
-                                    Tutti i calcoli per confrontare le liste di follower avvengono sul tuo dispositivo.
-                                    Utilizziamo la tecnologia <code
-                                        class="bg-surface-highlight px-1.5 py-0.5 rounded text-primary font-mono">FileReader API</code>
-                                    che permette al browser di leggere i file senza mai inviarli a un server esterno.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="glass rounded-2xl p-8 border-l-4 border-l-status-info shadow-glass">
-                        <div class="flex items-start gap-4">
-                            <div class="p-3 rounded-xl bg-status-info/10 text-status-info">
-                                <i data-lucide="network" class="w-6 h-6"></i>
-                            </div>
-                            <div>
-                                <h3 class="text-xl font-bold mb-2 text-text-primary" data-i18n="privacy_box3_title">
-                                    Nessun Login o API Esterna</h3>
-                                <p class="text-text-secondary leading-relaxed" data-i18n="privacy_box3_desc">
-                                    Non ti chiederemo mai la tua password. Non utilizziamo le API di Instagram,
-                                    basandoci esclusivamente sull'esportazione ufficiale dei dati di Meta per garantirti
-                                    il massimo controllo.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-6 bg-surface-highlight/50 rounded-2xl border border-border mt-4">
-                    <h4 class="font-bold flex items-center gap-2 mb-3">
-                        <i data-lucide="code" class="w-4 h-4"></i>
-                        Nota Tecnica
-                    </h4>
-                    <p class="text-sm text-text-secondary italic">
-                        "FollowCheck è un progetto statico. Non c'è un backend, non ci sono cookie di profilazione e
-                        non ci sono script di tracciamento di terze parti. È uno strumento creato per essere
-                        trasparente, veloce e sicuro."
-                    </p>
-                </div>
-            </div>
-        </div>
         </div>
 
     </main>
@@ -883,7 +919,6 @@
     <script>
         // App State
         let state = {
-            lang: localStorage.getItem('fc_lang') || 'it',
             followers: null,
             following: null,
             currentAnalysis: null,
@@ -893,142 +928,16 @@
                 searchQuery: '',
                 currentPage: 1,
                 itemsPerPage: 50,
-                sortBy: 'username', // 'username', 'date', 'verified'
+                sortBy: 'username', // 'index', 'username', 'name'
                 sortOrder: 'asc', // 'asc' or 'desc'
-                onlyVerified: false,
                 bookmark: localStorage.getItem('followcheck_bookmark') || null
             },
-            hiddenUsers: new Set(JSON.parse(localStorage.getItem('followcheck_hidden')) || [])
-        };
-
-        const translations = {
-            it: {
-                title: "FollowCheck",
-                subtitle: "Analizza chi non ti segue più su Instagram in modo sicuro e locale.",
-                hero_desc: "Analisi dei tuoi follower semplice, sicura e privata.",
-                no_login_required: "Nessun login richiesto.",
-                start_analysis: "Inizia Analisi",
-                how_it_works: "Come funziona?",
-                privacy_title: "La tua privacy al primo posto",
-                privacy_desc: "Tutta l'elaborazione avviene nel tuo browser. Nessun dato viene inviato a server esterni.",
-                upload_followers: "Carica Follower",
-                upload_following: "Carica Seguiti",
-                analyze_now: "Analizza Ora",
-                analyzing: "Analisi in corso...",
-                results_title: "Risultati Analisi",
-                not_following_back: "Non ti seguono",
-                you_dont_follow: "Non segui",
-                search_placeholder: "Cerca username o nome...",
-                sort_label: "ORDINA:",
-                sort_az: "A-Z",
-                sort_recent: "Recenti",
-                filter_label: "FILTRA:",
-                only_verified: "Solo Verificati",
-                no_results: "Nessun risultato trovato",
-                success_not_following: "Tutte le persone che segui ti seguono a loro volta.",
-                success_you_dont_follow: "Segui tutti coloro che ti seguono.",
-                visit_profile: "Apri",
-                hide_user: "Rimosso",
-                history_title: "Storico",
-                no_history: "Nessuna analisi salvata",
-                privacy_page_title: "Privacy & Trasparenza",
-                back_to_analysis: "Torna all'analisi",
-                date: "Data",
-                followers_label: "Follower",
-                following_label: "Seguiti",
-                mutual_label: "Ricambiano",
-                ratio_label: "Rapporto",
-                loading_msg: "Sto analizzando i tuoi dati...",
-                change_file: "Cambia file",
-                loaded_correct: "Caricato correttamente",
-                error_json: "Seleziona un file JSON valido",
-                error_structure: "Struttura file non riconosciuta",
-                confirm_hide: "Confermi di non seguire più @{user}? Verrà rimosso dalla lista.",
-                tutorial_title: "Come ottenere i file",
-                tutorial_written: "Guida Scritta",
-                tutorial_video: "Video Tutorial",
-                tutorial_video_desc: "Guarda il video per vedere i passaggi esatti da eseguire su Instagram",
-                step_1: "Accedi a Instagram da computer → Altro ☰ → Impostazioni",
-                step_2: "Centro gestione account → Le tue informazioni → Esporta le tue informazioni",
-                step_3: "Seleziona Instagram → Esporta sul dispositivo",
-                step_4: "Seleziona solo 'Seguiti e Follower' → Formato .JSON → Date su 'Sempre'",
-                step_5: "Scarica lo .zip → Estrai Followers_1.json e Following.json → Caricali qui",
-                privacy_header_desc: "La tua sicurezza è la nostra priorità.",
-                privacy_box1_title: "Nessun dato memorizzato",
-                privacy_box1_desc: "Questa applicazione non possiede un database. I file che carichi vengono letti temporaneamente nella memoria del tuo browser e scompaiono non appena chiudi la pagina o ricarichi.",
-                privacy_box2_title: "Elaborazione 100% Locale",
-                privacy_box2_desc: "Tutti i calcoli per confrontare le liste di follower avvengono sul tuo dispositivo. Utilizziamo la tecnologia FileReader API che permette al browser di leggere i file senza mai inviarli a un server esterno.",
-                privacy_box3_title: "Nessun Login o API Esterna",
-                privacy_box3_desc: "Non ti chiederemo mai la tua password. Non utilizziamo le API di Instagram, basandoci esclusivamente sull'esportazione ufficiale dei dati di Meta per garantirti il massimo controllo.",
-                dashboard_desc: "Cronologia delle tue analisi precedenti",
-                dashboard_saved: "Analisi salvate",
-                dashboard_empty_desc: "Le tue analisi future appariranno qui",
-                dashboard_first_analysis: "Esegui la tua prima analisi",
-                pagination_page: "Pagina",
-                pagination_of: "di"
-            },
-            en: {
-                title: "FollowCheck",
-                subtitle: "Analyze who unfollowed you on Instagram safely and locally.",
-                hero_desc: "Simple, secure and private follower analysis.",
-                no_login_required: "No login required.",
-                start_analysis: "Start Analysis",
-                how_it_works: "How it works?",
-                privacy_title: "Privacy first",
-                privacy_desc: "All processing happens in your browser. No data is sent to external servers.",
-                upload_followers: "Upload Followers",
-                upload_following: "Upload Following",
-                analyze_now: "Analyze Now",
-                analyzing: "Analyzing...",
-                results_title: "Analysis Results",
-                not_following_back: "Don't follow back",
-                you_dont_follow: "You don't follow",
-                search_placeholder: "Search username or name...",
-                sort_label: "SORT:",
-                sort_az: "A-Z",
-                sort_recent: "Recent",
-                filter_label: "FILTER:",
-                only_verified: "Verified only",
-                no_results: "No results found",
-                success_not_following: "Everyone you follow follows you back.",
-                success_you_dont_follow: "You follow everyone who follows you.",
-                visit_profile: "Open",
-                hide_user: "Fixed",
-                history_title: "History",
-                no_history: "No saved analysis",
-                privacy_page_title: "Privacy & Transparency",
-                back_to_analysis: "Back to analysis",
-                date: "Date",
-                followers_label: "Followers",
-                following_label: "Following",
-                mutual_label: "Mutual",
-                ratio_label: "Ratio",
-                loading_msg: "Analyzing your data...",
-                change_file: "Change file",
-                loaded_correct: "Loaded correctly",
-                error_json: "Please select a valid JSON file",
-                error_structure: "Unrecognized file structure",
-                confirm_hide: "Confirm you no longer follow @{user}? They will be removed from the list.",
-                tutorial_title: "How to get the files",
-                tutorial_written: "Written Guide",
-                tutorial_video: "Video Tutorial",
-                tutorial_video_desc: "Watch the video to see the exact steps to follow on Instagram",
-                step_1: "Login to Instagram on PC → More ☰ → Settings",
-                step_2: "Accounts Center → Your information → Transfer or copy your information",
-                step_3: "Select Instagram → Download to device",
-                step_4: "Select only 'Followers and Following' → .JSON format → Date range 'All time'",
-                step_5: "Download .zip → Extract Followers_1.json and Following.json → Upload them here",
-                privacy_header_desc: "Your security is our priority.",
-                privacy_box1_title: "No data stored",
-                privacy_box1_desc: "This application does not have a database. The files you upload are read temporarily in your browser's memory and disappear as soon as you close the page or reload.",
-                privacy_box2_title: "100% Local Processing",
-                privacy_box2_desc: "All calculations to compare follower lists happen on your device. We use FileReader API technology which allows the browser to read files without ever sending them to an external server.",
-                privacy_box3_title: "No Login or External API",
-                privacy_box3_desc: "We will never ask for your password. We do not use Instagram APIs, relying exclusively on the official Meta data export to ensure maximum control.",
-                dashboard_desc: "Chronology of your previous analyzes",
-                dashboard_saved: "Saved analyzes",
-                dashboard_empty_desc: "Your future analyzes will appear here",
-                dashboard_first_analysis: "Run your first analysis"
+            hiddenUsers: new Set(JSON.parse(localStorage.getItem('followcheck_hidden')) || []),
+            premium: {
+                likes: [],
+                comments: [],
+                stories: [],
+                hasInteractionData: false
             }
         };
 
@@ -1037,14 +946,21 @@
             btnAnalyze: document.getElementById('btn-analyze'),
             dropFollowers: document.getElementById('drop-followers'),
             dropFollowing: document.getElementById('drop-following'),
+            dropLikes: document.getElementById('drop-likes'),
+            dropComments: document.getElementById('drop-comments'),
+            dropStories: document.getElementById('drop-stories'),
             contentFollowers: document.getElementById('content-followers'),
             contentFollowing: document.getElementById('content-following'),
+            contentLikes: document.getElementById('content-likes'),
+            contentComments: document.getElementById('content-comments'),
+            contentStories: document.getElementById('content-stories'),
             loadingOverlay: document.getElementById('loading-overlay'),
             loadingMessage: document.getElementById('loading-message'),
             loadingProgress: document.getElementById('loading-progress'),
             resultsBody: document.getElementById('results-table-body'),
             searchInput: document.getElementById('search-input'),
-            paginationControls: document.getElementById('pagination-controls')
+            paginationControls: document.getElementById('pagination-controls'),
+            navInsights: document.getElementById('nav-insights')
         };
 
         // Initialize
@@ -1052,13 +968,10 @@
             // Initialize icons
             lucide.createIcons();
 
-            // Apply saved language
-            updateTexts();
-
             // Set theme from localStorage
             if (localStorage.getItem('fc_theme') === 'light') {
                 document.documentElement.classList.remove('dark');
-                document.getElementById('theme-icon')?.setAttribute('data-lucide', 'moon');
+                document.getElementById('theme-icon').setAttribute('data-lucide', 'moon');
                 lucide.createIcons();
             }
 
@@ -1074,60 +987,22 @@
             updateBookmarkButton();
         });
 
-        // Language toggle
-        function toggleLanguage() {
-            state.lang = state.lang === 'it' ? 'en' : 'it';
-            localStorage.setItem('fc_lang', state.lang);
-            updateTexts();
-            showToast(state.lang === 'it' ? 'Lingua: Italiano' : 'Language: English', 'info');
-        }
-
-        function updateTexts() {
-            const t = translations[state.lang];
-
-            // Update data-i18n elements
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (t[key]) el.textContent = t[key];
-            });
-
-            // Update data-i18n-placeholder elements
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                if (t[key]) el.setAttribute('placeholder', t[key]);
-            });
-
-            // Update specific labels
-            const langLabel = document.getElementById('lang-label');
-            if (langLabel) langLabel.textContent = state.lang.toUpperCase();
-
-            // Update dynamic parts if results are shown
-            if (state.currentAnalysis) {
-                renderCurrentView();
-            }
-
-            // Refresh icons as some text changes might affect layout
-            lucide.createIcons();
-        }
-
         // Theme toggle
         function toggleTheme() {
             document.documentElement.classList.toggle('dark');
             const isDark = document.documentElement.classList.contains('dark');
             localStorage.setItem('fc_theme', isDark ? 'dark' : 'light');
-            const icon = document.getElementById('theme-icon');
-            if (icon) {
-                icon.setAttribute('data-lucide', isDark ? 'sun' : 'moon');
-                lucide.createIcons();
-            }
+            document.getElementById('theme-icon').setAttribute('data-lucide', isDark ? 'sun' : 'moon');
+            lucide.createIcons();
         }
 
         // Page navigation
         function showPage(pageId) {
+            // Hide all pages
             document.getElementById('page-landing').classList.add('hidden-page');
             document.getElementById('page-results').classList.add('hidden-page');
             document.getElementById('page-dashboard').classList.add('hidden-page');
-            document.getElementById('page-privacy').classList.add('hidden-page');
+            document.getElementById('page-insights').classList.add('hidden-page');
 
             // Show selected page
             document.getElementById(`page-${pageId}`).classList.remove('hidden-page');
@@ -1138,8 +1013,9 @@
 
         // Setup drag and drop
         function setupDragAndDrop() {
-            ['followers', 'following'].forEach(type => {
+            ['followers', 'following', 'likes', 'comments', 'stories'].forEach(type => {
                 const dropZone = document.getElementById(`drop-${type}`);
+                if (!dropZone) return;
 
                 dropZone.addEventListener('dragover', (e) => {
                     e.preventDefault();
@@ -1205,15 +1081,7 @@
 
         // Process uploaded file
         function handleFile(file, type) {
-            // Reset error
-            const errorEl = document.getElementById(`error-${type}`);
-            if (errorEl) {
-                errorEl.classList.add('hidden');
-                errorEl.textContent = '';
-            }
-
             if (!file.name.endsWith('.json')) {
-                setFileError(type, 'Seleziona un file JSON valido');
                 showToast('Seleziona un file JSON valido', 'error');
                 return;
             }
@@ -1223,76 +1091,61 @@
                 try {
                     const data = JSON.parse(e.target.result);
 
-                    // Basic structure validation
-                    const users = extractUsers(data, type);
-
-                    if (users.length === 0) {
-                        const errorMsg = type === 'followers'
-                            ? 'Struttura file non riconosciuta. Assicurati che sia il file dei Follower.'
-                            : 'Struttura file non riconosciuta. Assicurati che sia il file dei Seguiti.';
-                        setFileError(type, errorMsg);
-                        showToast(errorMsg, 'error');
-                        return;
+                    if (type === 'followers') {
+                        // Normalizzazione 2024/2025
+                        if (Array.isArray(data)) {
+                            state.followers = data.map(item => ({
+                                username: item.string_list_data[0].value,
+                                timestamp: item.string_list_data[0].timestamp
+                            }));
+                        } else {
+                            state.followers = data.relationships_followers || data;
+                        }
+                    } else if (type === 'following') {
+                        state.following = data.relationships_following || data;
+                    } else if (type === 'likes') {
+                        const likes = data.likes_media_likes || [];
+                        state.premium.likes = likes.map(l => l.title);
+                        state.premium.hasInteractionData = true;
+                    } else if (type === 'comments') {
+                        const comments = data.comments_media_comments || [];
+                        state.premium.comments = comments.map(c => c.title || (c.string_list_data ? c.string_list_data[0].value : null)).filter(Boolean);
+                        state.premium.hasInteractionData = true;
+                    } else if (type === 'stories') {
+                        // Extract from poll responses, stickers, etc.
+                        const interactions = [];
+                        if (data.story_activities_polls) {
+                            data.story_activities_polls.forEach(p => {
+                                if (p.title) interactions.push(p.title);
+                            });
+                        }
+                        if (data.story_activities_stickers) {
+                            data.story_activities_stickers.forEach(s => {
+                                if (s.title) interactions.push(s.title);
+                            });
+                        }
+                        state.premium.stories = interactions;
+                        state.premium.hasInteractionData = true;
                     }
-
-                    state[type] = data;
 
                     // Update UI
                     const contentEl = document.getElementById(`content-${type}`);
                     contentEl.innerHTML = `
-                <div class="flex flex-col items-center animate-fadeIn">
-                    <i data-lucide="check-circle" class="w-12 h-12 mx-auto text-status-success mb-2"></i>
-                    <p class="font-bold text-text-primary mb-1">${file.name}</p>
-                    <p class="text-status-success text-xs font-semibold">Caricato correttamente</p>
-                    <button onclick="event.stopPropagation(); resetFileUpload('${type}')" class="mt-3 text-text-muted hover:text-primary text-xs flex items-center gap-1 transition-colors">
-                        <i data-lucide="refresh-cw" class="w-3 h-3"></i> Cambia file
-                    </button>
-                </div>
-            `;
+                        <i data-lucide="check-circle" class="w-12 h-12 mx-auto text-status-success"></i>
+                        <p class="font-medium text-white text-xs mt-1 truncate max-w-[150px] mx-auto">${file.name}</p>
+                        <p class="text-status-success text-[10px]">Caricato con successo</p>
+                    `;
 
                     lucide.createIcons();
                     checkAnalysisReady();
-                    showToast(`${type === 'followers' ? 'Follower' : 'Seguiti'} caricati`, 'success');
+                    showToast(`${type} caricato correttamente`, 'success');
 
                 } catch (error) {
                     console.error('File parsing error:', error);
-                    setFileError(type, 'Errore nel formato del file (JSON corrotto)');
-                    showToast('Errore nel file: JSON non valido', 'error');
+                    showToast('Errore nella lettura del file JSON', 'error');
                 }
             };
             reader.readAsText(file);
-        }
-
-        function setFileError(type, message) {
-            const errorEl = document.getElementById(`error-${type}`);
-            if (errorEl) {
-                errorEl.textContent = message;
-                errorEl.classList.remove('hidden');
-            }
-        }
-
-        function resetFileUpload(type) {
-            state[type] = null;
-            const contentEl = document.getElementById(`content-${type}`);
-            const icon = type === 'followers' ? 'users' : 'user-plus';
-            const title = type === 'followers' ? 'Carica Follower' : 'Carica Seguiti';
-            const filename = type === 'followers' ? 'followers_1.json' : 'following.json';
-
-            contentEl.innerHTML = `
-                <div class="space-y-4 text-text-secondary transition-transform group-hover:scale-105 duration-300">
-                    <div class="w-16 h-16 mx-auto bg-surface-highlight rounded-full flex items-center justify-center mb-2 group-hover:bg-primary/20 transition-colors">
-                        <i data-lucide="${icon}" class="w-8 h-8 text-text-primary group-hover:text-primary transition-colors"></i>
-                    </div>
-                    <div>
-                        <p class="font-bold text-text-primary text-lg">${title}</p>
-                        <p class="text-text-muted text-sm mt-1 font-mono bg-surface-highlight inline-block px-2 py-0.5 rounded">${filename}</p>
-                    </div>
-                </div>
-                <div id="error-${type}" class="text-status-error text-xs font-semibold mt-2 hidden"></div>
-            `;
-
-            lucide.createIcons();
-            checkAnalysisReady();
         }
 
         // Show file structure example - DEPRECATED/REMOVED
@@ -1303,47 +1156,37 @@
         // Extract users from Instagram data
         function extractUsers(data, type) {
             const users = [];
+
             if (!data) return users;
 
-            // Strict Validation for Instagram JSON structure
-            // CASE 1: New Meta format (Array of objects)
+            // If data is already an array
             if (Array.isArray(data)) {
-                // Check if items have standard Instagram user structure
-                const isValid = data.length === 0 || data.some(item =>
-                    (item.string_list_data && Array.isArray(item.string_list_data)) ||
-                    (item.username) || (item.value) || (item.href)
-                );
-
-                if (isValid) {
-                    data.forEach((item, index) => {
-                        const user = extractUserInfo(item, index);
-                        if (user) users.push(user);
-                    });
-                }
+                /* Debug logs removed */
+                data.forEach((item, index) => {
+                    const user = extractUserInfo(item, index);
+                    if (user) users.push(user);
+                });
             }
-            // CASE 2: Nested object format (e.g. {"relationships_followers": [...]})
+            // If data is an object with arrays
             else if (typeof data === 'object') {
-                const instagramKeys = ['relationships_followers', 'relationships_following', 'list', 'items'];
-                let foundKey = instagramKeys.find(key => Array.isArray(data[key]));
+                // Look for arrays in the object
+                const arrayKeys = Object.keys(data).filter(key => Array.isArray(data[key]));
 
-                if (!foundKey) {
-                    // Fallback to any array key, but validate its content
-                    const arrayKey = Object.keys(data).find(key => Array.isArray(data[key]));
-                    if (arrayKey && data[arrayKey].some(item =>
-                        (item.string_list_data && Array.isArray(item.string_list_data)) ||
-                        (item.username) || (item.value)
-                    )) {
-                        foundKey = arrayKey;
-                    }
-                }
+                if (arrayKeys.length > 0) {
+                    // Use the first array found
+                    const arrayKey = arrayKeys[0];
+                    console.log(`Found array in key "${arrayKey}" with ${data[arrayKey].length} items for ${type}`);
 
-                if (foundKey) {
-                    data[foundKey].forEach((item, index) => {
+                    data[arrayKey].forEach((item, index) => {
                         const user = extractUserInfo(item, index);
                         if (user) users.push(user);
                     });
+                } else {
+                    /* Debug logs removed */
                 }
             }
+
+            /* Debug logs removed */
 
             return users;
         }
@@ -1352,7 +1195,7 @@
         // Extract user info from item
         function extractUserInfo(item, index) {
             if (!item) return null;
-            let username = '', name = '', timestamp = 0, isVerified = false;
+            let username = '', name = '';
 
             // Helper to clean username from URL
             const extractFromUrl = (url) => {
@@ -1375,23 +1218,16 @@
                 }
 
                 name = data.value && !data.value.includes('instagram.com') ? data.value : username;
-                timestamp = data.timestamp || 0;
             } else if (item.username) {
                 username = item.username; name = item.name || item.full_name || item.username;
-                timestamp = item.timestamp || item.created_at || 0;
             } else if (item.value) {
                 username = item.value; name = item.name || item.full_name || item.value;
-                timestamp = item.timestamp || 0;
             } else if (item.href) {
                 username = extractFromUrl(item.href);
                 name = item.name || item.full_name || username;
-                timestamp = item.timestamp || 0;
             } else if (item.title) {
                 username = item.title; name = item.title;
             }
-
-            // Check for verified status (rare but possible in some formats)
-            isVerified = item.is_verified || item.verified || false;
 
             // Fallback search if still empty
             if (!username) {
@@ -1418,8 +1254,6 @@
                 username: username,
                 name: name || username,
                 profileUrl: `https://instagram.com/${encodeURIComponent(username)}`,
-                timestamp: timestamp,
-                isVerified: isVerified,
                 id: index
             };
         }
@@ -1449,12 +1283,174 @@
             setTimeout(() => {
                 try {
                     performAnalysis();
+
+                    // Specific logic for premium/insights
+                    if (state.premium.hasInteractionData || (Array.isArray(state.followers) && state.followers.some(f => f.timestamp))) {
+                        elements.navInsights.classList.remove('hidden');
+                        renderInsights();
+                    }
+                    checkSnapshots();
+
                 } catch (error) {
                     console.error('Analysis error:', error);
                     showToast('Errore durante l\'analisi: ' + error.message, 'error');
                     resetUI();
                 }
             }, 500);
+        }
+
+        // --- PREMIUM INSIGHTS LOGIC ---
+
+        function renderInsights() {
+            // 1. Engagement Rate
+            const totalInt = state.premium.likes.length + state.premium.comments.length + state.premium.stories.length;
+            const followersCount = (Array.isArray(state.followers) ? state.followers.length : 0) || 1;
+            const engagement = ((totalInt / followersCount) * 100).toFixed(2);
+            document.getElementById('insight-engagement').textContent = engagement + '%';
+            document.getElementById('insight-total-int').textContent = totalInt;
+
+            // 2. Growth Logic
+            let growth = 0;
+            if (Array.isArray(state.followers)) {
+                const now = new Date();
+                const lastMonth = new Date(now.getFullYear(), now.getMonth() - 1, now.getDate());
+                growth = state.followers.filter(f => f.timestamp && (f.timestamp * 1000) > lastMonth.getTime()).length;
+            }
+            document.getElementById('insight-growth').textContent = '+' + growth;
+
+            // 3. Growth Chart
+            renderGrowthChart();
+
+            // 4. Rankings
+            renderRankings();
+        }
+
+        function renderGrowthChart() {
+            const ctx = document.getElementById('growthChart').getContext('2d');
+            const monthlyGrowth = {};
+
+            if (Array.isArray(state.followers)) {
+                state.followers.forEach(f => {
+                    if (!f.timestamp) return;
+                    const d = new Date(f.timestamp * 1000);
+                    const key = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+                    monthlyGrowth[key] = (monthlyGrowth[key] || 0) + 1;
+                });
+            }
+
+            const labels = Object.keys(monthlyGrowth).sort();
+            if (labels.length === 0) return;
+
+            let cumulative = 0;
+            const data = labels.map(l => cumulative += monthlyGrowth[l]);
+
+            if (window.growthChartInstance) window.growthChartInstance.destroy();
+
+            window.growthChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Follower Totali',
+                        data: data,
+                        borderColor: '#E1306C',
+                        backgroundColor: 'rgba(225, 48, 108, 0.1)',
+                        fill: true,
+                        tension: 0.4,
+                        borderWidth: 3,
+                        pointRadius: 4,
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: {
+                            grid: { color: 'rgba(255,255,255,0.05)' },
+                            ticks: { color: '#888' }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { color: '#888' }
+                        }
+                    }
+                }
+            });
+        }
+
+        function renderRankings() {
+            // General Fans (Likes + Comments)
+            const counts = {};
+            state.premium.likes.forEach(u => counts[u] = (counts[u] || 0) + 1);
+            state.premium.comments.forEach(u => counts[u] = (counts[u] || 0) + 2);
+
+            const sorted = Object.entries(counts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            const container = document.getElementById('top-fans-ranking');
+
+            if (sorted.length === 0) {
+                container.innerHTML = '<p class="text-text-muted italic text-center py-8">Carica liked_posts.json o post_comments.json</p>';
+            } else {
+                container.innerHTML = sorted.map(([user, score], i) => `
+                    <div class="flex items-center justify-between p-3 rounded-lg bg-surface-highlight/50 border border-border/10">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 flex items-center justify-center rounded-full bg-primary/20 text-primary text-[10px] font-bold">${i + 1}</span>
+                            <span class="font-bold text-sm text-text-primary">${user}</span>
+                        </div>
+                        <span class="text-xs font-mono text-text-muted">${score} pt</span>
+                    </div>
+                `).join('');
+            }
+
+            // Story Kings (Poll Resp, Stickers)
+            const storyCounts = {};
+            state.premium.stories.forEach(u => storyCounts[u] = (storyCounts[u] || 0) + 1);
+            const sortedStories = Object.entries(storyCounts).sort((a, b) => b[1] - a[1]).slice(0, 10);
+            const storyContainer = document.getElementById('top-stories-ranking');
+
+            if (sortedStories.length === 0) {
+                storyContainer.innerHTML = '<p class="text-text-muted italic text-center py-8">Carica story_interactions.json</p>';
+            } else {
+                storyContainer.innerHTML = sortedStories.map(([user, score], i) => `
+                    <div class="flex items-center justify-between p-3 rounded-lg bg-surface-highlight/50 border border-border/10">
+                        <div class="flex items-center gap-3">
+                            <span class="w-6 h-6 flex items-center justify-center rounded-full bg-secondary/20 text-secondary text-[10px] font-bold">${i + 1}</span>
+                            <span class="font-bold text-sm text-text-primary">${user}</span>
+                        </div>
+                        <span class="text-xs font-mono text-text-muted">${score} interaz.</span>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function saveAnalysisSnapshot() {
+            if (!Array.isArray(state.followers)) return;
+            const snapshot = {
+                date: new Date().toISOString(),
+                usernames: state.followers.map(f => f.username)
+            };
+            localStorage.setItem('followcheck_snapshot', JSON.stringify(snapshot));
+            showToast("Snapshot salvato! Ora potrai vedere chi ti rimuove.", "success");
+        }
+
+        function checkSnapshots() {
+            const last = localStorage.getItem('followcheck_snapshot');
+            if (!last || !Array.isArray(state.followers)) return;
+
+            const old = JSON.parse(last);
+            const currentSet = new Set(state.followers.map(f => f.username));
+            const lost = old.usernames.filter(u => !currentSet.has(u));
+
+            const alertBox = document.getElementById('snapshot-alert');
+            const text = document.getElementById('snapshot-lost-text');
+
+            if (lost.length > 0) {
+                alertBox.classList.remove('hidden');
+                text.textContent = `${lost.length} persone ti hanno rimosso dall'ultima analisi (${new Date(old.date).toLocaleDateString()}): ${lost.join(', ')}`;
+            } else {
+                alertBox.classList.add('hidden');
+            }
         }
 
         // Perform the actual analysis
@@ -1585,11 +1581,6 @@
             // Filter out hidden users
             list = list.filter(u => !state.hiddenUsers.has(u.username.toLowerCase()));
 
-            // Filter by "Verified only"
-            if (state.view.onlyVerified) {
-                list = list.filter(u => u.isVerified);
-            }
-
             // Apply search filter
             if (state.view.searchQuery) {
                 const q = state.view.searchQuery.toLowerCase();
@@ -1599,42 +1590,19 @@
             // Apply sorting
             list.sort((a, b) => {
                 let valA, valB;
-
-                if (state.view.sortBy === 'date') {
-                    // Descending by date (most recent first)
-                    valA = a.timestamp || 0;
-                    valB = b.timestamp || 0;
-                    return state.view.sortOrder === 'asc' ? valA - valB : valB - valA;
-                } else if (state.view.sortBy === 'verified') {
-                    valA = a.isVerified ? 1 : 0;
-                    valB = b.isVerified ? 1 : 0;
-                    return state.view.sortOrder === 'asc' ? valA - valB : valB - valA;
+                if (state.view.sortBy === 'index') {
+                    valA = a.id; valB = b.id;
                 } else {
-                    // Alphabetic
-                    valA = (a.username || "").toLowerCase();
-                    valB = (b.username || "").toLowerCase();
-                    if (valA < valB) return state.view.sortOrder === 'asc' ? -1 : 1;
-                    if (valA > valB) return state.view.sortOrder === 'asc' ? 1 : -1;
-                    return 0;
+                    valA = (a[state.view.sortBy] || "").toLowerCase();
+                    valB = (b[state.view.sortBy] || "").toLowerCase();
                 }
+
+                if (valA < valB) return state.view.sortOrder === 'asc' ? -1 : 1;
+                if (valA > valB) return state.view.sortOrder === 'asc' ? 1 : -1;
+                return 0;
             });
 
             return list;
-        }
-
-        function toggleVerifiedFilter() {
-            state.view.onlyVerified = !state.view.onlyVerified;
-            state.view.currentPage = 1;
-            renderCurrentView();
-
-            const btn = document.getElementById('btn-filter-verified');
-            if (btn) {
-                if (state.view.onlyVerified) {
-                    btn.classList.add('bg-primary/10', 'border-primary', 'text-primary');
-                } else {
-                    btn.classList.remove('bg-primary/10', 'border-primary', 'text-primary');
-                }
-            }
         }
 
         // New: Core rendering logic
@@ -1652,36 +1620,14 @@
 
             // set titles
             const titles = {
-                'not-following-back': {
-                    it: { title: 'Persone che segui ma non ti seguono', desc: 'Queste persone segui ma loro non seguono te' },
-                    en: { title: 'People you follow but don\'t follow you back', desc: 'These people you follow but they don\'t follow you' }
-                },
-                'you-dont-follow': {
-                    it: { title: 'Persone che ti seguono ma non segui', desc: 'Queste persone ti seguono ma tu non le segui' },
-                    en: { title: 'People who follow you but you don\'t follow', desc: 'These people follow you but you don\'t follow them back' }
-                }
+                'not-following-back': { title: 'Persone che segui ma non ti seguono', desc: 'Queste persone segui ma loro non seguono te' },
+                'you-dont-follow': { title: 'Persone che ti seguono ma non segui', desc: 'Queste persone ti seguono ma tu non le segui' }
             };
-
-            const currentT = titles[state.view.currentTab][state.lang];
             document.getElementById('current-list-title').innerHTML = `
                 <i data-lucide="${state.view.currentTab === 'not-following-back' ? 'user-minus' : 'user-x'}" class="w-5 h-5 ${state.view.currentTab === 'not-following-back' ? 'text-status-error' : 'text-status-warning'}"></i>
-                ${currentT.title}
+                ${titles[state.view.currentTab].title}
             `;
-            document.getElementById('current-list-desc').textContent = currentT.desc;
-
-            // Update Sort UI Styles
-            const btnAZ = document.getElementById('btn-sort-az');
-            const btnRecent = document.getElementById('btn-sort-recent');
-
-            if (btnAZ && btnRecent) {
-                btnAZ.classList.toggle('bg-primary/10', state.view.sortBy === 'username');
-                btnAZ.classList.toggle('text-primary', state.view.sortBy === 'username');
-                btnAZ.classList.toggle('border-primary/30', state.view.sortBy === 'username');
-
-                btnRecent.classList.toggle('bg-primary/10', state.view.sortBy === 'date');
-                btnRecent.classList.toggle('text-primary', state.view.sortBy === 'date');
-                btnRecent.classList.toggle('border-primary/30', state.view.sortBy === 'date');
-            }
+            document.getElementById('current-list-desc').textContent = titles[state.view.currentTab].desc;
 
             // Check empty/success states
             const tableBody = document.getElementById('results-table-body');
@@ -1700,10 +1646,9 @@
                     emptyState.classList.remove('hidden');
                 } else {
                     successState.classList.remove('hidden');
-                    const t = translations[state.lang];
                     document.getElementById('success-message').textContent = state.view.currentTab === 'not-following-back'
-                        ? t.success_not_following
-                        : t.success_you_dont_follow;
+                        ? "Tutte le persone che segui ti seguono a loro volta."
+                        : "Segui tutti coloro che ti seguono.";
                 }
                 document.getElementById('showing-range').textContent = '0-0';
                 document.getElementById('total-items').textContent = '0';
@@ -1725,8 +1670,6 @@
             let html = '';
             pageItems.forEach((user, i) => {
                 const isBookmarked = state.view.bookmark === user.username;
-                const formattedDate = user.timestamp ? new Date(user.timestamp * 1000).toLocaleDateString(state.lang === 'it' ? 'it-IT' : 'en-US') : '';
-
                 html += `
             <tr class="result-item border-t border-border hover:bg-white/5 transition-colors ${isBookmarked ? 'bg-primary/5 ring-1 ring-inset ring-primary/30' : ''}" id="user-row-${user.username}">
                 <td class="p-4 text-text-muted text-sm w-16">${startIdx + i + 1}</td>
@@ -1734,34 +1677,31 @@
                     <div class="flex flex-col">
                         <div class="flex items-center gap-2">
                             <span class="font-bold text-text-primary text-base">${escapeHtml(user.username)}</span>
-                            ${user.isVerified ? '<i data-lucide="badge-check" class="w-4 h-4 text-status-info fill-status-info/20"></i>' : ''}
                             ${isBookmarked ? '<i data-lucide="bookmark" class="w-3 h-3 text-primary fill-primary"></i>' : ''}
                         </div>
-                        <div class="flex items-center gap-2 text-xs text-text-secondary">
-                            <span>${escapeHtml(user.name)}</span>
-                            ${formattedDate ? `<span class="opacity-50">&bull; ${formattedDate}</span>` : ''}
-                        </div>
+                        <span class="text-sm text-text-secondary">${escapeHtml(user.name)}</span>
                     </div>
                 </td>
                 <td class="p-4">
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-3">
                         <button onclick="toggleBookmark('${escapeHtml(user.username)}')" 
                                 class="p-2 rounded-lg border border-border hover:border-text-secondary text-text-secondary hover:text-text-primary transition-colors ${isBookmarked ? 'bg-primary/10 border-primary text-primary' : 'bg-surface'}"
                                 title="Segnalibro">
                             <i data-lucide="bookmark" class="w-4 h-4 ${isBookmarked ? 'fill-primary' : ''}"></i>
                         </button>
                         
+                        <!-- Large Rectangular Hide Button (Updated Layout) -->
                         <button onclick="hideUser('${escapeHtml(user.username)}')" 
-                                class="flex items-center justify-center gap-2 bg-surface border border-border hover:border-text-secondary text-text-primary px-3 py-2 rounded-lg transition-all group"
+                                class="flex items-center justify-center gap-3 bg-surface border border-border hover:border-text-secondary text-text-primary px-6 py-4 rounded-xl transition-all min-w-[200px] group"
                                 title="Segna come rimosso">
-                            <i data-lucide="eye-off" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity"></i>
-                            <span class="text-xs font-bold" data-i18n="hide_user">Rimosso</span>
+                            <i data-lucide="eye-off" class="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity"></i>
+                            <span class="text-sm font-bold">Non Seguo Piu'</span>
                         </button>
 
                         <a href="${user.profileUrl}" target="_blank" 
-                           class="flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-3 py-2 rounded-lg text-xs font-medium transition-colors">
-                            <i data-lucide="external-link" class="w-3 h-3"></i>
-                            <span data-i18n="visit_profile">Apri</span>
+                           class="flex items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                            Apri Profilo
                         </a>
                     </div>
                 </td>
@@ -1777,8 +1717,7 @@
             if (totalPages > 1) {
                 paginationControls.classList.remove('hidden');
                 paginationControls.classList.add('flex');
-                const t = translations[state.lang];
-                document.getElementById('page-display').textContent = `${t.pagination_page} ${state.view.currentPage} ${t.pagination_of} ${totalPages}`;
+                document.getElementById('page-display').textContent = `Pagina ${state.view.currentPage} di ${totalPages}`;
                 document.getElementById('btn-prev').disabled = state.view.currentPage === 1;
                 document.getElementById('btn-next').disabled = state.view.currentPage === totalPages;
             }
@@ -2089,22 +2028,13 @@
     </script>
 
     <!-- Footer -->
-    <footer class="py-16 border-t border-border/50 mt-auto bg-surface/30">
+    <footer class="py-12 border-t border-border/50 mt-auto">
         <div class="max-w-7xl mx-auto px-4 text-center">
-            <div class="mb-8">
-                <button onclick="showPage('privacy')"
-                    class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-surface border border-primary/30 hover:border-primary text-text-primary hover:bg-primary/5 transition-all duration-300 shadow-glass group">
-                    <i data-lucide="shield-check"
-                        class="w-4 h-4 text-primary group-hover:scale-110 transition-transform"></i>
-                    <span class="text-sm font-bold tracking-wide">Privacy & Trasparenza</span>
-                </button>
-            </div>
-
             <p class="text-text-muted text-sm font-medium tracking-wide">
                 Realizzato da <span class="text-text-primary font-bold">Orlando Capasso</span>
             </p>
-            <p class="text-text-muted text-[10px] mt-4 opacity-50 uppercase tracking-[0.3em]">
-                &copy; 2026 FollowCheck &bull; Analisi Sicura Locale
+            <p class="text-text-muted text-[10px] mt-2 opacity-50 uppercase tracking-[0.3em]">
+                &copy; 2026 FollowCheck
             </p>
         </div>
     </footer>
