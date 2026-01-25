@@ -1565,10 +1565,25 @@
 
                 state.currentAnalysis = analysis;
 
-                // Save to history
-                state.history.unshift(analysis);
-                if (state.history.length > 10) state.history = state.history.slice(0, 10);
-                localStorage.setItem('followcheck_history', JSON.stringify(state.history));
+                // Save to history (Optimize storage: Don't save full follower lists)
+                try {
+                    const historyItem = { ...analysis };
+                    // Remove huge arrays to save space
+                    delete historyItem.following;
+                    delete historyItem.followers;
+                    // Keep notFollowingBack and youDontFollow as they are key results
+                    // but if still too large, we might need to remove them too in future
+
+                    state.history.unshift(historyItem);
+                    if (state.history.length > 10) state.history = state.history.slice(0, 10);
+                    localStorage.setItem('followcheck_history', JSON.stringify(state.history));
+                } catch (e) {
+                    console.warn('LocalStorage full, history not saved', e);
+                    // If quota exceeded, try to clear history or just proceed
+                    if (e.name === 'QuotaExceededError') {
+                        showToast('Memoria piena: Impossibile salvare nello storico', 'warning');
+                    }
+                }
 
                 // Update results display
                 displayAnalysisOverview(analysis);
