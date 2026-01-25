@@ -454,7 +454,7 @@
             <div class="mt-12 text-center animate-slideUp" style="animation-delay: 0.3s;">
                 <button id="btn-analyze" onclick="startAnalysis()" disabled
                     class="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45] hover:opacity-90 font-heading rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary disabled:opacity-50 disabled:cursor-not-allowed hover:scale-105 shadow-glow">
-                    <span class="mr-2 text-lg">Avvia Analisi</span>
+                    <span class="mr-2 text-lg" data-i18n="start_analysis">Avvia Analisi</span>
                     <i data-lucide="arrow-right" class="w-5 h-5 transition-transform group-hover:translate-x-1"></i>
                 </button>
             </div>
@@ -469,10 +469,12 @@
                         <button onclick="showPage('landing')"
                             class="flex items-center gap-2 text-text-secondary hover:text-white transition-colors mb-4">
                             <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                            Torna all'analisi
+                            <span data-i18n="back_to_analysis">Torna all'analisi</span>
                         </button>
-                        <h2 class="font-heading text-3xl font-bold">Risultati dell'analisi</h2>
-                        <p class="text-text-secondary">Generato il <span id="analysis-date"></span></p>
+                        <h2 class="font-heading text-3xl font-bold" data-i18n="results_title">Risultati dell'analisi
+                        </h2>
+                        <p class="text-text-secondary"><span data-i18n="analysis_of">Generato il</span> <span
+                                id="analysis-date"></span></p>
                     </div>
                     <button id="btn-goto-bookmark" onclick="scrollToBookmark()"
                         class="hidden items-center gap-2 bg-primary/10 hover:bg-primary/20 text-primary px-4 py-2 rounded-lg text-sm font-medium transition-all border border-primary/20 animate-fade-in">
@@ -485,7 +487,7 @@
                 <div class="grid md:grid-cols-4 gap-6 mb-12">
                     <div class="glass rounded-xl p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-text-secondary">Persone che segui</span>
+                            <span class="text-text-secondary" data-i18n="following_label">Persone che segui</span>
                             <i data-lucide="user-plus" class="w-5 h-5 text-status-info"></i>
                         </div>
                         <p class="text-3xl font-bold" id="following-count">0</p>
@@ -493,7 +495,7 @@
 
                     <div class="glass rounded-xl p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-text-secondary">I tuoi follower</span>
+                            <span class="text-text-secondary" data-i18n="followers_label">I tuoi follower</span>
                             <i data-lucide="users" class="w-5 h-5 text-status-success"></i>
                         </div>
                         <p class="text-3xl font-bold" id="followers-count">0</p>
@@ -501,7 +503,7 @@
 
                     <div class="glass rounded-xl p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-text-secondary">Non ti seguono</span>
+                            <span class="text-text-secondary" data-i18n="not_following_back">Non ti seguono</span>
                             <i data-lucide="user-minus" class="w-5 h-5 text-status-error"></i>
                         </div>
                         <p class="text-3xl font-bold" id="not-following-back-count">0</p>
@@ -509,7 +511,7 @@
 
                     <div class="glass rounded-xl p-6">
                         <div class="flex items-center justify-between mb-4">
-                            <span class="text-text-secondary">Ti seguono e tu li segui</span>
+                            <span class="text-text-secondary" data-i18n="mutual_label">Ti seguono e tu li segui</span>
                             <i data-lucide="users-2" class="w-5 h-5 text-status-success"></i>
                         </div>
                         <p class="text-3xl font-bold" id="mutual-follows-count">0</p>
@@ -527,7 +529,7 @@
                             <span
                                 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-[#833AB4] via-[#FD1D1D] to-[#FCAF45]"
                                 id="chart-total">0</span>
-                            <span class="text-xs text-text-muted">Totale Analizzati</span>
+                            <span class="text-xs text-text-muted" data-i18n="total_analyzed">Totale Analizzati</span>
                         </div>
                     </div>
                     <div id="chart-legend" class="grid grid-cols-2 gap-x-8 gap-y-4">
@@ -675,12 +677,13 @@
             <div class="glass rounded-xl p-6">
                 <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
                     <i data-lucide="bar-chart" class="w-5 h-5"></i>
-                    Statistiche
+                    <span data-i18n="stats_title">Statistiche</span>
                 </h4>
                 <div class="space-y-3">
                     <div>
                         <div class="flex justify-between text-sm mb-1">
-                            <span class="text-text-secondary">Rapporto follower/seguendo</span>
+                            <span class="text-text-secondary" data-i18n="follow_ratio_label">Rapporto
+                                follower/seguendo</span>
                             <span id="follow-ratio">0%</span>
                         </div>
                         <div class="h-2 bg-white/10 rounded-full overflow-hidden">
@@ -690,15 +693,15 @@
                     </div>
                     <div class="text-sm">
                         <div class="flex justify-between py-2 border-b border-white/10">
-                            <span class="text-text-secondary">Followback rate</span>
+                            <span class="text-text-secondary" data-i18n="followback_rate_label">Followback rate</span>
                             <span id="followback-rate">0%</span>
                         </div>
                         <div class="flex justify-between py-2 border-b border-white/10">
-                            <span class="text-text-secondary">Account verificati</span>
+                            <span class="text-text-secondary" data-i18n="verified_count_label">Account verificati</span>
                             <span id="verified-count">0</span>
                         </div>
                         <div class="flex justify-between py-2">
-                            <span class="text-text-secondary">Account privati</span>
+                            <span class="text-text-secondary" data-i18n="private_count_label">Account privati</span>
                             <span id="private-count">0</span>
                         </div>
                     </div>
@@ -708,27 +711,28 @@
             <div class="glass rounded-xl p-6">
                 <h4 class="font-heading font-bold mb-4 flex items-center gap-2">
                     <i data-lucide="lightbulb" class="w-5 h-5"></i>
-                    Consigli
+                    <span data-i18n="advice_title">Consigli</span>
                 </h4>
                 <ul class="space-y-3 text-text-secondary">
                     <li class="flex items-start gap-2">
                         <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
-                        <span>Considera di smettere di seguire account che non ti seguono</span>
+                        <span data-i18n="advice_1">Considera di smettere di seguire account che non ti seguono</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
-                        <span>Mantieni un rapporto follower/seguendo equilibrato (>70%)</span>
+                        <span data-i18n="advice_2">Mantieni un rapporto follower/seguendo equilibrato (>70%)</span>
                     </li>
                     <li class="flex items-start gap-2">
                         <i data-lucide="check-circle" class="w-4 h-4 text-status-success mt-0.5"></i>
-                        <span>Analizza regolarmente la tua lista di follower</span>
+                        <span data-i18n="advice_3">Analizza regolarmente la tua lista di follower</span>
                     </li>
                 </ul>
                 <div class="mt-4 p-3 bg-white/5 rounded-lg">
                     <p class="text-sm text-text-secondary">
                         <i data-lucide="info" class="w-4 h-4 inline mr-2"></i>
-                        Suggerimento: I link "Visita profilo" potrebbero non funzionare per account con username
-                        speciali.
+                        <span data-i18n="advice_tip">Suggerimento: I link "Visita profilo" potrebbero non funzionare per
+                            account con username
+                            speciali.</span>
                     </p>
                 </div>
             </div>
@@ -867,7 +871,7 @@
         <div class="animate-pulse mb-4">
             <i data-lucide="loader-circle" class="w-16 h-16 text-primary animate-spin"></i>
         </div>
-        <h3 class="font-heading text-xl font-bold mb-2">Analisi in corso</h3>
+        <h3 class="font-heading text-xl font-bold mb-2" data-i18n="analyzing">Analisi in corso</h3>
         <p class="text-text-secondary max-w-md text-center" id="loading-message">Sto analizzando i tuoi dati...</p>
         <div class="mt-4 w-64 h-2 bg-white/10 rounded-full overflow-hidden">
             <div id="loading-progress" class="h-full bg-primary rounded-full" style="width: 0%"></div>
@@ -984,7 +988,25 @@
                 copy_error: "Errore nella copia",
                 analysis_of: "Analisi del",
                 stats_not_following_count_label: "non ti seguono",
-                lang_name: "Lingua: Italiano"
+                lang_name: "Lingua: Italiano",
+                stats_title: "Statistiche",
+                advice_title: "Consigli",
+                advice_1: "Considera di smettere di seguire account che non ti seguono",
+                advice_2: "Mantieni un rapporto follower/seguendo equilibrato (>70%)",
+                advice_3: "Analizza regolarmente la tua lista di follower",
+                advice_tip: "Suggerimento: I link \"Visita profilo\" potrebbero non funzionare per account con username speciali.",
+                footer_made_by: "Realizzato da",
+                footer_rights: "© 2026 FollowCheck • Analisi Sicura Locale",
+                follow_ratio_label: "Rapporto follower/seguendo",
+                followback_rate_label: "Followback rate",
+                verified_count_label: "Account verificati",
+                private_count_label: "Account privati",
+                total_analyzed: "Totale Analizzati",
+                list_title_not_following: "Persone che segui ma non ti seguono",
+                list_desc_not_following: "Queste persone segui ma loro non seguono te",
+                list_title_you_dont_follow: "Persone che ti seguono ma non segui",
+                list_desc_you_dont_follow: "Queste persone ti seguono ma tu non le segui",
+                storage_full_warning: "Memoria piena: Impossibile salvare nello storico"
             },
             en: {
                 title: "FollowCheck",
@@ -1068,7 +1090,25 @@
                 copy_error: "Error copying",
                 analysis_of: "Analysis of",
                 stats_not_following_count_label: "don't follow you",
-                lang_name: "Language: English"
+                lang_name: "Language: English",
+                stats_title: "Statistics",
+                advice_title: "Tips",
+                advice_1: "Consider unfollowing accounts that don't follow you back",
+                advice_2: "Maintain a balanced follower/following ratio (>70%)",
+                advice_3: "Regularly analyze your follower list",
+                advice_tip: "Tip: \"Open\" links might not work for accounts with special characters in username.",
+                footer_made_by: "Made by",
+                footer_rights: "© 2026 FollowCheck • Secure Local Analysis",
+                follow_ratio_label: "Follower/Following Ratio",
+                followback_rate_label: "Followback rate",
+                verified_count_label: "Verified accounts",
+                private_count_label: "Private accounts",
+                total_analyzed: "Total Analyzed",
+                list_title_not_following: "People you follow but don't follow you back",
+                list_desc_not_following: "These people you follow but they don't follow you",
+                list_title_you_dont_follow: "People who follow you but you don't follow",
+                list_desc_you_dont_follow: "These people follow you but you don't follow them back",
+                storage_full_warning: "Storage full: Cannot save to history"
             }
         };
 
@@ -1579,9 +1619,8 @@
                     localStorage.setItem('followcheck_history', JSON.stringify(state.history));
                 } catch (e) {
                     console.warn('LocalStorage full, history not saved', e);
-                    // If quota exceeded, try to clear history or just proceed
                     if (e.name === 'QuotaExceededError') {
-                        showToast('Memoria piena: Impossibile salvare nello storico', 'warning');
+                        showToast(t.storage_full_warning, 'warning');
                     }
                 }
 
@@ -1618,7 +1657,7 @@
 
         // Reset UI after analysis
         function resetUI() {
-            elements.btnAnalyze.innerHTML = `Analizza Ora <i data-lucide="chevron-right" class="w-5 h-5 inline ml-2"></i>`;
+            elements.btnAnalyze.innerHTML = `${translations[state.lang].analyze_now} <i data-lucide="chevron-right" class="w-5 h-5 inline ml-2"></i>`;
             checkAnalysisReady();
         }
 
@@ -1715,12 +1754,12 @@
             // set titles
             const titles = {
                 'not-following-back': {
-                    it: { title: 'Persone che segui ma non ti seguono', desc: 'Queste persone segui ma loro non seguono te' },
-                    en: { title: 'People you follow but don\'t follow you back', desc: 'These people you follow but they don\'t follow you' }
+                    it: { title: translations['it'].list_title_not_following, desc: translations['it'].list_desc_not_following },
+                    en: { title: translations['en'].list_title_not_following, desc: translations['en'].list_desc_not_following }
                 },
                 'you-dont-follow': {
-                    it: { title: 'Persone che ti seguono ma non segui', desc: 'Queste persone ti seguono ma tu non le segui' },
-                    en: { title: 'People who follow you but you don\'t follow', desc: 'These people follow you but you don\'t follow them back' }
+                    it: { title: translations['it'].list_title_you_dont_follow, desc: translations['it'].list_desc_you_dont_follow },
+                    en: { title: translations['en'].list_title_you_dont_follow, desc: translations['en'].list_desc_you_dont_follow }
                 }
             };
 
@@ -2114,8 +2153,8 @@
             // Adjust Logic: Pie = Mutual vs Not Following Back (Total Following)
             // Segments
             const segments = [
-                { label: 'Ricambiano', value: mutual, color: '#10B981' }, // Success Green
-                { label: 'Non Ricambiano', value: notFollowingBack, color: '#EF4444' } // Error Red
+                { label: translations[state.lang].mutual_label, value: mutual, color: '#10B981' }, // Success Green
+                { label: translations[state.lang].stats_not_following_count_label, value: notFollowingBack, color: '#EF4444' } // Error Red
                 // We could add 'Followers you dont follow' but that's a different list. 
                 // Let's stick to the main analysis: Following breakdown.
             ];
@@ -2149,7 +2188,18 @@
             chart.innerHTML = svgContent;
             legend.innerHTML = legendContent;
             totalDisplay.textContent = total;
+
+            // Re-render chart on language change
+            renderChart = () => drawStatsChart(analysis);
         }
+
+        // Add chart re-render support
+        let renderChart = null;
+        const originalUpdateTexts = updateTexts;
+        updateTexts = function () {
+            originalUpdateTexts();
+            if (renderChart) renderChart();
+        };
     </script>
 
     <!-- Footer -->
@@ -2165,7 +2215,8 @@
             </div>
 
             <p class="text-text-muted text-sm font-medium tracking-wide">
-                Realizzato da <span class="text-text-primary font-bold">Orlando Capasso</span>
+                <span data-i18n="footer_made_by">Realizzato da</span> <span class="text-text-primary font-bold">Orlando
+                    Capasso</span>
             </p>
             <p class="text-text-muted text-[10px] mt-4 opacity-50 uppercase tracking-[0.3em]">
                 &copy; 2026 FollowCheck &bull; Analisi Sicura Locale
