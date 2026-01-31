@@ -1213,7 +1213,9 @@
             document.getElementById(`page-${pageId}`).classList.remove('hidden-page');
 
             // Scroll to top
-            window.scrollTo(0, 0);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'instant' });
+            }, 10);
 
             // Update icons
             setTimeout(() => lucide.createIcons(), 10);
@@ -1640,6 +1642,8 @@
                 setTimeout(() => {
                     elements.loadingOverlay.classList.add('hidden');
                     elements.loadingProgress.style.width = '0%';
+                    // Force scroll to top when analysis is done and overlay is hidden
+                    window.scrollTo({ top: 0, behavior: 'instant' });
                 }, 300);
 
                 // Reset button
