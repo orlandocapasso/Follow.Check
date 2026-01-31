@@ -1212,6 +1212,9 @@
             // Show selected page
             document.getElementById(`page-${pageId}`).classList.remove('hidden-page');
 
+            // Scroll to top
+            window.scrollTo(0, 0);
+
             // Update icons
             setTimeout(() => lucide.createIcons(), 10);
         }
