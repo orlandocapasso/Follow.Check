@@ -977,7 +977,9 @@
                 tab_followers: "Followers",
                 tab_following: "Seguiti",
                 tab_not_back: "Non ricambiano",
-                tab_mutual: "Vi seguite a vicenda"
+                tab_mutual: "Vi seguite a vicenda",
+                no_history: "Nessuna analisi salvata",
+                analysis_of: "Analisi del"
             },
             en: {
                 dashboard_title: "Home",
@@ -1048,7 +1050,9 @@
                 tab_followers: "Followers",
                 tab_following: "Following",
                 tab_not_back: "Not following back",
-                tab_mutual: "Mutual"
+                tab_mutual: "Mutual",
+                no_history: "No history saved",
+                analysis_of: "Analysis of"
             }
         };
 
@@ -1734,6 +1738,8 @@
                 if (state.currentAnalysis) {
                     state.currentAnalysis.notFollowingBack = state.currentAnalysis.notFollowingBack.filter(u => u.username !== username);
                     state.currentAnalysis.mutual = state.currentAnalysis.mutual.filter(u => u.username !== username);
+                    state.currentAnalysis.followers = state.currentAnalysis.followers.filter(u => u.username !== username);
+                    state.currentAnalysis.following = state.currentAnalysis.following.filter(u => u.username !== username);
                 }
                 showToast(`@${username} nascosto`, 'info');
                 displayAnalysisOverview();
@@ -1769,9 +1775,9 @@
                             <div class="p-6 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors cursor-pointer group border-b border-border-light dark:border-border-dark last:border-0" onclick="loadHistory(${i})">
                                 <div class="flex justify-between items-center">
                                     <div class="flex items-center gap-4">
-                                        <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold shadow-sm">${a.followers.length}</div>
+                                        <div class="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary font-bold shadow-sm">${a.followers ? a.followers.length : 0}</div>
                                         <div>
-                                            <p class="font-bold text-gray-900 dark:text-white">${a.date || 'Unknown'}</p>
+                                            <p class="font-bold text-gray-900 dark:text-white">${translations[state.lang].analysis_of} ${a.date || 'Unknown'}</p>
                                             <p class="text-xs text-gray-400 font-medium">${a.following ? a.following.length : 0} ${translations[state.lang].history_stat_desc}</p>
                                         </div>
                                     </div>
@@ -1799,16 +1805,7 @@
 
 
 
-        function showToast(m, t) {
-            const toast = document.getElementById('toast');
-            const msg = document.getElementById('toast-message');
-            const icon = document.getElementById('toast-icon');
-            if (!toast || !msg || !icon) return;
-            msg.textContent = m;
-            icon.innerHTML = `<span class="material-icons-round">${t === 'success' ? 'check_circle' : 'error'}</span>`;
-            toast.className = `toast toast-${t} show`;
-            setTimeout(() => toast.classList.remove('show'), 3000);
-        }
+
     </script>
 </body>
 
