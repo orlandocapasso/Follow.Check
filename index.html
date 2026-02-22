@@ -166,7 +166,9 @@
             }
 
             .mobile-header-actions {
-                transform: translateY(-4px);
+                position: absolute;
+                right: 1rem;
+                top: calc(var(--safe-top) + 0.35rem);
             }
         }
     </style>
@@ -200,11 +202,13 @@
         </div>
         <div class="mobile-header-actions flex items-center gap-2">
             <button id="mobile-bookmark-btn" onclick="return openBookmarkProfile()"
+                type="button"
                 class="p-1.5 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
                 title="Apri segnalibro">
                 <span id="mobile-bookmark-icon" class="material-icons-round text-2xl">bookmark_border</span>
             </button>
             <button onclick="toggleMobileMenu()"
+                type="button"
                 class="p-1.5 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all">
                 <span class="material-icons-round text-2xl">menu</span>
             </button>
@@ -1639,10 +1643,10 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-start sm:justify-end gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
-                                    <button data-username="${encodeURIComponent(u.username)}" onclick="toggleBookmark(decodeURIComponent(this.dataset.username))" class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="Segnalibro">
+                                    <button type="button" onclick='toggleBookmark(${JSON.stringify(u.username)})' class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="Segnalibro">
                                         <span class="material-icons-round text-sm">${state.view.bookmark === u.username ? 'bookmark' : 'bookmark_border'}</span>
                                     </button>
-                                    <button data-username="${encodeURIComponent(u.username)}" onclick="hideUser(decodeURIComponent(this.dataset.username))" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="Nascondi">
+                                    <button type="button" onclick='hideUser(${JSON.stringify(u.username)})' class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="Nascondi">
                                         <span class="material-icons-round text-sm">visibility_off</span>
                                         <span class="text-[11px]">Rimuovi</span>
                                     </button>
