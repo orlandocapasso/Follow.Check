@@ -201,14 +201,12 @@
             <span class="font-display font-bold text-lg tracking-tight text-gray-900 dark:text-white">FollowCheck</span>
         </div>
         <div class="mobile-header-actions flex items-center gap-2">
-            <button id="mobile-bookmark-btn" onclick="return openBookmarkProfile()"
-                type="button"
+            <button id="mobile-bookmark-btn" onclick="return openBookmarkProfile()" type="button"
                 class="p-1.5 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
                 title="Apri segnalibro">
                 <span id="mobile-bookmark-icon" class="material-icons-round text-2xl">bookmark_border</span>
             </button>
-            <button onclick="toggleMobileMenu()"
-                type="button"
+            <button onclick="toggleMobileMenu()" type="button"
                 class="p-1.5 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all">
                 <span class="material-icons-round text-2xl">menu</span>
             </button>
@@ -294,7 +292,8 @@
         <div class="fixed inset-0 z-0 pointer-events-none bg-mesh opacity-80 dark:opacity-100"></div>
 
         <!-- Global Header -->
-        <header class="global-mobile-controls flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-10">
+        <header
+            class="global-mobile-controls flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-10">
             <div></div>
             <div class="w-full flex flex-wrap gap-2 sm:gap-3 items-center justify-start sm:justify-end">
                 <!-- Language Toggle -->
@@ -1883,9 +1882,33 @@
             showPage('results');
         }
 
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toast-icon');
+            const msg = document.getElementById('toast-message');
+            if (!toast || !msg) return;
 
+            toast.className = 'toast show';
 
+            if (icon) {
+                if (type === 'success') {
+                    icon.className = 'material-icons-round text-green-500 text-2xl';
+                    icon.textContent = 'check_circle';
+                } else if (type === 'error') {
+                    icon.className = 'material-icons-round text-red-500 text-2xl';
+                    icon.textContent = 'error';
+                } else {
+                    icon.className = 'material-icons-round text-primary text-2xl';
+                    icon.textContent = 'info';
+                }
+            }
 
+            msg.textContent = message;
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
 
     </script>
 </body>
