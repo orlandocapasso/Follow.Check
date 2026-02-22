@@ -200,7 +200,21 @@
             </svg>
             <span class="font-display font-bold text-lg tracking-tight text-gray-900 dark:text-white">FollowCheck</span>
         </div>
-        <div class="mobile-header-actions flex items-center gap-2">
+        <div class="mobile-header-actions flex items-center gap-1.5">
+            <!-- Mobile Language Toggle -->
+            <div
+                class="flex bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg p-0.5 shadow-sm scale-90 origin-right">
+                <button onclick="setLanguage('en')" id="mob-lang-en"
+                    class="px-2 py-1 rounded-md text-[10px] font-bold transition-all text-gray-400">EN</button>
+                <button onclick="setLanguage('it')" id="mob-lang-it"
+                    class="px-2 py-1 rounded-md text-[10px] font-bold transition-all bg-white dark:bg-surface-dark-2 text-primary shadow-sm border border-primary/20">IT</button>
+            </div>
+
+            <button id="btn-refresh-mob" onclick="startAnalysis()"
+                class="p-2 rounded-xl text-primary hover:bg-primary/10 transition-all" title="Aggiorna">
+                <span class="material-icons-round text-2xl">refresh</span>
+            </button>
+
             <button id="mobile-bookmark-btn" onclick="return openBookmarkProfile()" type="button"
                 class="p-1.5 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
                 title="Apri segnalibro">
@@ -293,7 +307,7 @@
 
         <!-- Global Header -->
         <header
-            class="global-mobile-controls flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-10">
+            class="hidden lg:flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-10">
             <div></div>
             <div class="w-full flex flex-wrap gap-2 sm:gap-3 items-center justify-start sm:justify-end">
                 <!-- Language Toggle -->
@@ -1205,12 +1219,21 @@
             // Update UI buttons
             const btnEn = document.getElementById('lang-btn-en');
             const btnIt = document.getElementById('lang-btn-it');
-            if (btnEn && btnIt) {
-                const activeClass = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white dark:bg-surface-dark-2 text-primary shadow-sm border border-primary/20";
-                const inactiveClass = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white";
+            const mobEn = document.getElementById('mob-lang-en');
+            const mobIt = document.getElementById('mob-lang-it');
 
+            const activeClass = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all bg-white dark:bg-surface-dark-2 text-primary shadow-sm border border-primary/20";
+            const inactiveClass = "px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white";
+            const activeMob = "px-2 py-1 rounded-md text-[10px] font-bold transition-all bg-white dark:bg-surface-dark-2 text-primary shadow-sm border border-primary/20";
+            const inactiveMob = "px-2 py-1 rounded-md text-[10px] font-bold transition-all text-gray-400";
+
+            if (btnEn && btnIt) {
                 btnEn.className = l === 'en' ? activeClass : inactiveClass;
                 btnIt.className = l === 'it' ? activeClass : inactiveClass;
+            }
+            if (mobEn && mobIt) {
+                mobEn.className = l === 'en' ? activeMob : inactiveMob;
+                mobIt.className = l === 'it' ? activeMob : inactiveMob;
             }
             showToast(l === 'it' ? 'Lingua: Italiano' : 'Language: English', 'success');
         }
@@ -1290,10 +1313,16 @@
         }
 
         function checkAnalysisReady() {
-            if (state.followers && state.following) {
-                elements.btnAnalyze.disabled = false;
-                updateLandingPreview();
-            }
+            const ready = state.followers && state.following;
+            if (elements.btnAnalyze) elements.btnAnalyze.disabled = !ready;
+
+            const btnRefreshMob = document.getElementById('btn-refresh-mob');
+            if (btnRefreshMob) btnRefreshMob.disabled = !ready;
+
+            const btnRefreshDesk = document.getElementById('btn-refresh');
+            if (btnRefreshDesk) btnRefreshDesk.disabled = !ready;
+
+            if (ready) updateLandingPreview();
         }
 
         function updateLandingPreview() {
