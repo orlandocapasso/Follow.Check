@@ -135,6 +135,36 @@
             z-index: 9999;
             backdrop-filter: blur(8px);
         }
+
+        :root {
+            --safe-top: env(safe-area-inset-top, 0px);
+        }
+
+        .mobile-header-safe {
+            height: calc(4rem + var(--safe-top));
+            padding-top: var(--safe-top);
+        }
+
+        @media (max-width: 1023px) {
+            .main-mobile-offset {
+                padding-top: calc(4rem + var(--safe-top) + 0.75rem);
+            }
+
+            .global-mobile-controls {
+                position: sticky;
+                top: calc(4rem + var(--safe-top));
+                z-index: 20;
+                padding-top: 0.35rem;
+                padding-bottom: 0.35rem;
+                backdrop-filter: blur(10px);
+                -webkit-backdrop-filter: blur(10px);
+                background: rgba(255, 255, 255, 0.9);
+            }
+
+            .dark .global-mobile-controls {
+                background: rgba(5, 5, 5, 0.82);
+            }
+        }
     </style>
 </head>
 
@@ -142,7 +172,7 @@
     class="bg-white dark:bg-background-dark text-gray-800 dark:text-gray-200 font-sans transition-colors duration-300 h-screen flex overflow-hidden selection:bg-primary selection:text-white">
     <!-- Mobile Header -->
     <header
-        class="lg:hidden fixed top-0 left-0 right-0 h-16 bg-white dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-4 z-30 transition-colors duration-300">
+        class="mobile-header-safe lg:hidden fixed top-0 left-0 right-0 bg-white dark:bg-surface-dark border-b border-border-light dark:border-border-dark flex items-center justify-between px-4 z-30 transition-colors duration-300">
         <div class="flex items-center gap-3">
             <svg class="w-8 h-8 flex-shrink-0 drop-shadow-[0_0_8px_rgba(225,48,108,0.35)]" viewBox="0 0 24 24"
                 fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -245,16 +275,16 @@
 
     <!-- Main Content Area -->
     <main id="main-content"
-        class="flex-1 h-full overflow-y-auto bg-white dark:bg-background-dark p-6 lg:p-10 relative custom-scrollbar transition-colors duration-300 pt-16 lg:pt-8">
+        class="main-mobile-offset flex-1 h-full overflow-y-auto bg-white dark:bg-background-dark p-6 lg:p-10 relative custom-scrollbar transition-colors duration-300 lg:pt-8">
         <div class="fixed inset-0 z-0 pointer-events-none bg-mesh opacity-80 dark:opacity-100"></div>
 
         <!-- Global Header -->
-        <header class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-10">
+        <header class="global-mobile-controls flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4 relative z-10">
             <div></div>
-            <div class="flex flex-wrap gap-3 items-center">
+            <div class="w-full flex flex-wrap gap-2 sm:gap-3 items-center justify-start sm:justify-end">
                 <!-- Language Toggle -->
                 <div
-                    class="flex bg-gray-100 dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl p-1 shadow-md mr-2">
+                    class="flex bg-gray-100 dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl p-1 shadow-md">
                     <button onclick="setLanguage('en')" id="lang-btn-en"
                         class="px-3 py-1.5 rounded-lg text-xs font-bold transition-all text-gray-400 hover:text-gray-900 dark:hover:text-white">EN</button>
                     <button onclick="setLanguage('it')" id="lang-btn-it"
@@ -263,16 +293,16 @@
 
                 <!-- Bookmark Display (clickable) -->
                 <a id="stat-bookmark-container" href="#" onclick="return openBookmarkProfile()"
-                    class="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-100 dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl shadow-sm mr-2 hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer no-underline">
+                    class="flex items-center gap-2 px-3 md:px-4 py-2 bg-gray-100 dark:bg-surface-dark border border-gray-200 dark:border-border-dark rounded-xl shadow-sm hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer no-underline">
                     <span class="material-icons-round text-amber-500 text-sm">bookmark</span>
                     <span id="stat-bookmark-val"
-                        class="text-xs font-bold text-gray-600 dark:text-gray-300 max-w-[100px] truncate">-</span>
+                        class="hidden sm:inline text-xs font-bold text-gray-600 dark:text-gray-300 max-w-[100px] truncate">-</span>
                 </a>
 
                 <button id="btn-refresh" onclick="startAnalysis()"
-                    class="flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-pink-600 text-white text-sm font-medium hover:brightness-110 transition-all shadow-glow active:scale-95 disabled:opacity-50 disabled:grayscale">
+                    class="flex items-center gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-pink-600 text-white text-xs sm:text-sm font-medium hover:brightness-110 transition-all shadow-glow active:scale-95 disabled:opacity-50 disabled:grayscale">
                     <span class="material-icons-round text-base">refresh</span>
-                    <span data-i18n="refresh_analysis">Refresh Analysis</span>
+                    <span class="hidden sm:inline" data-i18n="refresh_analysis">Refresh Analysis</span>
                 </button>
             </div>
         </header>
@@ -1281,9 +1311,6 @@
                     const elBook = document.getElementById('stat-bookmark-val');
                     if (elBook) {
                         elBook.textContent = state.view.bookmark ? `${state.view.bookmark}` : '-';
-                        elBook.className = state.view.bookmark
-                            ? "text-xs font-bold text-primary max-w-[100px] truncate"
-                            : "text-xs font-bold text-gray-600 dark:text-gray-300 max-w-[100px] truncate";
                     }
                 }
             } catch (e) {
