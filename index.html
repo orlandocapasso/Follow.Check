@@ -164,6 +164,10 @@
             .dark .global-mobile-controls {
                 background: rgba(5, 5, 5, 0.82);
             }
+
+            .mobile-header-actions {
+                transform: translateY(-4px);
+            }
         }
     </style>
 </head>
@@ -194,14 +198,14 @@
             </svg>
             <span class="font-display font-bold text-lg tracking-tight text-gray-900 dark:text-white">FollowCheck</span>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="mobile-header-actions flex items-center gap-2">
             <button id="mobile-bookmark-btn" onclick="return openBookmarkProfile()"
-                class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
+                class="p-1.5 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
                 title="Apri segnalibro">
                 <span id="mobile-bookmark-icon" class="material-icons-round text-2xl">bookmark_border</span>
             </button>
             <button onclick="toggleMobileMenu()"
-                class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all">
+                class="p-1.5 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all">
                 <span class="material-icons-round text-2xl">menu</span>
             </button>
         </div>
@@ -1576,7 +1580,9 @@
                 default: list = a.notFollowingBack; break;
             }
             const query = state.view.searchQuery.toLowerCase();
-            let filtered = query ? list.filter(u => u.username.toLowerCase().includes(query)) : [...list];
+            const hiddenSet = new Set(state.view.hiddenUsers.map(u => u.toLowerCase()));
+            const visibleList = list.filter(u => !hiddenSet.has(u.username.toLowerCase()));
+            let filtered = query ? visibleList.filter(u => u.username.toLowerCase().includes(query)) : [...visibleList];
 
             // Apply sorting
             if (state.view.sortBy === 'az') {
@@ -1633,10 +1639,10 @@
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-start sm:justify-end gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
-                                    <button onclick="toggleBookmark(decodeURIComponent('${encodeURIComponent(u.username)}'))" class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="Segnalibro">
+                                    <button data-username="${encodeURIComponent(u.username)}" onclick="toggleBookmark(decodeURIComponent(this.dataset.username))" class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="Segnalibro">
                                         <span class="material-icons-round text-sm">${state.view.bookmark === u.username ? 'bookmark' : 'bookmark_border'}</span>
                                     </button>
-                                    <button onclick="hideUser(decodeURIComponent('${encodeURIComponent(u.username)}'))" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="Nascondi">
+                                    <button data-username="${encodeURIComponent(u.username)}" onclick="hideUser(decodeURIComponent(this.dataset.username))" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="Nascondi">
                                         <span class="material-icons-round text-sm">visibility_off</span>
                                         <span class="text-[11px]">Rimuovi</span>
                                     </button>
@@ -1800,15 +1806,17 @@
         }
 
         function hideUser(username) {
-            if (!state.view.hiddenUsers.includes(username)) {
+            const normalized = username.toLowerCase();
+            const hiddenNormalized = state.view.hiddenUsers.map(u => u.toLowerCase());
+            if (!hiddenNormalized.includes(normalized)) {
                 state.view.hiddenUsers.push(username);
                 localStorage.setItem('followcheck_hidden', JSON.stringify(state.view.hiddenUsers));
                 // Remove from current analysis lists
                 if (state.currentAnalysis) {
-                    state.currentAnalysis.notFollowingBack = state.currentAnalysis.notFollowingBack.filter(u => u.username !== username);
-                    state.currentAnalysis.mutual = state.currentAnalysis.mutual.filter(u => u.username !== username);
-                    state.currentAnalysis.followers = state.currentAnalysis.followers.filter(u => u.username !== username);
-                    state.currentAnalysis.following = state.currentAnalysis.following.filter(u => u.username !== username);
+                    state.currentAnalysis.notFollowingBack = state.currentAnalysis.notFollowingBack.filter(u => u.username.toLowerCase() !== normalized);
+                    state.currentAnalysis.mutual = state.currentAnalysis.mutual.filter(u => u.username.toLowerCase() !== normalized);
+                    state.currentAnalysis.followers = state.currentAnalysis.followers.filter(u => u.username.toLowerCase() !== normalized);
+                    state.currentAnalysis.following = state.currentAnalysis.following.filter(u => u.username.toLowerCase() !== normalized);
                 }
                 showToast(`@${username} nascosto`, 'info');
                 displayAnalysisOverview();
