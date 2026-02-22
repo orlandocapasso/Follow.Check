@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8" />
-    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport" />
     <title>FollowCheck - Instagram Analysis</title>
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
     <link
@@ -147,7 +147,7 @@
 
         @media (max-width: 1023px) {
             .main-mobile-offset {
-                padding-top: calc(4rem + var(--safe-top) + 0.75rem);
+                padding-top: calc(4rem + var(--safe-top) + 0.75rem) !important;
             }
 
             .global-mobile-controls {
@@ -194,10 +194,17 @@
             </svg>
             <span class="font-display font-bold text-lg tracking-tight text-gray-900 dark:text-white">FollowCheck</span>
         </div>
-        <button onclick="toggleMobileMenu()"
-            class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all">
-            <span class="material-icons-round text-2xl">menu</span>
-        </button>
+        <div class="flex items-center gap-2">
+            <button id="mobile-bookmark-btn" onclick="return openBookmarkProfile()"
+                class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all"
+                title="Apri segnalibro">
+                <span id="mobile-bookmark-icon" class="material-icons-round text-2xl">bookmark_border</span>
+            </button>
+            <button onclick="toggleMobileMenu()"
+                class="p-2 rounded-xl text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-all">
+                <span class="material-icons-round text-2xl">menu</span>
+            </button>
+        </div>
     </header>
 
     <!-- Mobile Menu Backdrop -->
@@ -1155,6 +1162,7 @@
             if (state.history.length > 0) updateHistoryDisplay();
             setupDragAndDrop();
             showPage('landing');
+            updateMobileBookmarkButton();
         });
 
         function toggleTheme() {
@@ -1185,6 +1193,7 @@
             state.lang = l;
             localStorage.setItem('fc_lang', l);
             updateTranslations();
+            updateMobileBookmarkButton();
 
             // Update UI buttons
             const btnEn = document.getElementById('lang-btn-en');
@@ -1504,6 +1513,7 @@
                 elBook.textContent = state.view.bookmark ? `@${state.view.bookmark}` : '-';
                 // Removed class overwriting to preserve header styling
             }
+            updateMobileBookmarkButton();
 
             // New v3 Ratio Stats
             const elRatioVal = document.getElementById('stat-ratio-val');
@@ -1622,15 +1632,15 @@
                                         <span class="text-[10px] text-gray-500 uppercase tracking-tighter truncate">Profilo Instagram</span>
                                     </div>
                                 </div>
-                                <div class="flex items-center justify-end gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
-                                    <button onclick="toggleBookmark('${u.username}')" class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="Segnalibro">
+                                <div class="flex items-center justify-start sm:justify-end gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
+                                    <button onclick="toggleBookmark(decodeURIComponent('${encodeURIComponent(u.username)}'))" class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="Segnalibro">
                                         <span class="material-icons-round text-sm">${state.view.bookmark === u.username ? 'bookmark' : 'bookmark_border'}</span>
                                     </button>
-                                    <button onclick="hideUser('${u.username}')" class="flex items-center gap-2 px-3 py-2 rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium" title="Nascondi">
+                                    <button onclick="hideUser(decodeURIComponent('${encodeURIComponent(u.username)}'))" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="Nascondi">
                                         <span class="material-icons-round text-sm">visibility_off</span>
-                                        <span class="hidden sm:inline text-xs">Rimuovi</span>
+                                        <span class="text-[11px]">Rimuovi</span>
                                     </button>
-                                    <a href="${u.profileUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-3 py-2 rounded-xl bg-primary text-white hover:bg-primary/90 transition-all shadow-md active:scale-95 font-bold" title="Apri profilo">
+                                    <a href="${u.profileUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl bg-primary text-white hover:bg-primary/90 transition-all shadow-md active:scale-95 font-bold shrink-0" title="Apri profilo">
                                         <span class="material-icons-round text-sm">open_in_new</span>
                                         <span class="hidden sm:inline text-xs">Apri</span>
                                     </a>
@@ -1715,7 +1725,10 @@
         }
 
         function openBookmarkProfile() {
-            if (!state.view.bookmark || !state.currentAnalysis) return false;
+            if (!state.view.bookmark || !state.currentAnalysis) {
+                showToast(state.lang === 'it' ? 'Nessun segnalibro disponibile' : 'No bookmark available', 'info');
+                return false;
+            }
 
             // Switch to the "not-following-back" tab
             setTab('not-following-back');
@@ -1768,8 +1781,22 @@
                 localStorage.setItem('followcheck_bookmark', username);
                 showToast(`Segnalibro aggiunto: @${username}`, 'success');
             }
+            updateMobileBookmarkButton();
             displayAnalysisOverview();
             renderCurrentResults();
+        }
+
+        function updateMobileBookmarkButton() {
+            const btn = document.getElementById('mobile-bookmark-btn');
+            const icon = document.getElementById('mobile-bookmark-icon');
+            if (!btn || !icon) return;
+            const hasBookmark = !!state.view.bookmark;
+            icon.textContent = hasBookmark ? 'bookmark' : 'bookmark_border';
+            btn.title = hasBookmark
+                ? (state.lang === 'it' ? `Apri segnalibro: @${state.view.bookmark}` : `Open bookmark: @${state.view.bookmark}`)
+                : (state.lang === 'it' ? 'Nessun segnalibro' : 'No bookmark');
+            btn.classList.toggle('text-amber-500', hasBookmark);
+            btn.classList.toggle('text-gray-500', !hasBookmark);
         }
 
         function hideUser(username) {
