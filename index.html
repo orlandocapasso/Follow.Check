@@ -1496,22 +1496,26 @@
                 elements.loadingMessage.textContent = state.lang === 'it' ? 'Calcolo risultati...' : 'Calculating results...';
                 elements.loadingProgress.style.width = '90%';
 
-                const fSet = new Set(followers.map(u => u.username.toLowerCase()));
-                const gSet = new Set(following.map(u => u.username.toLowerCase()));
-
-                // Filter hidden users immediately
                 const hidden = new Set(state.view.hiddenUsers.map(u => u.toLowerCase()));
-                const notBack = following.filter(u => !fSet.has(u.username.toLowerCase()) && !hidden.has(u.username.toLowerCase()));
-                const mutual = followers.filter(u => gSet.has(u.username.toLowerCase()) && !hidden.has(u.username.toLowerCase()));
+
+                // Filter hidden users from base lists
+                const filteredFollowers = followers.filter(u => !hidden.has(u.username.toLowerCase()));
+                const filteredFollowing = following.filter(u => !hidden.has(u.username.toLowerCase()));
+
+                const fSet = new Set(filteredFollowers.map(u => u.username.toLowerCase()));
+                const gSet = new Set(filteredFollowing.map(u => u.username.toLowerCase()));
+
+                const notBack = filteredFollowing.filter(u => !fSet.has(u.username.toLowerCase()));
+                const mutual = filteredFollowers.filter(u => gSet.has(u.username.toLowerCase()));
 
                 state.currentAnalysis = {
                     date: new Date().toLocaleString('it-IT'),
-                    followers: followers,
-                    following: following,
+                    followers: filteredFollowers,
+                    following: filteredFollowing,
                     notFollowingBack: notBack,
                     mutual: mutual,
-                    ratio: Math.round((followers.length / Math.max(1, following.length)) * 100),
-                    verifiedCount: followers.filter(u => u.isVerified).length + following.filter(u => u.isVerified).length,
+                    ratio: Math.round((filteredFollowers.length / Math.max(1, filteredFollowing.length)) * 100),
+                    verifiedCount: filteredFollowers.filter(u => u.isVerified).length + filteredFollowing.filter(u => u.isVerified).length,
                     privateCount: 0 // Placeholder as standard JSON export doesn't include privacy status
                 };
 
@@ -1849,6 +1853,8 @@
                     state.currentAnalysis.mutual = state.currentAnalysis.mutual.filter(u => u.username.toLowerCase() !== normalized);
                     state.currentAnalysis.followers = state.currentAnalysis.followers.filter(u => u.username.toLowerCase() !== normalized);
                     state.currentAnalysis.following = state.currentAnalysis.following.filter(u => u.username.toLowerCase() !== normalized);
+                    state.currentAnalysis.ratio = Math.round((state.currentAnalysis.followers.length / Math.max(1, state.currentAnalysis.following.length)) * 100);
+                    state.currentAnalysis.verifiedCount = state.currentAnalysis.followers.filter(u => u.isVerified).length + state.currentAnalysis.following.filter(u => u.isVerified).length;
                 }
                 showToast(`@${username} nascosto`, 'info');
                 displayAnalysisOverview();
@@ -1897,13 +1903,17 @@
         }
 
         function loadHistory(i) {
-            state.currentAnalysis = state.history[i];
+            state.currentAnalysis = JSON.parse(JSON.stringify(state.history[i]));
 
             // Ensure hidden users are filtered out from the loaded history
             if (state.currentAnalysis && state.view.hiddenUsers.length > 0) {
                 const hidden = new Set(state.view.hiddenUsers.map(u => u.toLowerCase()));
+                state.currentAnalysis.followers = state.currentAnalysis.followers.filter(u => !hidden.has(u.username.toLowerCase()));
+                state.currentAnalysis.following = state.currentAnalysis.following.filter(u => !hidden.has(u.username.toLowerCase()));
                 state.currentAnalysis.notFollowingBack = state.currentAnalysis.notFollowingBack.filter(u => !hidden.has(u.username.toLowerCase()));
                 state.currentAnalysis.mutual = state.currentAnalysis.mutual.filter(u => !hidden.has(u.username.toLowerCase()));
+                state.currentAnalysis.ratio = Math.round((state.currentAnalysis.followers.length / Math.max(1, state.currentAnalysis.following.length)) * 100);
+                state.currentAnalysis.verifiedCount = state.currentAnalysis.followers.filter(u => u.isVerified).length + state.currentAnalysis.following.filter(u => u.isVerified).length;
             }
 
             displayAnalysisOverview();
