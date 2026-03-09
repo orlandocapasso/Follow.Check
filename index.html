@@ -1230,6 +1230,13 @@
             });
             const searchInput = document.getElementById('search-input');
             if (searchInput) searchInput.placeholder = lang === 'it' ? 'Cerca utente...' : 'Search user...';
+
+            // Dynamic Sort Labels
+            const labelRecent = document.getElementById('sort-label-recent');
+            if (labelRecent) {
+                const isDesc = state.view.sortBy === 'recent' && state.view.sortOrder === 'desc';
+                labelRecent.textContent = isDesc ? t.sort_least_recent : t.sort_recent;
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
