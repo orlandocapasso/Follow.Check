@@ -1080,7 +1080,10 @@
                 copy_user: "Copiato:",
                 instagram_profile: "Profilo Instagram",
                 open_profile: "Apri",
-                hide_button: "Rimuovi"
+                hide_button: "Rimuovi",
+                title_bookmark: "Segnalibro",
+                title_hide: "Nascondi",
+                title_open_profile: "Apri profilo"
             },
             en: {
                 dashboard_title: "Home",
@@ -1178,7 +1181,10 @@
                 copy_user: "Copied:",
                 instagram_profile: "Instagram Profile",
                 open_profile: "Open",
-                hide_button: "Remove"
+                hide_button: "Remove",
+                title_bookmark: "Bookmark",
+                title_hide: "Hide",
+                title_open_profile: "Open profile"
             }
         };
 
@@ -1737,20 +1743,20 @@
                                             <span class="truncate">${u.username}</span>
                                             ${u.isVerified ? '<span class="material-icons-round text-blue-400 text-[12px]">verified</span>' : ''}
                                         </span>
-                                        <span class="text-[10px] text-gray-500 uppercase tracking-tighter truncate" data-i18n="instagram_profile">Profilo Instagram</span>
+                                        <span class="text-[10px] text-gray-500 uppercase tracking-tighter truncate">${translations[state.lang].instagram_profile}</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-start sm:justify-end gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
-                                    <button type="button" onclick='toggleBookmark(${JSON.stringify(u.username)})' class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="Segnalibro">
+                                    <button type="button" onclick='toggleBookmark(${JSON.stringify(u.username)})' class="p-2 rounded-xl border shrink-0 ${state.view.bookmark === u.username ? 'border-primary/50 bg-primary/10 text-primary' : 'border-border-light dark:border-white/10 text-gray-400 hover:text-primary hover:border-primary/30 hover:bg-primary/10'} transition-all" title="${translations[state.lang].title_bookmark}">
                                         <span class="material-icons-round text-sm">${state.view.bookmark === u.username ? 'bookmark' : 'bookmark_border'}</span>
                                     </button>
-                                    <button type="button" onclick='hideUser(${JSON.stringify(u.username)})' class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="Nascondi">
+                                    <button type="button" onclick='hideUser(${JSON.stringify(u.username)})' class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="${translations[state.lang].title_hide}">
                                         <span class="material-icons-round text-sm">visibility_off</span>
-                                        <span class="text-[11px]" data-i18n="hide_button">Rimuovi</span>
+                                        <span class="text-[11px]">${translations[state.lang].hide_button}</span>
                                     </button>
-                                    <a href="${u.profileUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl bg-primary text-white hover:bg-primary/90 transition-all shadow-md active:scale-95 font-bold shrink-0" title="Apri profilo">
+                                    <a href="${u.profileUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl bg-primary text-white hover:bg-primary/90 transition-all shadow-md active:scale-95 font-bold shrink-0" title="${translations[state.lang].title_open_profile}">
                                         <span class="material-icons-round text-sm">open_in_new</span>
-                                        <span class="hidden sm:inline text-xs" data-i18n="open_profile">Apri</span>
+                                        <span class="hidden sm:inline text-xs">${translations[state.lang].open_profile}</span>
                                     </a>
                                 </div>
                             </div>
