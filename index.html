@@ -210,7 +210,7 @@
                     class="px-2 py-1 rounded-md text-[10px] font-bold transition-all bg-white dark:bg-surface-dark-2 text-primary shadow-sm border border-primary/20">IT</button>
             </div>
 
-            <button id="btn-refresh-mob" onclick="startAnalysis()"
+            <button id="btn-refresh-mob" onclick="startAnalysis(true)"
                 class="p-2 rounded-xl text-primary hover:bg-primary/10 transition-all" title="Aggiorna">
                 <span class="material-icons-round text-2xl">refresh</span>
             </button>
@@ -327,7 +327,7 @@
                         class="hidden sm:inline text-xs font-bold text-gray-600 dark:text-gray-300 max-w-[100px] truncate">-</span>
                 </a>
 
-                <button id="btn-refresh" onclick="startAnalysis()"
+                <button id="btn-refresh" onclick="startAnalysis(true)"
                     class="flex items-center gap-2 px-3 sm:px-5 py-2.5 rounded-xl bg-gradient-to-r from-primary to-pink-600 text-white text-xs sm:text-sm font-medium hover:brightness-110 transition-all shadow-glow active:scale-95 disabled:opacity-50 disabled:grayscale">
                     <span class="material-icons-round text-base">refresh</span>
                     <span class="hidden sm:inline" data-i18n="refresh_analysis">Refresh Analysis</span>
@@ -1175,7 +1175,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             updateTranslations();
-            setLanguage(state.lang); // Correctly highlight active lang button
+            setLanguage(state.lang, true); // Correctly highlight active lang button without toast
             const savedTheme = localStorage.getItem('fc_theme') || 'dark';
             document.documentElement.classList.toggle('dark', savedTheme === 'dark');
             const themeIcon = document.getElementById('side-theme-icon');
@@ -1210,7 +1210,7 @@
             }
         }
 
-        function setLanguage(l) {
+        function setLanguage(l, silent = false) {
             state.lang = l;
             localStorage.setItem('fc_lang', l);
             updateTranslations();
@@ -1235,7 +1235,9 @@
                 mobEn.className = l === 'en' ? activeMob : inactiveMob;
                 mobIt.className = l === 'it' ? activeMob : inactiveMob;
             }
-            showToast(l === 'it' ? 'Lingua: Italiano' : 'Language: English', 'success');
+            if (!silent) {
+                showToast(l === 'it' ? 'Lingua: Italiano' : 'Language: English', 'success');
+            }
         }
 
         function showPage(pageId) {
@@ -1363,7 +1365,8 @@
             }
         }
 
-        function startAnalysis() {
+        function startAnalysis(isRefresh = false) {
+            state.isRefresh = isRefresh;
             elements.loadingOverlay.classList.remove('hidden');
             elements.loadingMessage.textContent = 'Elaborazione dati...';
             elements.loadingProgress.style.width = '20%';
@@ -1522,7 +1525,12 @@
                 displayAnalysisOverview();
                 renderCurrentResults();
 
-                try { saveCurrentAnalysis(); } catch (err) { console.warn("Save error:", err); }
+                try {
+                    if (!state.isRefresh) {
+                        saveCurrentAnalysis();
+                    }
+                } catch (err) { console.warn("Save error:", err); }
+                state.isRefresh = false;
 
                 setTimeout(() => {
                     elements.loadingProgress.style.width = '100%';
@@ -1777,7 +1785,8 @@
                 return false;
             }
 
-            // Switch to the "not-following-back" tab
+            // Switch to the "not-following-back" tab and clear search
+            state.view.searchQuery = '';
             setTab('not-following-back');
             showPage('results');
 
