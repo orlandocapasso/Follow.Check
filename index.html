@@ -771,7 +771,8 @@
                     <div
                         class="px-6 py-3 border-b border-gray-100 dark:border-white/5 flex items-center gap-2 bg-gray-50/50 dark:bg-black/5">
                         <span class="material-icons-round text-gray-400 text-sm mr-1">sort</span>
-                        <span class="text-[10px] text-gray-400 uppercase tracking-wider font-bold mr-2">Ordina:</span>
+                        <span class="text-[10px] text-gray-400 uppercase tracking-wider font-bold mr-2"
+                            data-i18n="sort_by">Ordina:</span>
                         <button onclick="setSortFilter('recent')" id="sort-btn-recent"
                             class="px-3 py-1.5 rounded-lg text-[11px] font-bold transition-all bg-primary/10 text-primary border border-primary/20">
                             <span class="flex items-center gap-1"><span
@@ -793,14 +794,16 @@
                         <!-- Users rendered by JS -->
                         <div class="flex flex-col items-center justify-center py-20 text-gray-600">
                             <span class="material-icons-round text-5xl mb-4 opacity-20">hourglass_empty</span>
-                            <p class="text-sm">Avvia l'analisi per vedere i risultati</p>
+                            <p class="text-sm" data-i18n="start_analysis_empty">Avvia l'analisi per vedere i risultati
+                            </p>
                         </div>
                     </div>
 
                     <!-- Pagination (Moved from full table) -->
                     <div id="pagination-controls"
                         class="p-4 border-t border-gray-100 dark:border-white/5 flex items-center justify-between bg-gray-50 dark:bg-black/10">
-                        <span class="text-xs text-gray-500 font-medium" id="page-display">Pagina 1 di 1</span>
+                        <span class="text-xs text-gray-500 font-medium" id="page-display"><span
+                                data-i18n="page_of">Pagina</span> 1 <span data-i18n="of_page">di</span> 1</span>
                         <div class="flex gap-2">
                             <button id="btn-prev" onclick="changePage(-1)"
                                 class="p-2 rounded-lg bg-white dark:bg-white/5 border border-gray-200 dark:border-white/5 text-gray-400 hover:text-primary transition-all disabled:opacity-20 active:scale-95">
@@ -1062,7 +1065,22 @@
                 tip_unfollow: "Considera di smettere di seguire account che non ti seguono",
                 tip_ratio: "Mantieni un rapporto follower/seguendo equilibrato (>70%)",
                 tip_analyze: "Analizza regolarmente la tua lista di follower",
-                info_usernames: "Suggerimento: I link \"Visita profilo\" potrebbero non funzionare per account con username speciali."
+                info_usernames: "Suggerimento: I link \"Visita profilo\" potrebbero non funzionare per account con username speciali.",
+                sort_by: "Ordina:",
+                sort_recent: "Recenti",
+                sort_least_recent: "Meno recenti",
+                start_analysis_empty: "Avvia l'analisi per vedere i risultati",
+                page_of: "Pagina",
+                of_page: "di",
+                bookmark_added: "Segnalibro aggiunto",
+                bookmark_removed: "Segnalibro rimosso",
+                bookmark_not_found: "Utente segnalibro non trovato",
+                bookmark_empty: "Nessun segnalibro disponibile",
+                hidden_user: "nascosto",
+                copy_user: "Copiato:",
+                instagram_profile: "Profilo Instagram",
+                open_profile: "Apri",
+                hide_button: "Rimuovi"
             },
             en: {
                 dashboard_title: "Home",
@@ -1145,7 +1163,22 @@
                 tip_unfollow: "Consider unfollowing accounts that don't follow you back",
                 tip_ratio: "Maintain a balanced follower/following ratio (>70%)",
                 tip_analyze: "Regularly analyze your follower list",
-                info_usernames: "Tip: \"Visit profile\" links may not work for accounts with special usernames."
+                info_usernames: "Tip: \"Visit profile\" links may not work for accounts with special usernames.",
+                sort_by: "Sort by:",
+                sort_recent: "Newest",
+                sort_least_recent: "Oldest",
+                start_analysis_empty: "Start the analysis to see the results",
+                page_of: "Page",
+                of_page: "of",
+                bookmark_added: "Bookmark added",
+                bookmark_removed: "Bookmark removed",
+                bookmark_not_found: "Bookmarked user not found",
+                bookmark_empty: "No bookmark available",
+                hidden_user: "hidden",
+                copy_user: "Copied:",
+                instagram_profile: "Instagram Profile",
+                open_profile: "Open",
+                hide_button: "Remove"
             }
         };
 
@@ -1704,7 +1737,7 @@
                                             <span class="truncate">${u.username}</span>
                                             ${u.isVerified ? '<span class="material-icons-round text-blue-400 text-[12px]">verified</span>' : ''}
                                         </span>
-                                        <span class="text-[10px] text-gray-500 uppercase tracking-tighter truncate">Profilo Instagram</span>
+                                        <span class="text-[10px] text-gray-500 uppercase tracking-tighter truncate" data-i18n="instagram_profile">Profilo Instagram</span>
                                     </div>
                                 </div>
                                 <div class="flex items-center justify-start sm:justify-end gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
@@ -1713,17 +1746,21 @@
                                     </button>
                                     <button type="button" onclick='hideUser(${JSON.stringify(u.username)})' class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl border border-border-light dark:border-white/10 text-gray-400 hover:text-red-500 hover:border-red-500/30 hover:bg-red-500/10 transition-all font-medium shrink-0" title="Nascondi">
                                         <span class="material-icons-round text-sm">visibility_off</span>
-                                        <span class="text-[11px]">Rimuovi</span>
+                                        <span class="text-[11px]" data-i18n="hide_button">Rimuovi</span>
                                     </button>
                                     <a href="${u.profileUrl}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-3 py-2 min-h-[38px] rounded-xl bg-primary text-white hover:bg-primary/90 transition-all shadow-md active:scale-95 font-bold shrink-0" title="Apri profilo">
                                         <span class="material-icons-round text-sm">open_in_new</span>
-                                        <span class="hidden sm:inline text-xs">Apri</span>
+                                        <span class="hidden sm:inline text-xs" data-i18n="open_profile">Apri</span>
                                     </a>
                                 </div>
                             </div>
                             `).join('');
 
-            if (pageDisplay) pageDisplay.textContent = `Pagina ${state.view.currentPage} di ${totalPages}`;
+            if (pageDisplay) {
+                const textPage = translations[state.lang].page_of;
+                const textOf = translations[state.lang].of_page;
+                pageDisplay.innerHTML = `<span>${textPage}</span> ${state.view.currentPage} <span>${textOf}</span> ${totalPages}`;
+            }
             if (btnPrev) btnPrev.disabled = state.view.currentPage === 1;
             if (btnNext) btnNext.disabled = state.view.currentPage === totalPages;
         }
@@ -1789,7 +1826,10 @@
             const arrowRecent = document.getElementById('sort-arrow-recent');
             const labelAz = document.getElementById('sort-label-az');
 
-            if (labelRecent) labelRecent.textContent = state.view.sortBy === 'recent' && state.view.sortOrder === 'desc' ? 'Meno recenti' : 'Recenti';
+            if (labelRecent) {
+                const isDesc = state.view.sortBy === 'recent' && state.view.sortOrder === 'desc';
+                labelRecent.textContent = isDesc ? translations[state.lang].sort_least_recent : translations[state.lang].sort_recent;
+            }
             if (arrowRecent) {
                 arrowRecent.textContent = state.view.sortBy === 'recent' && state.view.sortOrder === 'desc' ? 'arrow_upward' : 'arrow_downward';
                 arrowRecent.style.display = state.view.sortBy === 'recent' ? '' : 'none';
@@ -1801,7 +1841,7 @@
 
         function openBookmarkProfile() {
             if (!state.view.bookmark || !state.currentAnalysis) {
-                showToast(state.lang === 'it' ? 'Nessun segnalibro disponibile' : 'No bookmark available', 'info');
+                showToast(translations[state.lang].bookmark_empty, 'info');
                 return false;
             }
 
@@ -1817,7 +1857,7 @@
             const idx = filtered.findIndex(u => u.username === state.view.bookmark);
 
             if (idx === -1) {
-                showToast(state.lang === 'it' ? 'Utente segnalibro non trovato nella lista' : 'Bookmarked user not found in list', 'error');
+                showToast(translations[state.lang].bookmark_not_found, 'error');
                 return false;
             }
 
@@ -1851,11 +1891,11 @@
             if (state.view.bookmark === username) {
                 state.view.bookmark = null;
                 localStorage.removeItem('followcheck_bookmark');
-                showToast('Segnalibro rimosso', 'info');
+                showToast(translations[state.lang].bookmark_removed, 'info');
             } else {
                 state.view.bookmark = username;
                 localStorage.setItem('followcheck_bookmark', username);
-                showToast(`Segnalibro aggiunto: @${username}`, 'success');
+                showToast(`${translations[state.lang].bookmark_added}: @${username}`, 'success');
             }
             updateMobileBookmarkButton();
             displayAnalysisOverview();
@@ -1898,7 +1938,7 @@
                         updateHistoryDisplay();
                     }
                 }
-                showToast(`@${username} nascosto`, 'info');
+                showToast(`@${username} ${translations[state.lang].hidden_user}`, 'info');
                 displayAnalysisOverview();
                 renderCurrentResults();
             }
@@ -1906,7 +1946,7 @@
 
         function copyUsername(u) {
             navigator.clipboard.writeText(u);
-            showToast(`Copiato: @${u}`, 'success');
+            showToast(`${translations[state.lang].copy_user} @${u}`, 'success');
         }
 
         function saveCurrentAnalysis() {
