@@ -1256,7 +1256,7 @@
             const activeNav = document.getElementById(`nav-${pageId}`);
             if (activeNav) {
                 activeNav.className = "nav-item flex items-center px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer bg-primary/10 text-primary border border-primary/20 shadow-[0_0_15px_rgba(225,48,108,0.1)] font-bold";
-            } else if (pageId === 'results') {
+            } else if (pageId === 'results' || pageId.startsWith('results-')) {
                 // Secondary check for results sub-pages
                 const resNav = document.getElementById('nav-results');
                 if (resNav) resNav.className = "nav-item flex items-center px-4 py-3 rounded-xl transition-all duration-300 cursor-pointer bg-primary/10 text-primary border border-primary/20 shadow-[0_0_15px_rgba(225,48,108,0.1)] font-bold";
@@ -1582,7 +1582,12 @@
             if (elSideCount) elSideCount.textContent = a.notFollowingBack.length;
 
             const elUpdated = document.getElementById('last-updated-time');
-            if (elUpdated) elUpdated.textContent = translations[state.lang].just_now;
+            if (elUpdated) {
+                // Se è un'analisi appena fatta o dallo storico
+                elUpdated.textContent = a.date === new Date().toLocaleString('it-IT')
+                    ? translations[state.lang].just_now
+                    : a.date;
+            }
 
             // Landing Page Insights Update
             const elLandRatio = document.getElementById('landing-stat-ratio');
@@ -1855,6 +1860,14 @@
                     state.currentAnalysis.following = state.currentAnalysis.following.filter(u => u.username.toLowerCase() !== normalized);
                     state.currentAnalysis.ratio = Math.round((state.currentAnalysis.followers.length / Math.max(1, state.currentAnalysis.following.length)) * 100);
                     state.currentAnalysis.verifiedCount = state.currentAnalysis.followers.filter(u => u.isVerified).length + state.currentAnalysis.following.filter(u => u.isVerified).length;
+
+                    // Update history to save the hidden state
+                    const historyIndex = state.history.findIndex(h => h.date === state.currentAnalysis.date);
+                    if (historyIndex !== -1) {
+                        state.history[historyIndex] = state.currentAnalysis;
+                        localStorage.setItem('followcheck_history', JSON.stringify(state.history));
+                        updateHistoryDisplay();
+                    }
                 }
                 showToast(`@${username} nascosto`, 'info');
                 displayAnalysisOverview();
