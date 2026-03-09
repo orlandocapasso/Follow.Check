@@ -1740,7 +1740,11 @@
                         <span class="material-icons-round text-5xl mb-4 opacity-20">search_off</span>
                         <p class="text-sm">${translations[state.lang].no_users_found}</p>
                     </div>`;
-                if (pageDisplay) pageDisplay.textContent = `0 di 0`;
+                if (pageDisplay) {
+                    const textPage = translations[state.lang].page_of;
+                    const textOf = translations[state.lang].of_page;
+                    pageDisplay.innerHTML = `<span>${textPage}</span> 0 <span>${textOf}</span> 0`;
+                }
                 return;
             }
 
