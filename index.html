@@ -748,8 +748,9 @@
                             <div class="relative hidden md:block">
                                 <span
                                     class="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">search</span>
-                                <input type="text" oninput="handleSearch(this.value)" placeholder="Cerca..."
-                                    class="w-48 pl-9 pr-4 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs text-gray-900 dark:text-white focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600 focus:w-64">
+                                <input type="text" oninput="handleSearch(this.value)"
+                                    class="w-48 pl-9 pr-4 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs text-gray-900 dark:text-white focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600 focus:w-64"
+                                    data-i18n-placeholder="search_placeholder">
                             </div>
                             <span class="bg-red-500/10 text-red-500 text-sm font-bold px-3 py-1.5 rounded-lg"
                                 id="side-list-count">0</span>
@@ -762,8 +763,9 @@
                         <div class="relative">
                             <span
                                 class="material-icons-round absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 text-sm">search</span>
-                            <input type="text" oninput="handleSearch(this.value)" placeholder="Cerca..."
-                                class="w-full pl-9 pr-4 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs text-gray-900 dark:text-white focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600">
+                            <input type="text" oninput="handleSearch(this.value)"
+                                class="w-full pl-9 pr-4 py-2 bg-gray-100 dark:bg-white/5 border border-gray-200 dark:border-white/5 rounded-xl text-xs text-gray-900 dark:text-white focus:ring-1 focus:ring-primary outline-none transition-all placeholder:text-gray-500 dark:placeholder:text-gray-600"
+                                data-i18n-placeholder="search_placeholder">
                         </div>
                     </div>
 
@@ -1083,7 +1085,8 @@
                 hide_button: "Rimuovi",
                 title_bookmark: "Segnalibro",
                 title_hide: "Nascondi",
-                title_open_profile: "Apri profilo"
+                title_open_profile: "Apri profilo",
+                search_placeholder: "Cerca utente..."
             },
             en: {
                 dashboard_title: "Home",
@@ -1184,7 +1187,8 @@
                 hide_button: "Remove",
                 title_bookmark: "Bookmark",
                 title_hide: "Hide",
-                title_open_profile: "Open profile"
+                title_open_profile: "Open profile",
+                search_placeholder: "Search user..."
             }
         };
 
@@ -1228,8 +1232,10 @@
                 const key = el.getAttribute('data-i18n-title');
                 if (t[key]) el.title = t[key];
             });
-            const searchInput = document.getElementById('search-input');
-            if (searchInput) searchInput.placeholder = lang === 'it' ? 'Cerca utente...' : 'Search user...';
+            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+                const key = el.getAttribute('data-i18n-placeholder');
+                if (t[key]) el.placeholder = t[key];
+            });
 
             // Dynamic Sort Labels
             const labelRecent = document.getElementById('sort-label-recent');
